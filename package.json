@@ -1,17 +1,17 @@
 {
-  "name": "lower-case-dashed-name-of-project",
-  "repository": "REPOSITORY-NAME-AS-IT-APPEARS-IN-GITHUB-URL",
+  "name": "type-type-revenge",
+  "repository": "type-type-revengeL",
   "version": "0.1.0",
-  "title": "PROJECT TITLE HERE",
-  "description": "SHORT DESCRIPTION OF PROJECT HERE. ONE TO TWO SENTENCES MAX",
+  "title": "Type Type Revenge",
+  "description": "A typing practice game modeled after the classic music game Tap Tap Revenge for Princeton's COS426: Computer Graphics.",
   "keywords": [
     "Princeton",
     "graphics",
     "three.js",
     "COS 426",
     "ivy league",
-    "keyword1",
-    "keyword2",
+    "typing game",
+    "type",
     "...",
     "this last entry CANNOT have a comma after it ->"
   ],
