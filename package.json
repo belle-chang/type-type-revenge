@@ -29,12 +29,12 @@
     "webpack-cli": "^3.3.11"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.5",
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
     "babel-loader": "^8.1.0",
     "file-loader": "^6.0.0",
     "gh-pages": "^2.2.0",
-    "html-webpack-plugin": "^4.2.1",
+    "html-webpack-plugin": "^4.3.0",
     "prettier": "^2.0.4",
     "raw-loader": "^4.0.1",
     "rimraf": "^3.0.2",
