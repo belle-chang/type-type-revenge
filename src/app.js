@@ -17,11 +17,12 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 
 // Initialize core ThreeJS components
 const scene = new SeedScene();
-const camera = new PerspectiveCamera();
+// const camera = new PerspectiveCamera();
+const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 const renderer = new WebGLRenderer({ antialias: true });
 
 // Set up camera
-camera.position.set(6, 3, -10);
+camera.position.set(0, 0, 16);
 camera.lookAt(new Vector3(0, 0, 0));
 
 // Set up renderer, canvas, and minor CSS adjustments
@@ -33,12 +34,12 @@ document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
 
 // Set up controls
-const controls = new OrbitControls(camera, canvas);
-controls.enableDamping = true;
-controls.enablePan = false;
-controls.minDistance = 4;
-controls.maxDistance = 16;
-controls.update();
+// const controls = new OrbitControls(camera, canvas);
+// controls.enableDamping = false;
+// controls.enablePan = false;
+// controls.minDistance = 16;
+// controls.maxDistance = 16;
+// controls.update();
 
 
 // ADD POSTPROCESSING EFFECT SUPPORT
@@ -48,7 +49,7 @@ composer.addPass(new RenderPass(scene, camera));
 // add glow
 var bloomPass = new UnrealBloomPass(
     new THREE.Vector2(window.innerWidth, window.innerHeight), 
-    2, 0, .1
+    1, .01, 0
 );
 bloomPass.renderToScreen = true;
 composer.addPass(bloomPass);
@@ -56,7 +57,7 @@ composer.addPass(bloomPass);
 
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
-    controls.update();
+    // controls.update();
     // renderer.render(scene, camera);
     composer.render(timeStamp);
     scene.update && scene.update(timeStamp);

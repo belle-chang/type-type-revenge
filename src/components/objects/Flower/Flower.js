@@ -1,7 +1,7 @@
 import { Group } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
-import MODEL from './a.gltf';
+import MODEL from './model.gltf';
 import {Vector3} from 'three';
 
 class Flower extends Group {
@@ -22,11 +22,6 @@ class Flower extends Group {
         const loader = new GLTFLoader();
         this.name = 'flower';
         loader.load(MODEL, (gltf) => {
-            // console.log(gltf.scene.position);
-            // gltf.scene.position.x = -1;
-            // gltf.scene.rotation.x = 1.5708
-            // gltf.scene.rotation.y = 3.14159;
-            // console.log(gltf.scene.rotation.z)
             this.add(gltf.scene);
         });
         // console.log(loader)
