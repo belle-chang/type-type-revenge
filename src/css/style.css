@@ -1,0 +1,18 @@
+html, body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    
+ } 
+a{
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1em;
+    position: fixed;
+    margin-top: 50px;
+ }
+ 
+ #title{
+    /* text-align: center; */
+    left: 44%; 
+    top: 0;
+ }
