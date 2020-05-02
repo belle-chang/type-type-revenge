@@ -26,6 +26,9 @@ camera.position.set(0, 0, 16);
 camera.lookAt(new Vector3(0, 0, 0));
 
 // Set up renderer, canvas, and minor CSS adjustments
+renderer.setSize(window.innerWidth, window.innerHeight);
+// renderer.toneMapping = THREE.LinearToneMapping;
+// renderer.setClearColor(0x000000,0.0);
 renderer.setPixelRatio(window.devicePixelRatio);
 const canvas = renderer.domElement;
 canvas.style.display = 'block'; // Removes padding below canvas
@@ -46,10 +49,12 @@ document.body.appendChild(canvas);
 var composer = new EffectComposer( renderer );
 // first and mandatory pass
 composer.addPass(new RenderPass(scene, camera));
+
 // add glow
+// resolution, strength, kernel size, sigma?
 var bloomPass = new UnrealBloomPass(
     new THREE.Vector2(window.innerWidth, window.innerHeight), 
-    1, .01, 0
+    3, 0.5, 0.1
 );
 bloomPass.renderToScreen = true;
 composer.addPass(bloomPass);
@@ -75,3 +80,15 @@ const windowResizeHandler = () => {
 };
 windowResizeHandler();
 window.addEventListener('resize', windowResizeHandler, false);
+window.addEventListener("keydown", handleKeyDown);
+window.addEventListener("keyup", handleKeyUp);
+
+// when key is pressed save event key to key parameter of SeedScene
+function handleKeyDown(event) {
+    scene.key = event.key;
+}
+
+// once key is lifted, set SeedScene key to default value
+function handleKeyUp(event) {
+    scene.key = "";
+}
