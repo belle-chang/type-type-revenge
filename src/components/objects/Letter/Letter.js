@@ -98,11 +98,14 @@ class Letter extends Mesh {
     }
 
     // dispose of letter and its target after it falls out of frame
-    dispose() {
+    dispose(target) {
         this.tracker.dispose();
         // need to add a null check for some reason
-        if (this.parent !== null)
+        if (this.parent !== null) {
             this.parent.remove(this);
+            this.parent.remove(target);
+        }
+
     }
 
     // MOVE FALL TO update() FOR IT TO AUTOMATICALLY FALL!
@@ -117,7 +120,7 @@ class Letter extends Mesh {
         fallDown.start();
     }
 
-    update(timeStamp) {
+    update(timeStamp, target) {
         // Bob back and forth
         // this.rotation.z = 0.05 * Math.sin(timeStamp / 300);
         this.target = target;
