@@ -98,12 +98,12 @@ class Letter extends Mesh {
     }
 
     // dispose of letter and its target after it falls out of frame
-    dispose(target) {
+    dispose() {
         this.tracker.dispose();
         // need to add a null check for some reason
         if (this.parent !== null) {
             this.parent.remove(this);
-            this.parent.remove(target);
+            this.target.dispose();
         }
 
     }
@@ -118,6 +118,8 @@ class Letter extends Mesh {
             .to({ y: -24 }, 5000);
 
         fallDown.start();
+        // after letter finishes falling down, dispose of it
+        fallDown.onComplete(() => this.dispose());
     }
 
     update(timeStamp, target) {
