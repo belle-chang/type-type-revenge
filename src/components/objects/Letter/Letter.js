@@ -106,12 +106,24 @@ class Letter extends Mesh {
         fallDown.onComplete(() => this.dispose());
         
     }
+
+    move() {
+        const fallDown = new TWEEN.Tween(this.position)
+        .to({ y: -45 }, 10000).start();
+        // fallDown.start();
+        // after letter finishes falling down, dispose of it
+        fallDown.onComplete(() => this.dispose());
+    }
+
     update(timeStamp) {
         // Bob back and forth
         this.rotation.z = 0.05 * Math.sin(timeStamp / 300);
-        
+
         // Advance tween animations, if any exist
         TWEEN.update();
+        // uncomment this to move it automatically
+        // this.move();
+
     }
 }
 
