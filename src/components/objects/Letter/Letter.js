@@ -19,10 +19,10 @@ class Letter extends Mesh {
         // set parent to remove letter from scene
         this.parent = parent;
 
-        this.state = {
-            gui: parent.state.gui,
-            fall: this.fall.bind(this)
-        };
+        // this.state = {
+        //     gui: parent.state.gui,
+        //     fall: this.fall.bind(this)
+        // };
 
         // name of letter
         this.name = letter;
@@ -79,7 +79,7 @@ class Letter extends Mesh {
         parent.addToUpdateList(this);
 
         // Populate GUI
-        this.state.gui.add(this.state, 'fall');
+        // this.state.gui.add(this.state, 'fall');
     }
 
     // figure out how to make it fill with color when pressed...
@@ -117,7 +117,7 @@ class Letter extends Mesh {
         // Advance tween animations, if any exist
         TWEEN.update();
         // uncomment this to move it automatically
-        // this.fall();
+        this.fall();
 
     }
 }

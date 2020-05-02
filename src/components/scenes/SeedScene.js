@@ -11,8 +11,8 @@ class SeedScene extends Scene {
 
         // Init state
         this.state = {
-            gui: new Dat.GUI(), // Create GUI for scene
-            rotationSpeed: 1,
+            // gui: new Dat.GUI(), // Create GUI for scene
+            // rotationSpeed: 1,
             updateList: [],
         };
 
@@ -28,7 +28,7 @@ class SeedScene extends Scene {
         this.add(lights, letter);
 
         // Populate GUI
-        this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
+        // this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
     }
 
     addToUpdateList(object) {
