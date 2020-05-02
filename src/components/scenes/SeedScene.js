@@ -1,5 +1,5 @@
 import * as Dat from 'dat.gui';
-import { Scene, Color } from 'three';
+import { Scene, Color, AnimationObjectGroup } from 'three';
 import { Flower, Land, Letter, Target } from 'objects';
 import {ResourceTracker} from 'tracker';
 import { BasicLights } from 'lights';
@@ -14,7 +14,7 @@ class SeedScene extends Scene {
 
         // Init state
         this.state = {
-            gui: new Dat.GUI(), // Create GUI for scene
+            // gui: new Dat.GUI(), // Create GUI for scene
             rotationSpeed: 1,
             key: "",
             spheres: [],
@@ -40,7 +40,7 @@ class SeedScene extends Scene {
         // this.add(lights, letter1, target1, letter2, target2, letter3, target3);
     
         // add a new random letter every second, stops after 10th letter to prevent overloading
-        var id = setInterval(addLetter, 1000, this);
+        var id = setInterval(addLetter, 5000, this);
 
         function addLetter(scene) {
             function getRandomInt(min, max) {
@@ -59,10 +59,23 @@ class SeedScene extends Scene {
 
 
         // Populate GUI
-        this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
+        // this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
+
+        // add line for incorrect letter;
+        this.tracker = new ResourceTracker();
+        const track = this.tracker.track.bind(this.tracker);
+
+        var error_bar = track( new THREE.Mesh(track(new THREE.BoxGeometry(48, .25, 0)), 
+                                 track(new THREE.MeshBasicMaterial({color: "red", wireframe: false}))
+                                ) );
+        error_bar.position.set(0, -12.7, 0)
+        error_bar.visible = false;
+        this.incorrect = error_bar;
+        this.add(error_bar);
+         
 
         // rain effect
-        setInterval(makeLine, 50, this);
+        setInterval(makeLine, 60, this);
 
         function makeLine(scene) {
             // get random position for the line
@@ -71,26 +84,35 @@ class SeedScene extends Scene {
                 max = Math.floor(max);
                 return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
             }
-        
+            
+            // add resource tracker to dispose of lines once they have fallen out of the scene
+            let rt = new ResourceTracker();
+            const track = rt.track.bind(rt);
+
             // create new line segment object and add to top of scene
-            var geometry = new THREE.Geometry();
+            var geometry = track( new THREE.Geometry() );
             var xPos = getRandomInt(-22, 22);
             var yPos = 16;
             var length = getRandomInt(0, 3);
-            geometry.vertices.push(new THREE.Vector3(xPos, yPos, 0), new THREE.Vector3(xPos,yPos - length, 0));
-            var material = new THREE.LineBasicMaterial( { color: "rgb(70,70,70)" } );
-            var line = new THREE.LineSegments( geometry, material );
+            geometry.vertices.push(track( new THREE.Vector3(xPos, yPos, 0) ), track( new THREE.Vector3(xPos,yPos - length, 0) ));
+            var material = track( new THREE.LineBasicMaterial( { color: "rgb(70,70,70)" } ) );
+            var line = track( new THREE.LineSegments( geometry, material ) );
             scene.add(line);
 
             // animate line
             var start = { x : xPos , y : yPos };
             var target = { x : xPos , y : -19 };
-            const tween = new TWEEN.Tween(start).to(target, 4000);
+            const tween = new TWEEN.Tween(start).to(target, 4500);
             tween.onUpdate(function(){
                 line.position.y = start.y;
             });
             tween.start();
-            tween.onComplete(() => scene.remove(line));
+
+            // dispose of line and remove from scene
+            tween.onComplete(() => {
+                rt.dispose();
+                scene.remove(line);
+            });
         }
     }
 
