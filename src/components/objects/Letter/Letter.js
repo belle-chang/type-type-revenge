@@ -100,11 +100,13 @@ class Letter extends Mesh {
     // dispose of letter and its target after it falls out of frame
     dispose() {
         this.tracker.dispose();
-        this.parent.remove(this);
-        this.target.dispose();
+        // need to add a null check for some reason
+        if (this.parent !== null)
+            this.parent.remove(this);
     }
 
-    fall(target) {
+    // MOVE FALL TO update() FOR IT TO AUTOMATICALLY FALL!
+    fall() {
 
         // Use timing library for more precice "bounce" animation
         // TweenJS guide: http://learningthreejs.com/blog/2011/08/17/tweenjs-for-smooth-animation/
@@ -113,21 +115,9 @@ class Letter extends Mesh {
             .to({ y: -24 }, 5000);
 
         fallDown.start();
-
-        // after letter finishes falling down, dispose of it
-        fallDown.onComplete(() => this.dispose());
-
     }
 
-    // move() {
-    //     const fallDown = new TWEEN.Tween(this.position)
-    //     .to({ y: -45 }, 10000).start();
-    //     // fallDown.start();
-    //     // after letter finishes falling down, dispose of it
-    //     fallDown.onComplete(() => this.dispose());
-    // }
-
-    update(timeStamp, target) {
+    update(timeStamp) {
         // Bob back and forth
         // this.rotation.z = 0.05 * Math.sin(timeStamp / 300);
         this.target = target;
@@ -149,7 +139,7 @@ class Letter extends Mesh {
         // Advance tween animations, if any exist
         TWEEN.update();
         // uncomment this to move it automatically
-        // this.move();
+        // this.fall();
 
     }
 }
