@@ -6,14 +6,13 @@
  * handles window resizes.
  *
  */
+import * as THREE from 'three';
 import { WebGLRenderer, PerspectiveCamera, Vector3 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { SeedScene } from 'scenes';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass.js';
-import { BloomPass } from 'three/examples/jsm/postprocessing/BloomPass.js';
-import { FilmPass } from 'three/examples/jsm/postprocessing/FilmPass.js';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 
 
 // Initialize core ThreeJS components
@@ -46,27 +45,19 @@ controls.update();
 var composer = new EffectComposer( renderer );
 // first and mandatory pass
 composer.addPass(new RenderPass(scene, camera));
-const gp = new GlitchPass(
-    .1
-)
-gp.renderToScreen = true;
-composer.addPass(gp);
-// const filmPass = new FilmPass(
-//     0.35,   // noise intensity
-//     0.25,  // scanline intensity
-//     648,    // scanline count
-//     false,  // grayscale
-// );
-// filmPass.renderToScreen = true;
-// composer.addPass(filmPass);
-//   bloomPass.renderToScreen = true;
+// add glow
+var bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(window.innerWidth, window.innerHeight), 
+    2, 0, .1
+);
+bloomPass.renderToScreen = true;
+composer.addPass(bloomPass);
 
 
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
     controls.update();
     // renderer.render(scene, camera);
-    // composer.render(scene, camera);
     composer.render(timeStamp);
     scene.update && scene.update(timeStamp);
     window.requestAnimationFrame(onAnimationFrameHandler);
@@ -77,6 +68,7 @@ window.requestAnimationFrame(onAnimationFrameHandler);
 const windowResizeHandler = () => {
     const { innerHeight, innerWidth } = window;
     renderer.setSize(innerWidth, innerHeight);
+    // composer.setSize(innerWidth, innerHeight);
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
 };
