@@ -9,7 +9,7 @@ import * as THREE from 'three';
 
 
 class Target extends Mesh {
-    constructor(parent, letter, x) {
+    constructor(parent, letter, x, color) {
         // Call parent Group() constructor
         super();
 
@@ -49,6 +49,15 @@ class Target extends Mesh {
             textGeo.center();
 
             this.normalGeometry = textGeo;
+            // var phong = track( new THREE.MeshLambertMaterial( {
+            //     color: 0xff0000,
+            // } ));
+            // let mesh = track( new THREE.Mesh(textGeo, phong) );
+            // mesh.position.set(x, -9, 0);
+            // mesh.rotateY(Math.PI / 9);
+            // mesh.visible = true;
+            // this.uponPressed = mesh;
+            // this.add(mesh);
 
             // add geometry -- edges
             var geo = track(new THREE.EdgesGeometry( textGeo ));
@@ -80,8 +89,10 @@ class Target extends Mesh {
     // dispose of letter after it falls out of frame
     dispose() {
         this.tracker.dispose();
-        this.parent.state.updateListTarget.shift();
-        this.parent.remove(this);
+        if (this.parent != null) {
+            this.parent.state.updateListTarget.shift();
+            this.parent.remove(this);
+        }
     }
     
 
@@ -107,9 +118,9 @@ class Target extends Mesh {
         fallDown.onComplete(() => this.dispose());
     }
 
-    update(timeStamp) {
+    update() {
         // Bob back and forth
-        // this.rotation.z = 0.05 * Math.sin(timeStamp / 300);
+        // this.rotation.z = 0.05 * Math.sin(timeStamp / 300)
 
         // Advance tween animations, if any exist
         TWEEN.update();

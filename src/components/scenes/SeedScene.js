@@ -20,7 +20,9 @@ class SeedScene extends Scene {
             key: "",
             spheres: [],
             updateList: [],
-            updateListTarget: [] // list of targets that correspond to objects in updateList
+            updateSet: new Set(),
+            updateListTarget: [], // list of targets that correspond to objects in updateList
+            lettersOnScreen: []
         };
 
         // add position tracker to ensure there aren't any overlapping letters
@@ -53,6 +55,7 @@ class SeedScene extends Scene {
             let charCode = getRandomInt(97, 123);
             const letter = new Letter(scene, String.fromCharCode(charCode));
             const target = new Target(scene, String.fromCharCode(charCode), letter.coords.x);
+            letter.addTarget(target);
             scene.add(letter, target);
             if (scene.state.updateList.length > 10) {
                 clearInterval(id);
@@ -123,19 +126,33 @@ class SeedScene extends Scene {
         this.state.updateList.push(object);
     }
 
+    // add letter object to updateSet
+    addToUpdateSet(object) {
+        this.state.updateSet.add(object);
+    }
+
     // add target object to updateListTarget
     addToUpdateListTarget(object) {
         this.state.updateListTarget.push(object);
     }
 
+    addToLettersOnScreen(object) {
+        this.state.lettersOnScreen.push(object);
+    }
+
     update(timeStamp) {
-        const { rotationSpeed, updateList, updateListTarget } = this.state;
+        const { updateList, updateListTarget } = this.state;
         // this.rotation.y = (rotationSpeed * timeStamp) / 10000;
 
         // Call update for each object in the updateList
         // for (const obj of updateList) {
         //     obj.update(timeStamp);
         // }
+        // console.log(updateList);
+        // console.log(updateListTarget);
+        // console.log(this.state.updateSet);
+        console.log(this.state.lettersOnScreen);
+        debugger;
 
         // update each object in updateList
         // passes in corresponding target object to check position values in Letter.js

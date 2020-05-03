@@ -1,4 +1,3 @@
-import { Group, Vector3 } from 'three';
 import { Mesh } from 'three';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 import { ResourceTracker } from 'tracker';
@@ -89,7 +88,9 @@ class Letter extends Mesh {
           }
 
         parent.addToUpdateList(this);
-
+        parent.addToLettersOnScreen(letter);
+        parent.addToUpdateSet(this);
+        
         // Populate GUI
         // this.state.gui.add(this.state, 'fall');
     }
@@ -100,7 +101,6 @@ class Letter extends Mesh {
         // let update_material = this.tracker.track(new THREE.MeshPhongMaterial( 
         //     { color: this.color, specular: 0xffffff }
         // ));
-        // this.target.geometry = update_material;
     }
 
     // dispose of letter and its target after it falls out of frame
@@ -109,9 +109,12 @@ class Letter extends Mesh {
         // need to add a null check for some reason
         if (this.parent !== null) {
             this.parent.allPositions.clear(this.coords.x);
+            // DECIDE WHETHER OR NOT TO USE A SET OR AN ARRAY -- WITH ARRAY WE ARE BANKING ON
+            // THE "THIS" OBJECT TO BE AT THE BEGINNING OF THE ARRAY. 
+            this.parent.state.updateSet.delete(this);
+            this.parent.state.lettersOnScreen.shift();
             this.parent.state.updateList.shift();
             this.parent.remove(this);
-            // for some reson when i comment this out, it stops disposing of the targets :()
             this.target.dispose();
         }
     }
@@ -130,10 +133,14 @@ class Letter extends Mesh {
         fallDown.onComplete(() => this.dispose());
     }
 
+    addTarget(target) {
+        this.target = target;
+    }
+
     update(timeStamp, target) {
         // Bob back and forth
         // this.rotation.z = 0.05 * Math.sin(timeStamp / 300);
-        this.target = target;
+        // this.target = target;
 
         // add null check -- idk why but it needs this
         if (this.parent != null) {
@@ -145,7 +152,11 @@ class Letter extends Mesh {
                 // new background color is a toned down version of the letter color (orig color is too bright)
                 this.parent.background = this.textMesh.material.color.clone().addScalar(-0.4);
                 correct = true;
-                // this.isTyped();
+
+                // trying to figure out how to make letter glow lol, to no avail
+                this.target.material.color = this.tracker.track( new THREE.MeshPhongMaterial( {
+                        color: this.textMesh.material.color.clone().addScalar(-0.4)
+                    } ));
             }
             
             // return to black background once letter passes through target
@@ -155,6 +166,7 @@ class Letter extends Mesh {
             }
 
             // if falling letter hits corresponding key BUT INCORRECT KEY IS PRESSED --> show error bar
+            // still doesn't work!!!!
             // if (!correct && (this.parent.key != null) && (this.parent.key != "") && (this.parent.key != this.name)) {
             //     debugger;
             //     if (this.parent.incorrect != null) {
