@@ -29,7 +29,6 @@ class SeedScene extends Scene {
         };
 
         // add position tracker to ensure there aren't any overlapping letters
-        this.allPositions = new PositionFinder(-22, 22);
 
         // Set background to a nice color
         // this.background = new Color(0x7ec0ee);
