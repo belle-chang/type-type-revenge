@@ -144,25 +144,18 @@ class Letter extends Mesh {
         // add null check -- idk why but it needs this
         if (this.parent != null) {
             // if falling letter hits its corresponding target object when the correct key is pressed, flash bright background color
-            let correct = false;
             if (this.position.y < -1 * (this.coords.y + Math.abs(target.coords.y)) + 1
                 && this.position.y > -1 * (this.coords.y + Math.abs(target.coords.y)) - 1
                 && this.parent.key == this.name) {
                 // new background color is a toned down version of the letter color (orig color is too bright)
                 // this.parent.background = this.textMesh.material.color.clone().addScalar(-0.4);
-                correct = true;
 
-                // trying to figure out how to make letter glow lol, to no avail
+              // trying to figure out how to make letter glow lol, to no avail
                 // this.target.children[0].material.color = new THREE.Color(0xff0000);
                 // this.target.changeColor(this.textMesh.material.color.clone());
                 this.target.geoToSolid(this.color);
             }
-            
-            // return to black background once letter passes through target
-            else if (this.position.y < -1 * (this.coords.y + Math.abs(target.coords.y) - 1)
-                    && this.position.y > -24) {
-                this.parent.background = new THREE.Color(0x000000);
-            }
+
 
             // if falling letter hits corresponding key BUT INCORRECT KEY IS PRESSED --> show error bar
             // still doesn't work!!!!
