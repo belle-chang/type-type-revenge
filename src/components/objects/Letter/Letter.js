@@ -149,17 +149,13 @@ class Letter extends Mesh {
                 && this.position.y > -1 * (this.coords.y + Math.abs(target.coords.y)) - 1
                 && this.parent.key == this.name) {
                 // new background color is a toned down version of the letter color (orig color is too bright)
-                this.parent.background = this.textMesh.material.color.clone().addScalar(-0.4);
+                // this.parent.background = this.textMesh.material.color.clone().addScalar(-0.4);
                 correct = true;
 
                 // trying to figure out how to make letter glow lol, to no avail
-                debugger;
-                console.log(this.target.material.color);
-                this.target.material.color = this.textMesh.material.color.clone().addScalar(-0.4);
-                console.log(this.target.material.color);
-                debugger;
-                // this.tracker.track( new THREE.MeshPhongMaterial( {
-                //     color:
+                // this.target.children[0].material.color = new THREE.Color(0xff0000);
+                // this.target.changeColor(this.textMesh.material.color.clone());
+                this.target.geoToSolid(this.color);
             }
             
             // return to black background once letter passes through target
