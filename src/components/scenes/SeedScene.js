@@ -6,12 +6,15 @@ import { BasicLights } from 'lights';
 import * as THREE from 'three';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 import { PositionFinder } from 'positioning';
+import { HighScore } from 'interface';
 
 
 class SeedScene extends Scene {
     constructor() {
         // Call parent Scene() constructor
         super();
+
+        this.score = new HighScore();
 
         // Init state
         this.state = {
@@ -150,6 +153,7 @@ class SeedScene extends Scene {
         if ((this.key != "") && (this.key != undefined)) {
             const found = this.state.lettersOnScreen.find(element => element == this.key);
             if (found == undefined) {
+                this.score.reset();
                 this.incorrect.visible = true;
                 //         this.parent.key = "";
                 setTimeout(() => this.incorrect.visible = false, 300);
