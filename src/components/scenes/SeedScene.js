@@ -44,7 +44,7 @@ class SeedScene extends Scene {
         // this.add(lights, letter1, target1, letter2, target2, letter3, target3);
     
         // add a new random letter every second, stops after 10th letter to prevent overloading
-        var id = setInterval(addLetter, 3000, this);
+        var id = setInterval(addLetter, 1000, this);
 
         function addLetter(scene) {
             function getRandomInt(min, max) {
@@ -147,6 +147,15 @@ class SeedScene extends Scene {
         // Call update for each object in the updateList
         // for (const obj of updateList) {
         //     obj.update(timeStamp);
+        if ((this.key != "") && (this.key != undefined)) {
+            const found = this.state.lettersOnScreen.find(element => element == this.key);
+            if (found == undefined) {
+                this.incorrect.visible = true;
+                //         this.parent.key = "";
+                setTimeout(() => this.incorrect.visible = false, 300);
+            }
+        }
+
 
         // update each object in updateList
         // passes in corresponding target object to check position values in Letter.js
