@@ -1,10 +1,11 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color, AnimationObjectGroup } from 'three';
-import { Flower, Land, Letter, Target } from 'objects';
-import {ResourceTracker} from 'tracker';
+import { Letter, Target } from 'objects';
+import { ResourceTracker } from 'tracker';
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
+import { PositionFinder } from 'positioning';
 
 
 class SeedScene extends Scene {
@@ -22,13 +23,14 @@ class SeedScene extends Scene {
             updateListTarget: [] // list of targets that correspond to objects in updateList
         };
 
+        // add position tracker to ensure there aren't any overlapping letters
+        this.allPositions = new PositionFinder(-22, 22);
+
         // Set background to a nice color
         // this.background = new Color(0x7ec0ee);
         this.background = new Color(0x000000);
 
         // Add meshes to scene
-        // const land = new Land();
-        // const flower = new Flower(this);
         const lights = new BasicLights();
         this.add(lights);
         // const letter1 = new Letter(this, "a");
@@ -40,7 +42,7 @@ class SeedScene extends Scene {
         // this.add(lights, letter1, target1, letter2, target2, letter3, target3);
     
         // add a new random letter every second, stops after 10th letter to prevent overloading
-        var id = setInterval(addLetter, 5000, this);
+        var id = setInterval(addLetter, 3000, this);
 
         function addLetter(scene) {
             function getRandomInt(min, max) {

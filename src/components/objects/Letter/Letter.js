@@ -30,7 +30,8 @@ class Letter extends Mesh {
 
         // randomize position between top left corner and top right corner of the screen
         // added here in order to access in SeedScene.js to create corresponding target object
-        var newx = getRandomInt(-22, 22);
+        // var newx = getRandomInt(-22, 22);
+        var newx = parent.allPositions.add();
         this.coords = new THREE.Vector3(newx, 12, 0);
 
         // load font for textgeometry
@@ -109,6 +110,7 @@ class Letter extends Mesh {
         this.tracker.dispose();
         // need to add a null check for some reason
         if (this.parent !== null) {
+            this.parent.allPositions.clear(this.coords.x);
             this.parent.state.updateList.shift();
             this.parent.remove(this);
             // for some reson when i comment this out, it stops disposing of the targets :()
@@ -158,14 +160,14 @@ class Letter extends Mesh {
             console.log(this.parent.state.updateList)
 
             // if falling letter hits corresponding key BUT INCORRECT KEY IS PRESSED --> show error bar
-            if (!correct && (this.parent.key != null) && (this.parent.key != "") && (this.parent.key != this.name)) {
-                debugger;
-                if (this.parent.incorrect != null) {
-                    this.parent.incorrect.visible = true;
-                    this.parent.key = "";
-                    setTimeout(() => this.parent.incorrect.visible = false, 300);
-                }
-            }
+            // if (!correct && (this.parent.key != null) && (this.parent.key != "") && (this.parent.key != this.name)) {
+            //     debugger;
+            //     if (this.parent.incorrect != null) {
+            //         this.parent.incorrect.visible = true;
+            //         this.parent.key = "";
+            //         setTimeout(() => this.parent.incorrect.visible = false, 300);
+            //     }
+            // }
         }
 
         // Advance tween animations, if any exist
