@@ -19,12 +19,12 @@ class Letter extends Mesh {
         // set parent to remove letter from scene
         this.parent = parent;
 
+
         this.state = {
             gui: parent.state.gui,
             fall: this.fall.bind(this),
             paused: false
         };
-
         // name of letter
         this.name = letter;
 
@@ -52,11 +52,12 @@ class Letter extends Mesh {
             textGeo.center();
 
             this.normalGeometry = textGeo;
+            this.color = getPastelColor();
 
             // add geometry -- edges
             var geo = track(new THREE.EdgesGeometry( textGeo ));
             // add material
-            var mat = track(new THREE.LineBasicMaterial( { color: getPastelColor(), linewidth: 1.5 } ));
+            var mat = track(new THREE.LineBasicMaterial( { color: this.color, linewidth: 1.5 } ));
             // create mesh
             let textMesh = track(new THREE.LineSegments(geo, mat));
             // randomize position between top left corner and top right corner of the screen
@@ -68,6 +69,8 @@ class Letter extends Mesh {
             
             // add mesh to scene
             this.add(textMesh);
+
+            // this.state.gui.add(this.state, 'fall');
 
         });
 
@@ -89,12 +92,16 @@ class Letter extends Mesh {
         parent.addToUpdateList(this);
 
         // Populate GUI
-        this.state.gui.add(this.state, 'fall');
+        // this.state.gui.add(this.state, 'fall');
     }
 
     // figure out how to make it fill with color when pressed...
     isTyped() {
-
+        // debugger;
+        // let update_material = this.tracker.track(new THREE.MeshPhongMaterial( 
+        //     { color: this.color, specular: 0xffffff }
+        // ));
+        // this.target.geometry = update_material;
     }
 
     // dispose of letter and its target after it falls out of frame
@@ -102,7 +109,9 @@ class Letter extends Mesh {
         this.tracker.dispose();
         // need to add a null check for some reason
         if (this.parent !== null) {
+            this.parent.state.updateList.shift();
             this.parent.remove(this);
+            // for some reson when i comment this out, it stops disposing of the targets :()
             this.target.dispose();
         }
 
@@ -115,7 +124,7 @@ class Letter extends Mesh {
         // TweenJS guide: http://learningthreejs.com/blog/2011/08/17/tweenjs-for-smooth-animation/
         // Possible easings: http://sole.github.io/tween.js/examples/03_graphs.html
         const fallDown = new TWEEN.Tween(this.position)
-            .to({ y: -24 }, 5000);
+            .to({ y: -40 }, 5000);
 
         fallDown.start();
         // after letter finishes falling down, dispose of it
@@ -127,25 +136,42 @@ class Letter extends Mesh {
         // this.rotation.z = 0.05 * Math.sin(timeStamp / 300);
         this.target = target;
 
-        // if falling letter hits its corresponding target object when the correct key is pressed, flash bright background color\
-        if (this.position.y < -1 * (this.coords.y + Math.abs(target.coords.y)) + 1
-            && this.position.y > -1 * (this.coords.y + Math.abs(target.coords.y)) - 1
-            && this.parent.key == this.name) {
-            // new background color is a toned down version of the letter color (orig color is too bright)
-            this.parent.background = this.textMesh.material.color.clone().addScalar(-0.4);
-        }
-        
-        // return to black background once letter passes through target
-        else if (this.position.y < -1 * (this.coords.y + Math.abs(target.coords.y) - 1)
-                 && this.position.y > -24) {
-            this.parent.background = new THREE.Color(0x000000);
+        // add null check -- idk why but it needs this
+        if (this.parent != null) {
+            // if falling letter hits its corresponding target object when the correct key is pressed, flash bright background color
+            let correct = false;
+            if (this.position.y < -1 * (this.coords.y + Math.abs(target.coords.y)) + 1
+                && this.position.y > -1 * (this.coords.y + Math.abs(target.coords.y)) - 1
+                && this.parent.key == this.name) {
+                // new background color is a toned down version of the letter color (orig color is too bright)
+                this.parent.background = this.textMesh.material.color.clone().addScalar(-0.4);
+                correct = true;
+                // this.isTyped();
+            }
+            
+            // return to black background once letter passes through target
+            else if (this.position.y < -1 * (this.coords.y + Math.abs(target.coords.y) - 1)
+                    && this.position.y > -24) {
+                this.parent.background = new THREE.Color(0x000000);
+            }
+
+            console.log(this.parent.state.updateList)
+
+            // if falling letter hits corresponding key BUT INCORRECT KEY IS PRESSED --> show error bar
+            if (!correct && (this.parent.key != null) && (this.parent.key != "") && (this.parent.key != this.name)) {
+                debugger;
+                if (this.parent.incorrect != null) {
+                    this.parent.incorrect.visible = true;
+                    this.parent.key = "";
+                    setTimeout(() => this.parent.incorrect.visible = false, 300);
+                }
+            }
         }
 
         // Advance tween animations, if any exist
         TWEEN.update();
         // uncomment this to move it automatically
-        // this.fall();
-
+        this.fall();
     }
 }
 

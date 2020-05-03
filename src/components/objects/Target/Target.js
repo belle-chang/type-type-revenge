@@ -80,6 +80,7 @@ class Target extends Mesh {
     // dispose of letter after it falls out of frame
     dispose() {
         this.tracker.dispose();
+        this.parent.state.updateListTarget.shift();
         this.parent.remove(this);
     }
     
