@@ -154,7 +154,7 @@ class Letter extends Mesh {
                 this.parent.score.update();
                 this.scoreAccountedFor = true;
 
-                // trying to figure out how to make letter glow lol, to no avail
+              // trying to figure out how to make letter glow lol, to no avail
                 // this.target.children[0].material.color = new THREE.Color(0xff0000);
                 // this.target.changeColor(this.textMesh.material.color.clone());
                 this.target.geoToSolid(this.color);
