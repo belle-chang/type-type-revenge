@@ -99,7 +99,7 @@ class Target extends Group {
     }
 
     changeColor(color) {
-        this.state.mesh.material.color = new Color(color);
+        this.state.edgesMesh.material.color = new Color(color);
     }
 
     // figure out how to make it fill with color when pressed...

@@ -91,6 +91,8 @@ class Letter extends Mesh {
         parent.addToLettersOnScreen(letter);
         parent.addToUpdateSet(this);
 
+        this.scoreAccountedFor = false;
+
         // Populate GUI
         // this.state.gui.add(this.state, 'fall');
     }
@@ -142,18 +144,27 @@ class Letter extends Mesh {
         // Bob back and forth
 
         // add null check -- idk why but it needs this
-        if (this.parent != null) {
+        if (this.parent != null && !this.scoreAccountedFor) {
             // if falling letter hits its corresponding target object when the correct key is pressed, flash bright background color
             if (this.position.y < -1 * (this.coords.y + Math.abs(target.coords.y)) + 1
                 && this.position.y > -1 * (this.coords.y + Math.abs(target.coords.y)) - 1
                 && this.parent.key == this.name) {
                 // new background color is a toned down version of the letter color (orig color is too bright)
                 // this.parent.background = this.textMesh.material.color.clone().addScalar(-0.4);
+                this.parent.score.update();
+                this.scoreAccountedFor = true;
 
               // trying to figure out how to make letter glow lol, to no avail
                 // this.target.children[0].material.color = new THREE.Color(0xff0000);
                 // this.target.changeColor(this.textMesh.material.color.clone());
                 this.target.geoToSolid(this.color);
+            }
+            // // return to black background once letter passes through target
+            if (this.position.y < -1 * (this.coords.y + Math.abs(target.coords.y) + 2)
+                    && this.position.y > -24
+                    && this.parent.key != this.name) {
+                this.target.changeColor(0xff0000);
+                this.parent.score.reset();
             }
 
 
