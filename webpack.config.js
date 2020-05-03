@@ -51,6 +51,7 @@ module.exports = {
             objects$: path.resolve(__dirname, 'src/components/objects'),
             scenes$: path.resolve(__dirname, 'src/components/scenes'),
             tracker$: path.resolve(__dirname, 'src/components/tracker'),
+            positioning$: path.resolve(__dirname, 'src/components/positioning'),
         },
     },
     plugins: [
