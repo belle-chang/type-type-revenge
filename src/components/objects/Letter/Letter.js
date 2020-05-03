@@ -90,7 +90,7 @@ class Letter extends Mesh {
         parent.addToUpdateList(this);
         parent.addToLettersOnScreen(letter);
         parent.addToUpdateSet(this);
-        
+
         // Populate GUI
         // this.state.gui.add(this.state, 'fall');
     }
@@ -111,6 +111,7 @@ class Letter extends Mesh {
             this.parent.allPositions.clear(this.coords.x);
             // DECIDE WHETHER OR NOT TO USE A SET OR AN ARRAY -- WITH ARRAY WE ARE BANKING ON
             // THE "THIS" OBJECT TO BE AT THE BEGINNING OF THE ARRAY. 
+            // set might be more expensive to add to tho???
             this.parent.state.updateSet.delete(this);
             this.parent.state.lettersOnScreen.shift();
             this.parent.state.updateList.shift();
@@ -139,8 +140,6 @@ class Letter extends Mesh {
 
     update(timeStamp, target) {
         // Bob back and forth
-        // this.rotation.z = 0.05 * Math.sin(timeStamp / 300);
-        // this.target = target;
 
         // add null check -- idk why but it needs this
         if (this.parent != null) {
@@ -154,9 +153,13 @@ class Letter extends Mesh {
                 correct = true;
 
                 // trying to figure out how to make letter glow lol, to no avail
-                this.target.material.color = this.tracker.track( new THREE.MeshPhongMaterial( {
-                        color: this.textMesh.material.color.clone().addScalar(-0.4)
-                    } ));
+                debugger;
+                console.log(this.target.material.color);
+                this.target.material.color = this.textMesh.material.color.clone().addScalar(-0.4);
+                console.log(this.target.material.color);
+                debugger;
+                // this.tracker.track( new THREE.MeshPhongMaterial( {
+                //     color:
             }
             
             // return to black background once letter passes through target

@@ -147,12 +147,6 @@ class SeedScene extends Scene {
         // Call update for each object in the updateList
         // for (const obj of updateList) {
         //     obj.update(timeStamp);
-        // }
-        // console.log(updateList);
-        // console.log(updateListTarget);
-        // console.log(this.state.updateSet);
-        console.log(this.state.lettersOnScreen);
-        debugger;
 
         // update each object in updateList
         // passes in corresponding target object to check position values in Letter.js
