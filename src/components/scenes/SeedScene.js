@@ -59,7 +59,6 @@ class SeedScene extends Scene {
             }
         }
 
-
         // Populate GUI
         // this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
 

@@ -19,7 +19,6 @@ class Letter extends Mesh {
         // set parent to remove letter from scene
         this.parent = parent;
 
-
         this.state = {
             gui: parent.state.gui,
             fall: this.fall.bind(this),
@@ -67,7 +66,6 @@ class Letter extends Mesh {
             textMesh.rotateY(Math.PI / 9);
 
             this.textMesh = textMesh;
-            
             // add mesh to scene
             this.add(textMesh);
 
@@ -116,7 +114,6 @@ class Letter extends Mesh {
             // for some reson when i comment this out, it stops disposing of the targets :()
             this.target.dispose();
         }
-
     }
 
     // MOVE FALL TO update() FOR IT TO AUTOMATICALLY FALL!
@@ -157,8 +154,6 @@ class Letter extends Mesh {
                 this.parent.background = new THREE.Color(0x000000);
             }
 
-            console.log(this.parent.state.updateList)
-
             // if falling letter hits corresponding key BUT INCORRECT KEY IS PRESSED --> show error bar
             // if (!correct && (this.parent.key != null) && (this.parent.key != "") && (this.parent.key != this.name)) {
             //     debugger;
@@ -172,7 +167,7 @@ class Letter extends Mesh {
 
         // Advance tween animations, if any exist
         TWEEN.update();
-        // uncomment this to move it automatically
+        // let it fall automatically
         this.fall();
     }
 }
