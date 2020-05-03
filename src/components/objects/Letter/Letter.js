@@ -51,7 +51,7 @@ class Letter extends Mesh {
         textGeo.center();
 
         this.normalGeometry = textGeo;
-        this.color = getPastelColor();
+        this.color = getPastelColor(newx, parent);
 
         // add geometry -- edges
         var geo = track(new THREE.EdgesGeometry(textGeo));
@@ -82,14 +82,36 @@ class Letter extends Mesh {
     }
 
     // generate random pastel color
-    function getPastelColor() {
+    function getPastelColor(x, parent) {
+      // Uncomment code below to do random colors based on sections of the screen
+      // let numSections = 3;
+      // let offset = numSections - 1;
+      // let fraction = (x - parent.allPositions.minx) / 
+      //                 (parent.allPositions.maxx - parent.allPositions.minx);
+      // for (let i = numSections - 1; i >= 1; i--) {
+      //   if (fraction < i/numSections) offset = i-1;
+      // }
+      // return (
+      //   "hsl(" +
+      //   Math.floor(360 * (Math.random()/numSections + offset/numSections)) +
+      //   "," +
+      //   Math.floor(25 + 70 * (Math.random()/numSections + offset/numSections)) +
+      //   "%," +
+      //   Math.floor(45 + (Math.random()/numSections + offset/numSections)) +
+      //   "%)"
+      // );
+
+      // Uncomment code below to do color based on continuous fraction of the x coordinate
       return (
         "hsl(" +
-        Math.floor(360 * Math.random()) +
+        Math.floor(360 * (x - parent.allPositions.minx) / 
+                         (parent.allPositions.maxx - parent.allPositions.minx)) +
         "," +
-        Math.floor(25 + 70 * Math.random()) +
+        Math.floor(25 + 70 * (x - parent.allPositions.minx) / 
+                         (parent.allPositions.maxx - parent.allPositions.minx)) +
         "%," +
-        Math.floor(45 + Math.random()) +
+        Math.floor(45 + (x - parent.allPositions.minx) / 
+                         (parent.allPositions.maxx - parent.allPositions.minx)) +
         "%)"
       );
     }
