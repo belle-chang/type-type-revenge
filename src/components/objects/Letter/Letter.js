@@ -7,7 +7,7 @@ import { ResourceTracker } from "tracker";
 import * as THREE from "three";
 
 class Letter extends Mesh {
-  constructor(parent, letter) {
+  constructor(parent, letter, x) {
     // Call parent Group() constructor
     super();
 
@@ -28,8 +28,8 @@ class Letter extends Mesh {
     // randomize position between top left corner and top right corner of the screen
     // added here in order to access in SeedScene.js to create corresponding target object
     // var newx = getRandomInt(-22, 22);
-    var newx = parent.allPositions.add();
-    this.coords = new THREE.Vector3(newx, 12, 0);
+    // var newx = parent.allPositions.add();
+    this.coords = new THREE.Vector3(x, 12, 0);
 
     // load font for textgeometry
     var loader = new THREE.FontLoader();
@@ -51,7 +51,7 @@ class Letter extends Mesh {
         textGeo.center();
 
         this.normalGeometry = textGeo;
-        this.color = getPastelColor(newx, parent);
+        this.color = getPastelColor(x, parent);
 
         // add geometry -- edges
         var geo = track(new THREE.EdgesGeometry(textGeo));
@@ -63,7 +63,7 @@ class Letter extends Mesh {
         let textMesh = track(new THREE.LineSegments(geo, mat));
         // randomize position between top left corner and top right corner of the screen
         // let newx = getRandomInt(-22, 22);
-        textMesh.position.set(newx, 12, 0);
+        textMesh.position.set(x, 12, 0);
         textMesh.rotateY(Math.PI / 9);
 
         this.textMesh = textMesh;
