@@ -1,4 +1,4 @@
-import { Group } from 'three';
+import { Group, Color } from 'three';
 import { Mesh } from 'three';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 import { ResourceTracker } from 'tracker';
@@ -8,8 +8,8 @@ import { ResourceTracker } from 'tracker';
 import * as THREE from 'three';
 
 
-class Target extends Mesh {
-    constructor(parent, letter, x) {
+class Target extends Group {
+    constructor(parent, letter, x, color) {
         // Call parent Group() constructor
         super();
 
@@ -49,11 +49,21 @@ class Target extends Mesh {
             textGeo.center();
 
             this.normalGeometry = textGeo;
+            var phong = track( new THREE.MeshLambertMaterial( {
+                color: 0xffffff,
+            } ));
+            let mesh = track( new THREE.Mesh(textGeo, phong) );
+            mesh.position.set(x, -9, 0);
+            mesh.rotateY(Math.PI / 9);
+            // mesh.visible = true;
+            // this.uponPressed = mesh;
+            mesh.visible = false;
+            this.add(mesh);
 
             // add geometry -- edges
             var geo = track(new THREE.EdgesGeometry( textGeo ));
             // add material
-            var mat = track(new THREE.LineBasicMaterial( { color: "rgb(150,150,150)", linewidth: 0.5 } ));
+            var mat = track(new THREE.LineBasicMaterial( { color: 0xffffff, linewidth: 0.5 } ));
             // create mesh
             let textMesh = track(new THREE.LineSegments(geo, mat));
 
@@ -63,6 +73,8 @@ class Target extends Mesh {
 
             // add mesh to scene
             this.add(textMesh);
+            this.state.mesh = mesh;
+            this.state.edgesMesh = textMesh;
 
         });
 
@@ -70,6 +82,24 @@ class Target extends Mesh {
 
         // Populate GUI
         // this.state.gui.add(this.state);
+    }
+
+    geoToSolid(color) {
+        console.log(color);
+        color = color.replace("45", "9");
+        this.state.mesh.material.color = new Color(color);
+        this.state.mesh.visible = true;
+
+
+        // this.state.mesh.geometry = this.normalGeometry;
+        // debugger;
+        // let mat = this.tracker.track( new THREE.MeshBasicMaterial({ color: new Color(color) }));
+        // this.state.mesh = this.tracker.track(new THREE.Mesh(this.normalGeometry, mat));
+        // debugger;
+    }
+
+    changeColor(color) {
+        this.state.edgesMesh.material.color = new Color(color);
     }
 
     // figure out how to make it fill with color when pressed...
@@ -80,8 +110,10 @@ class Target extends Mesh {
     // dispose of letter after it falls out of frame
     dispose() {
         this.tracker.dispose();
-        this.parent.state.updateListTarget.shift();
-        this.parent.remove(this);
+        if (this.parent != null) {
+            this.parent.state.updateListTarget.shift();
+            this.parent.remove(this);
+        }
     }
     
 
@@ -107,9 +139,9 @@ class Target extends Mesh {
         fallDown.onComplete(() => this.dispose());
     }
 
-    update(timeStamp) {
+    update() {
         // Bob back and forth
-        // this.rotation.z = 0.05 * Math.sin(timeStamp / 300);
+        // this.rotation.z = 0.05 * Math.sin(timeStamp / 300)
 
         // Advance tween animations, if any exist
         TWEEN.update();
