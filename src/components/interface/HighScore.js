@@ -7,7 +7,6 @@ class HighScore {
 	}
 
 	update() {
-        debugger;
         this.score += 1;
 		this.element.innerText = "Score: " + this.score;
     }

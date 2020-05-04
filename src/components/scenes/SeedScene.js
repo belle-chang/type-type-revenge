@@ -151,12 +151,24 @@ class SeedScene extends Scene {
         // for (const obj of updateList) {
         //     obj.update(timeStamp);
         if ((this.key != "") && (this.key != undefined)) {
-            const found = this.state.lettersOnScreen.find(element => element == this.key);
-            if (found == undefined) {
+            const found = this.state.lettersOnScreen.indexOf(this.key)
+            // const found = this.state.lettersOnScreen.find(element => element == this.key);
+            // if (found == undefined) {
+            
+            if (found == -1) {
                 this.score.reset();
                 this.incorrect.visible = true;
                 //         this.parent.key = "";
                 setTimeout(() => this.incorrect.visible = false, 300);
+            }
+            else {
+                let found_letter = updateList[found];
+                if (found_letter.position.y > -1 * (found_letter.coords.y + Math.abs(found_letter.target.coords.y)) + 1.5) {
+                    this.score.reset();
+                    this.incorrect.visible = true;
+                        this.key = "";
+                    setTimeout(() => this.incorrect.visible = false, 300);
+                }
             }
         }
 
