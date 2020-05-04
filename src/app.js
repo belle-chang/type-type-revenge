@@ -104,7 +104,7 @@ var sound = new THREE.Audio( listener );
 
 // load a sound and set it as the Audio object's buffer
 var audioLoader = new THREE.AudioLoader();
-audioLoader.load( 'sounds/WiiThemeSong.mp3', function( buffer ) {
+audioLoader.load( 'src/sounds/WiiThemeSong.mp3', function( buffer ) {
 	sound.setBuffer( buffer );
 	sound.setLoop( true );
 	sound.setVolume( 0.5 );
