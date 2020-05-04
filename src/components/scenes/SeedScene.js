@@ -163,12 +163,11 @@ class SeedScene extends Scene {
 
         // Call update for each object in the updateList
         // for (const obj of updateList) {
+
         //     obj.update(timeStamp);
         if ((this.key != "") && (this.key != undefined)) {
+            // console.log(typeof SONG)
             const found = this.state.lettersOnScreen.indexOf(this.key)
-            // const found = this.state.lettersOnScreen.find(element => element == this.key);
-            // if (found == undefined) {
-            
             if (found == -1) {
                 this.score.reset();
                 this.incorrect.visible = true;
@@ -181,6 +180,12 @@ class SeedScene extends Scene {
                     this.score.reset();
                     this.incorrect.visible = true;
                         this.key = "";
+                    setTimeout(() => this.incorrect.visible = false, 300);
+                }
+                if (found_letter.target.state.mesh.visible) {
+                    found_letter.target.changeColor(0xff0000);
+                    this.incorrect.visible = true;
+                    this.key = "";
                     setTimeout(() => this.incorrect.visible = false, 300);
                 }
             }

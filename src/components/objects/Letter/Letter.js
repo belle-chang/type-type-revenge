@@ -34,10 +34,12 @@ class Letter extends Mesh {
 
         // load font for textgeometry
         var loader = new THREE.FontLoader();
+        // const json = require('json-loader!./fonts/ncaa.json');
+
 
         // FOR SOME REASON, CANNOT LOAD FONTS FROM LOCAL FOLDERS... 
         // RESOLVE THIS BY UPLOADING TO GITHUB, USE "RAW" FILES
-        // loader.load("src/components/objects/letter/fonts/ncaa.json", (font) => {
+        // loader.load("/components/objects/letter/fonts/ncaa.json", (font) => {
         loader.load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/fonts/helvetiker_bold.typeface.json', (font) => {
 
             var textGeo = track(new THREE.TextGeometry(letter, {
@@ -186,6 +188,7 @@ class Letter extends Mesh {
                 // this.target.children[0].material.color = new THREE.Color(0xff0000);
                 // this.target.changeColor(this.textMesh.material.color.clone());
                 this.target.geoToSolid(this.color);
+                this.parent.key = ""
             }
             // // return to black background once letter passes through target
             if (this.position.y < -1 * (this.coords.y + Math.abs(target.coords.y) + 2)
@@ -194,19 +197,15 @@ class Letter extends Mesh {
                 this.target.changeColor(0xff0000);
                 this.parent.score.reset();
             }
-
-
-            // if falling letter hits corresponding key BUT INCORRECT KEY IS PRESSED --> show error bar
-            // still doesn't work!!!!
-            // if (!correct && (this.parent.key != null) && (this.parent.key != "") && (this.parent.key != this.name)) {
-            //     debugger;
-            //     if (this.parent.incorrect != null) {
-            //         this.parent.incorrect.visible = true;
-            //         this.parent.key = "";
-            //         setTimeout(() => this.parent.incorrect.visible = false, 300);
-            //     }
-            // }
         }
+        // else if (this.parent != null && this.scoreAccountedFor) {
+        //     if (this.position.y < -1 * (this.coords.y + Math.abs(target.coords.y) + 2)
+        //             && this.position.y > -24
+        //             && this.parent.key != this.name) {
+        //         this.target.changeColor(0xff0000);
+        //         this.parent.score.reset();
+        //     }
+        // }
 
         // Advance tween animations, if any exist
         TWEEN.update();
