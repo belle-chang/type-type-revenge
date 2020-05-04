@@ -166,22 +166,22 @@ class SeedScene extends Scene {
       const fallTime = 4000;
       // obtain note from pitch
       let note = (parseInt(info[i + 1]) - 21) % 12;
-      let letters = "";
+      let third;
       // map note to corresponding section of the keyboard, update string of possible letters
       // TODO: generate xPos that corresponds to section on keyboard
       if (note >= 0 && note <= 3) {
-        letters = "qweasdzx";
+        third = 0;
       } else if (note <= 7) {
-        letters = "rtyfghcvb";
+        third = 1;
       } else {
-        letters = "uiopjklnm";
+        third = 2;
       }
       // add a random letter from "letters" string after specified time
       setTimeout(
-        noteToLetter,
+        addLetter,
         parseInt(info[i]) - fallTime,
         this,
-        letters,
+        third,
         noteToColor[note]
       );
     }
@@ -206,7 +206,7 @@ class SeedScene extends Scene {
     // var id = setInterval(addLetter, 1000, this);
 
     // original version of addLetter that generates a random letter
-    function addLetter(scene) {
+    function addLetter(scene, third, color) {
       // selects a random x position then randomly selects a character based on the x coordinate and number of sections
       // the order of possibleLetters is from left to right on the keyboard, the order matters for selecting
       function getRandomLetter(xPos) {
@@ -225,7 +225,17 @@ class SeedScene extends Scene {
       }
       // ensure different characters on the screen at all times
       // remove this if we want to support sentences
-      let xPos = scene.allPositions.add();
+      let xPos;
+      let length = scene.allPositions.maxx - scene.allPositions.minx;
+      if (third == 0) {
+        xPos = scene.allPositions.add(scene.allPositions.minx, Math.floor(scene.allPositions.minx + length / 3));
+      }
+      else if (third == 1) {
+        xPos = scene.allPositions.add(Math.floor(scene.allPositions.minx + length / 3), Math.floor(scene.allPositions.minx + 2 * length / 3));
+      }
+      else {
+        xPos = scene.allPositions.add(Math.floor(scene.allPositions.minx + 2 * length / 3), scene.allPositions.maxx);
+      }
       let character = getRandomLetter(xPos);
       while (
         scene.state.lettersOnScreen.find(element => element == character) !=
@@ -233,7 +243,7 @@ class SeedScene extends Scene {
       ) {
         character = getRandomLetter(xPos);
       }
-      const letter = new Letter(scene, character, xPos);
+      const letter = new Letter(scene, character, xPos, color);
       const target = new Target(scene, character, letter.coords.x);
       letter.addTarget(target);
 

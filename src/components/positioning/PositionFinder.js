@@ -23,6 +23,20 @@ class PositionFinder {
       this.allPositions[random + this.maxx] = true;
       return random;
     }
+    add(minimum, maximum) {
+      function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max) + 1;
+        return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+      }
+      let random = getRandomInt(minimum, maximum);
+      // debugger;
+      while (this.allPositions[random + this.maxx]) {
+        random = getRandomInt(this.minx, this.maxx);
+      }
+      this.allPositions[random + this.maxx] = true;
+      return random;
+    }
     clear(index) {
       this.allPositions[index + this.maxx] = false;
     }
