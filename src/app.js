@@ -13,7 +13,8 @@ import { SeedScene } from 'scenes';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
-import mp3 from './sounds/WiiThemeSong.mp3'
+import mp3 from './sounds/WiiThemeSong.mp3';
+import $ from 'jquery';
 
 // Initialize core ThreeJS components
 const scene = new SeedScene();
@@ -110,3 +111,7 @@ audioLoader.load( mp3, function( buffer ) {
 	sound.setVolume( 0.5 );
 	sound.play();
 });
+
+// $.getJSON( "./json/exampleSong.json", function( json ) {
+//     console.log( "JSON Data: " + json.notes[ 3 ].note );
+//    });
