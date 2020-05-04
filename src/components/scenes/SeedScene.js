@@ -7,7 +7,7 @@ import * as THREE from "three";
 import { TWEEN } from "three/examples/jsm/libs/tween.module.min.js";
 import { PositionFinder } from "positioning";
 import { HighScore } from "interface";
-// import $ from "jquery";
+import $ from "jquery";
 
 class SeedScene extends Scene {
   constructor(width, height) {

@@ -14,7 +14,7 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import mp3 from "./sounds/WiiThemeSong.mp3";
-// import $ from 'jquery';
+import $ from "jquery";
 
 // Initialize core ThreeJS components
 
