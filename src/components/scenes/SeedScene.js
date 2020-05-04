@@ -29,7 +29,7 @@ class SeedScene extends Scene {
         };
 
         // add position tracker to ensure there aren't any overlapping letters
-        this.allPositions = new PositionFinder(-22, 22);
+        this.allPositions = new PositionFinder(-20, 20);
 
         // Set background to a nice color
         // this.background = new Color(0x7ec0ee);
@@ -49,16 +49,30 @@ class SeedScene extends Scene {
         // add a new random letter every second, stops after 10th letter to prevent overloading
         var id = setInterval(addLetter, 1000, this);
 
+
         function addLetter(scene) {
             function getRandomInt(min, max) {
                 min = Math.ceil(min);
                 max = Math.floor(max);
                 return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
             }
-            let charCode = getRandomInt(97, 123);
-            const letter = new Letter(scene, String.fromCharCode(charCode));
-            const target = new Target(scene, String.fromCharCode(charCode), letter.coords.x);
+
+            // selects a random x position then randomly selects a character based on the x coordinate and number of sections
+            // the order of possibleLetters is from left to right on the keyboard, the order matters for selecting
+            let possibleLetters = "qazwsxedcrfvtgbyhnujmikolp";
+            let xPos = scene.allPositions.add();
+            let numSections = 3;
+            let offset = numSections - 1;
+            let fraction = (xPos - scene.allPositions.minx) / 
+                            (scene.allPositions.maxx - scene.allPositions.minx);
+            for (let i = numSections - 1; i >= 1; i--) {
+              if (fraction < i/numSections) offset = i-1;
+            }
+            let character = possibleLetters[Math.floor((Math.random()/numSections + offset/numSections) * 26)];
+            const letter = new Letter(scene, character, xPos);
+            const target = new Target(scene, character, letter.coords.x);
             letter.addTarget(target);
+
             scene.add(letter, target);
             if (scene.state.updateList.length > 10) {
                 clearInterval(id);

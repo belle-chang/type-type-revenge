@@ -8,7 +8,7 @@ import * as THREE from 'three';
 
 
 class Letter extends Mesh {
-    constructor(parent, letter) {
+    constructor(parent, letter, x) {
         // Call parent Group() constructor
         super();
 
@@ -29,8 +29,8 @@ class Letter extends Mesh {
         // randomize position between top left corner and top right corner of the screen
         // added here in order to access in SeedScene.js to create corresponding target object
         // var newx = getRandomInt(-22, 22);
-        var newx = parent.allPositions.add();
-        this.coords = new THREE.Vector3(newx, 12, 0);
+        // var newx = parent.allPositions.add();
+        this.coords = new THREE.Vector3(x, 12, 0);
 
         // load font for textgeometry
         var loader = new THREE.FontLoader();
@@ -51,7 +51,7 @@ class Letter extends Mesh {
             textGeo.center();
 
             this.normalGeometry = textGeo;
-            this.color = getPastelColor();
+            this.color = getPastelColor(x, parent);
 
             // add geometry -- edges
             var geo = track(new THREE.EdgesGeometry( textGeo ));
@@ -61,7 +61,7 @@ class Letter extends Mesh {
             let textMesh = track(new THREE.LineSegments(geo, mat));
             // randomize position between top left corner and top right corner of the screen
             // let newx = getRandomInt(-22, 22);
-            textMesh.position.set(newx, 12,0);
+            textMesh.position.set(x, 12,0);
             textMesh.rotateY(Math.PI / 9);
 
             this.textMesh = textMesh;
@@ -69,7 +69,6 @@ class Letter extends Mesh {
             this.add(textMesh);
 
             // this.state.gui.add(this.state, 'fall');
-
         });
 
 
@@ -81,11 +80,38 @@ class Letter extends Mesh {
         }
 
         // generate random pastel color
-        function getPastelColor(){ 
-            return "hsl(" + Math.floor(360 * Math.random()) + ',' +
-                       Math.floor((25 + 70 * Math.random())) + '%,' + 
-                       Math.floor((45 + Math.random())) + '%)'
-          }
+        function getPastelColor(x, parent) {
+          // Uncomment code below to do random colors based on sections of the screen
+          // let numSections = 3;
+          // let offset = numSections - 1;
+          // let fraction = (x - parent.allPositions.minx) / 
+          //                 (parent.allPositions.maxx - parent.allPositions.minx);
+          // for (let i = numSections - 1; i >= 1; i--) {
+          //   if (fraction < i/numSections) offset = i-1;
+          // }
+          // return (
+          //   "hsl(" +
+          //   Math.floor(360 * (Math.random()/numSections + offset/numSections)) +
+          //   "," +
+          //   Math.floor(25 + 70 * (Math.random()/numSections + offset/numSections)) +
+          //   "%," +
+          //   Math.floor(45 + (Math.random()/numSections + offset/numSections)) +
+          //   "%)"
+          // );
+
+          // Uncomment code below to do color based on continuous fraction of the x coordinate
+          return (
+            "hsl(" +
+            Math.floor(360 * (x - parent.allPositions.minx) / 
+                             (parent.allPositions.maxx - parent.allPositions.minx)) +
+            "," +
+            Math.floor(25 + 70 * (x - parent.allPositions.minx) / 
+                             (parent.allPositions.maxx - parent.allPositions.minx)) +
+            "%," +
+            Math.floor(45 + (x - parent.allPositions.minx) / 
+                             (parent.allPositions.maxx - parent.allPositions.minx)) +
+            "%)"
+          );}
 
         parent.addToUpdateList(this);
         parent.addToLettersOnScreen(letter);
@@ -96,6 +122,7 @@ class Letter extends Mesh {
         // Populate GUI
         // this.state.gui.add(this.state, 'fall');
     }
+
 
     // figure out how to make it fill with color when pressed...
     isTyped() {
@@ -134,6 +161,7 @@ class Letter extends Mesh {
         fallDown.start();
         // after letter finishes falling down, dispose of it
         fallDown.onComplete(() => this.dispose());
+
     }
 
     addTarget(target) {
