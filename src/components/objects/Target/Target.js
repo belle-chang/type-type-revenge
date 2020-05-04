@@ -53,7 +53,8 @@ class Target extends Group {
                 color: 0xffffff,
             } ));
             let mesh = track( new THREE.Mesh(textGeo, phong) );
-            mesh.position.set(x, -9, 0);
+            // mesh.position.set(x, -9, 0);
+            mesh.position.set(x, -1 * (parent.height - 3), 0);
             mesh.rotateY(Math.PI / 9);
             // mesh.visible = true;
             // this.uponPressed = mesh;
@@ -68,7 +69,8 @@ class Target extends Group {
             let textMesh = track(new THREE.LineSegments(geo, mat));
 
             // position between top left corner and top right corner of the screen
-            textMesh.position.set(x, -9, 0);
+            // textMesh.position.set(x, -9, 0);
+            textMesh.position.set(x, -1 * (parent.height - 3), 0);
             textMesh.rotateY(Math.PI / 9);
 
             // add mesh to scene

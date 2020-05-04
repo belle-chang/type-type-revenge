@@ -17,7 +17,7 @@ import mp3 from './sounds/WiiThemeSong.mp3';
 import $ from 'jquery';
 
 // Initialize core ThreeJS components
-const scene = new SeedScene();
+
 // const camera = new PerspectiveCamera();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 const renderer = new WebGLRenderer({ antialias: true });
@@ -25,6 +25,18 @@ const renderer = new WebGLRenderer({ antialias: true });
 // Set up camera
 camera.position.set(0, 0, 16);
 camera.lookAt(new Vector3(0, 0, 0));
+
+// convert camera frustum vertical fov from degrees to rads
+let fovRad = camera.fov * (Math.PI / 180);
+
+// half of height:
+var height = camera.position.z * Math.sin(fovRad / 2) / Math.sin((Math.PI / 2) - (fovRad / 2));
+
+// half of width: 
+var width = height / window.innerHeight * window.innerWidth;
+
+// initialize scene
+const scene = new SeedScene(width, height);
 
 // Set up renderer, canvas, and minor CSS adjustments
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -115,3 +127,4 @@ audioLoader.load( mp3, function( buffer ) {
 // $.getJSON( "./json/exampleSong.json", function( json ) {
 //     console.log( "JSON Data: " + json.notes[ 3 ].note );
 //    });
+

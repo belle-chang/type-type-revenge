@@ -8,7 +8,7 @@ import * as THREE from 'three';
 
 
 class Letter extends Mesh {
-    constructor(parent, letter, x) {
+    constructor(parent, letter, x, color) {
         // Call parent Group() constructor
         super();
 
@@ -30,12 +30,14 @@ class Letter extends Mesh {
         // added here in order to access in SeedScene.js to create corresponding target object
         // var newx = getRandomInt(-22, 22);
         // var newx = parent.allPositions.add();
-        this.coords = new THREE.Vector3(x, 12, 0);
+        this.coords = new THREE.Vector3(x, parent.height, 0);
 
         // load font for textgeometry
         var loader = new THREE.FontLoader();
         // const json = require('json-loader!./fonts/ncaa.json');
 
+
+        this.color = color;
 
         // FOR SOME REASON, CANNOT LOAD FONTS FROM LOCAL FOLDERS... 
         // RESOLVE THIS BY UPLOADING TO GITHUB, USE "RAW" FILES
@@ -53,8 +55,9 @@ class Letter extends Mesh {
             textGeo.center();
 
             this.normalGeometry = textGeo;
-            this.color = getPastelColor(x, parent);
 
+            // this.color = getPastelColor(x, parent);
+            
             // add geometry -- edges
             var geo = track(new THREE.EdgesGeometry( textGeo ));
             // add material
@@ -63,7 +66,7 @@ class Letter extends Mesh {
             let textMesh = track(new THREE.LineSegments(geo, mat));
             // randomize position between top left corner and top right corner of the screen
             // let newx = getRandomInt(-22, 22);
-            textMesh.position.set(x, 12,0);
+            textMesh.position.set(x, parent.height,0);
             textMesh.rotateY(Math.PI / 9);
 
             this.textMesh = textMesh;
