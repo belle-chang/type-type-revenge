@@ -87,9 +87,13 @@ class Target extends Group {
     }
 
     geoToSolid(color) {
-        console.log(color);
-        color = color.replace("45", "9");
-        this.state.mesh.material.color = new Color(color);
+        let ind = color.lastIndexOf("%")
+        let l = color.slice(ind - 2, ind);
+        let update_l = (parseInt(l) - 50 <= 0) ? 10 : (parseInt(l) - 50);
+
+        // darken color so it's not too bright 
+        let new_color = color.replace(l, 9);
+        this.state.mesh.material.color = new Color(new_color);
         this.state.mesh.visible = true;
 
 
