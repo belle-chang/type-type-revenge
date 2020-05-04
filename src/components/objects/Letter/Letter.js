@@ -177,13 +177,14 @@ class Letter extends Mesh {
           .clone()
           .addScalar(-0.4);
         correct = true;
+        this.dispose();
         // this.isTyped();
       }
 
       // return to black background once letter passes through target
       else if (
         this.position.y <
-          -1 * (this.coords.y + Math.abs(target.coords.y) - 1) &&
+          -1 * (this.coords.y + Math.abs(target.coords.y) - 1) + 5 &&
         this.position.y > -24
       ) {
         this.parent.background = new THREE.Color(0x000000);
