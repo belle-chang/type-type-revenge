@@ -20,7 +20,7 @@ module.exports = {
                 exclude: path.resolve(__dirname, './node_modules/'),
             },
             {
-                test: /\.(jpe?g|png|gif|svg|tga|gltf|babylon|mtl|pcb|pcd|prwm|obj|mat|mp3|ogg|typeface.json)$/i,
+                test: /\.(jpe?g|png|gif|svg|tga|gltf|babylon|mtl|pcb|pcd|prwm|obj|mat|mp3|ogg|json)$/i,
                 use: 'file-loader',
                 exclude: path.resolve(__dirname, './node_modules/'),
             },
@@ -28,6 +28,10 @@ module.exports = {
                 test: /\.(vert|frag|glsl|shader|txt)$/i,
                 use: 'raw-loader',
                 exclude: path.resolve(__dirname, './node_modules/'),
+            },
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader'],
             },
             {
                 type: 'javascript/auto',
@@ -38,11 +42,7 @@ module.exports = {
                         loader: 'file-loader',
                     },
                 ],
-            },
-            {
-                test: /\.css$/i,
-                use: ['style-loader', 'css-loader'],
-            },
+            }
         ],
     },
     resolve: {
