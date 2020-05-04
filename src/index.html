@@ -1,42 +1,112 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
   </head>
   <style>
-	html, body {
-        margin: 0;
-        height: 100%;
-        overflow: hidden;
-    } 
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+    }
     a {
-        font-family: 'Helvetica Neue';
-        font-size: 1.25em;
-        position: fixed;
-        margin-top: 50px;
-        left: 50%; 
-        transform: translateX(-50%);
-        color:white;
+      font-family: "Helvetica Neue";
+      font-size: 1.25em;
+      position: fixed;
+      margin-top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
     }
 
-    div{
-        font-family: 'Helvetica Neue';
-        font-size: 1.25em;
-        position: fixed;
-        margin-top: 50px;
-        margin-right: 50px;
-        right: 0%;
-        color:white;
+    div {
+      font-family: "Helvetica Neue";
+      font-size: 1.25em;
+      position: fixed;
+      margin-top: 50px;
+      margin-right: 50px;
+      right: 0%;
+      color: white;
     }
     /* a:nth-child(2){ */
     #description {
-        margin-top: 90px;
-        text-align:center;
+      margin-top: 90px;
+      text-align: center;
     }
-</style>
+    .instructions {
+      display: block;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      background-color:silver;
+      /* padding-top: 1em; */
+      padding-left: 1em;
+      padding-right: 1em;
+      padding-bottom: 1em;
+      border-radius: 5px;
+
+    }
+    .instructions-heading {
+      text-align: center;
+      font-size: 1.5em;
+    }
+    .instructions-text {
+      text-align: center;
+      font-size: 1em;
+    }
+    .instructions-close {
+      text-align: right !important;
+      font-size: 1.5em;
+    }
+    .instructions-close:hover {
+      color: aquamarine;
+    }
+    .instructions-open {
+      font-size: 1.5em;
+      color: white;
+      align-content: right;
+      margin-top: 4em;
+    }
+    .instructions-open:hover {
+      color: aquamarine;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
   <body>
-  <!-- <a id="description">type each letter as they fall! 
+    <!-- <a id="description">type each letter as they fall! 
       [pls edit this. also there is a delay to the game bc otherwise the error bars go crazy lol] </a> -->
+      <div class="instructions-open" onClick="openInstructions()">
+          <i class="far fa-question-circle"></i>
+      </div>
+      <div class="instructions" id="instructions">
+        <p class="instructions-close" onClick="closeInstructions()">x</p>
+        <h1 class="instructions-heading">instructions</h1>
+        <p class="instructions-text">
+          When the falling letters match up with their target outlines at the
+          bottom of the screen, hit the corresponding letter on your keyboard to
+          earn points. Maintain a streak of correctly pressed notes to earn more
+          points! Make sure you turn your volume up so you can hear the music.
+        </p>
+      </div>
+      <!-- add in gif example here? -->
+      <!-- add in options to choose song? -->
+      <!-- add in options to choose difficulty? -->
+      <!-- mb add in something that dims the rest of the background when this box opens up -->
+    </div>
+
+    <script>
+        function closeInstructions() {
+          document.getElementById("instructions").className = "instructions hidden";
+        }
+        function openInstructions() {
+          document.getElementById("instructions").className = "instructions";
+        }
+        </script>
   </body>
 </html>

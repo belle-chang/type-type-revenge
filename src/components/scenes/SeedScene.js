@@ -121,13 +121,12 @@ class SeedScene extends Scene {
      *  deployed as well, not just locally)
      */
     let jsonFilename = "exampleSong.json";
-    // if (UrlExists("src/components/scenes/" + jsonFilename)) {
-    // var json = require("./" + jsonFilename); //(with path)
-    var jsonObj = loadJson("src/components/scenes/" + jsonFilename);
-    console.log(jsonObj);
-    // } else {
-    //   console.log(jsonFilename + " does not exist!");
-    // }
+    if (UrlExists("src/components/scenes/" + jsonFilename)) {
+      var jsonObj = loadJson("src/components/scenes/" + jsonFilename);
+      console.log(jsonObj);
+    } else {
+      console.log(jsonFilename + " does not exist!");
+    }
 
     // source for UrlExists(): COS426 A4 code!
     // http://stackoverflow.com/questions/3646914/how-do-i-check-if-file-exists-in-jquery-or-javascript
