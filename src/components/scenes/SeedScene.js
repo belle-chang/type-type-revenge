@@ -114,13 +114,20 @@ class SeedScene extends Scene {
       });
     }
 
+    // ------------------------------------------------------------------------
+    /* ------------------------------------------------------------------------
+     * this entire section is figuring out how to access a json file but we don't
+     * use it anywhere yet (have to figure out how to make it accessible when
+     *  deployed as well, not just locally)
+     */
     let jsonFilename = "exampleSong.json";
-    if (UrlExists("src/components/scenes/" + jsonFilename)) {
-      var jsonObj = loadJson("src/components/scenes/" + jsonFilename);
-      console.log(jsonObj);
-    } else {
-      console.log(jsonFilename + " does not exist!");
-    }
+    // if (UrlExists("src/components/scenes/" + jsonFilename)) {
+    // var json = require("./" + jsonFilename); //(with path)
+    var jsonObj = loadJson("src/components/scenes/" + jsonFilename);
+    console.log(jsonObj);
+    // } else {
+    //   console.log(jsonFilename + " does not exist!");
+    // }
 
     // source for UrlExists(): COS426 A4 code!
     // http://stackoverflow.com/questions/3646914/how-do-i-check-if-file-exists-in-jquery-or-javascript
@@ -147,6 +154,9 @@ class SeedScene extends Scene {
     // $.getJSON( "/json/exampleSong.json", function( json ) {
     //     console.log( "JSON Data: " + json.notes[ 3 ].note );
     //    });
+
+    // ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
 
     // convert string into array of numbers
     var info = starwars.split(" ");
