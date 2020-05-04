@@ -85,7 +85,8 @@ window.addEventListener("keyup", handleKeyUp);
 
 // when key is pressed save event key to key parameter of SeedScene
 function handleKeyDown(event) {
-    scene.key = event.key;
+    if (!event.metaKey && !event.altKey && !event.controlKey)
+        scene.key = event.key;
 }
 
 // once key is lifted, set SeedScene key to default value
