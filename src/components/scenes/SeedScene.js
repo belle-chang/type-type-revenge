@@ -71,6 +71,7 @@ class SeedScene extends Scene {
             let character = possibleLetters[Math.floor((Math.random()/numSections + offset/numSections) * 26)];
             const letter = new Letter(scene, character, xPos);
             const target = new Target(scene, character, letter.coords.x);
+            letter.addTarget(target);
 
             scene.add(letter, target);
             if (scene.state.updateList.length > 10) {
