@@ -51,24 +51,26 @@ class SeedScene extends Scene {
 
 
         function addLetter(scene) {
-            function getRandomInt(min, max) {
-                min = Math.ceil(min);
-                max = Math.floor(max);
-                return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-            }
-
             // selects a random x position then randomly selects a character based on the x coordinate and number of sections
             // the order of possibleLetters is from left to right on the keyboard, the order matters for selecting
-            let possibleLetters = "qazwsxedcrfvtgbyhnujmikolp";
-            let xPos = scene.allPositions.add();
-            let numSections = 3;
-            let offset = numSections - 1;
-            let fraction = (xPos - scene.allPositions.minx) / 
-                            (scene.allPositions.maxx - scene.allPositions.minx);
-            for (let i = numSections - 1; i >= 1; i--) {
-              if (fraction < i/numSections) offset = i-1;
+            function getRandomLetter(xPos) {
+                let possibleLetters = "qazwsxedcrfvtgbyhnujmikolp";
+                let numSections = 3;
+                let offset = numSections - 1;
+                let fraction = (xPos - scene.allPositions.minx) / 
+                                (scene.allPositions.maxx - scene.allPositions.minx);
+                for (let i = numSections - 1; i >= 1; i--) {
+                if (fraction < i/numSections) offset = i-1;
+                }
+                return possibleLetters[Math.floor((Math.random()/numSections + offset/numSections) * 26)];
             }
-            let character = possibleLetters[Math.floor((Math.random()/numSections + offset/numSections) * 26)];
+            // ensure different characters on the screen at all times
+            // remove this if we want to support sentences
+            let xPos = scene.allPositions.add();
+            let character = getRandomLetter(xPos);
+            while (scene.state.lettersOnScreen.find(element => element == character) != undefined) {
+                character = getRandomLetter(xPos);
+            }
             const letter = new Letter(scene, character, xPos);
             const target = new Target(scene, character, letter.coords.x);
             letter.addTarget(target);
