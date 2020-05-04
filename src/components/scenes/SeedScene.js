@@ -183,6 +183,7 @@ class SeedScene extends Scene {
                     setTimeout(() => this.incorrect.visible = false, 300);
                 }
                 if (found_letter.target.state.mesh.visible) {
+                    this.score.reset();
                     found_letter.target.changeColor(0xff0000);
                     this.incorrect.visible = true;
                     this.key = "";
