@@ -188,6 +188,7 @@ class Letter extends Mesh {
                 // this.target.children[0].material.color = new THREE.Color(0xff0000);
                 // this.target.changeColor(this.textMesh.material.color.clone());
                 this.target.geoToSolid(this.color);
+                this.parent.key = ""
             }
             // // return to black background once letter passes through target
             if (this.position.y < -1 * (this.coords.y + Math.abs(target.coords.y) + 2)

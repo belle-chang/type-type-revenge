@@ -13,7 +13,7 @@ import { SeedScene } from 'scenes';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
-
+import mp3 from './sounds/WiiThemeSong.mp3'
 
 // Initialize core ThreeJS components
 const scene = new SeedScene();
@@ -104,7 +104,7 @@ var sound = new THREE.Audio( listener );
 
 // load a sound and set it as the Audio object's buffer
 var audioLoader = new THREE.AudioLoader();
-audioLoader.load( 'src/sounds/WiiThemeSong.mp3', function( buffer ) {
+audioLoader.load( mp3, function( buffer ) {
 	sound.setBuffer( buffer );
 	sound.setLoop( true );
 	sound.setVolume( 0.5 );

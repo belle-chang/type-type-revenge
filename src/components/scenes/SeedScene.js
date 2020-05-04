@@ -7,8 +7,7 @@ import * as THREE from 'three';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 import { PositionFinder } from 'positioning';
 import { HighScore } from 'interface';
-import SONG from './exampleSong.json'
-const langFile = require('./exampleSong.json');
+
 
 class SeedScene extends Scene {
     constructor() {
@@ -165,8 +164,6 @@ class SeedScene extends Scene {
         // Call update for each object in the updateList
         // for (const obj of updateList) {
 
-        console.log(JSON.stringify(langFile));
-
         //     obj.update(timeStamp);
         if ((this.key != "") && (this.key != undefined)) {
             // console.log(typeof SONG)
@@ -185,12 +182,10 @@ class SeedScene extends Scene {
                         this.key = "";
                     setTimeout(() => this.incorrect.visible = false, 300);
                 }
-                // i think we should use bounding boxes instead of 1.5
-                if (found_letter.position.y < -1 * (found_letter.coords.y + Math.abs(found_letter.target.coords.y) + 1.5)) {
+                if (found_letter.target.state.mesh.visible) {
                     found_letter.target.changeColor(0xff0000);
-                    this.score.reset();
                     this.incorrect.visible = true;
-                        this.key = "";
+                    this.key = "";
                     setTimeout(() => this.incorrect.visible = false, 300);
                 }
             }
