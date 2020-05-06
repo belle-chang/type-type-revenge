@@ -1,5 +1,6 @@
 import { Mesh } from 'three';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
+import { Tween } from "@createjs/tweenjs";
 import { ResourceTracker } from 'tracker';
 
 
@@ -166,6 +167,7 @@ class Letter extends Mesh {
         fallDown.start();
         // after letter finishes falling down, dispose of it
         fallDown.onComplete(() => this.dispose());
+        this.fallDown = fallDown;
 
     }
 
@@ -209,11 +211,17 @@ class Letter extends Mesh {
         //         this.parent.score.reset();
         //     }
         // }
-
         // Advance tween animations, if any exist
         TWEEN.update();
         // let it fall automatically
         this.fall();
+        
+        // if (this.parent != null) {
+        //     if (!this.parent.playing) {
+        //         this.pauseStart = new Date().getTime();
+        //     }
+        // }
+
     }
 }
 

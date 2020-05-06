@@ -14,10 +14,9 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import mp3 from "./sounds/WiiThemeSong.mp3";
-import $ from "jquery";
 
 // Initialize core ThreeJS components
-
+let playing = false;
 // const camera = new PerspectiveCamera();
 const camera = new THREE.PerspectiveCamera(
   75,
@@ -82,13 +81,14 @@ composer.addPass(bloomPass);
 
 // Render loop
 const onAnimationFrameHandler = timeStamp => {
-  // controls.update();
-  // renderer.render(scene, camera);
-  composer.render(timeStamp);
-  scene.update && scene.update(timeStamp);
+    // controls.update();
+    // renderer.render(scene, camera);
+    
+    composer.render(timeStamp);
+    scene.update && scene.update(timeStamp);
+    window.requestAnimationFrame(onAnimationFrameHandler);
+  };
   window.requestAnimationFrame(onAnimationFrameHandler);
-};
-window.requestAnimationFrame(onAnimationFrameHandler);
 
 // Resize Handler
 const windowResizeHandler = () => {
@@ -102,7 +102,7 @@ windowResizeHandler();
 window.addEventListener("resize", windowResizeHandler, false);
 window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
-
+document.getElementById("start").addEventListener("click", start);
 // when key is pressed save event key to key parameter of SeedScene
 function handleKeyDown(event) {
   if (!event.metaKey && !event.altKey && !event.controlKey)
@@ -129,7 +129,31 @@ audioLoader.load(mp3, function (buffer) {
   sound.setLoop(true);
   sound.setVolume(0.5);
   sound.play();
+  playing = true;
 });
+
+function start() {
+    if(playing){
+        sound.pause();
+        playing = false;
+    }
+    else{
+        sound.play();
+        playing = true;
+    }
+    scene.playing = playing;
+}
+
+// const onAnimationFrameHandler = timeStamp => {
+//     // controls.update();
+//     // renderer.render(scene, camera);
+//     composer.render(timeStamp);
+//     if (scene.playing) {
+//         scene.update && scene.update(timeStamp);
+//     }
+//     window.requestAnimationFrame(onAnimationFrameHandler);
+// };
+// window.requestAnimationFrame(onAnimationFrameHandler);
 
 // $.getJSON( "./json/exampleSong.json", function( json ) {
 //     console.log( "JSON Data: " + json.notes[ 3 ].note );

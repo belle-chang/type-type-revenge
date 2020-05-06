@@ -7,7 +7,7 @@ import * as THREE from "three";
 import { TWEEN } from "three/examples/jsm/libs/tween.module.min.js";
 import { PositionFinder } from "positioning";
 import { HighScore } from "interface";
-import $ from "jquery";
+
 import SONG from './exampleSong.json';
 
 class SeedScene extends Scene {
@@ -193,14 +193,16 @@ class SeedScene extends Scene {
         third = 2;
       }
       // add a random letter from "letters" string after specified time
-      setTimeout(
-        addLetter,
-        parseInt(info[i]) - fallTime,
-        // parseInt(info[i].time) - fallTime,
-        this,
-        third,
-        noteToColor[note]
-      );
+      // if (this.playing) {
+        setTimeout(
+          addLetter,
+          parseInt(info[i]) - fallTime,
+          // parseInt(info[i].time) - fallTime,
+          this,
+          third,
+          noteToColor[note]
+        );
+      // }
     }
 
     // version of addLetter that takes in a string of possible letters
