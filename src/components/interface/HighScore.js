@@ -3,7 +3,7 @@ class HighScore {
     this.element = document.createElement("DIV");
     this.score = 0;
     this.streak = 0;
-    this.element.innerText = "Score: 0\n Streak: 0";
+    this.element.innerText = "SCORE: 0\n Streak: 0";
     document.body.appendChild(this.element);
   }
 
