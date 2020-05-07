@@ -131,7 +131,6 @@ const onAnimationFrameHandler = timeStamp => {
     composer.render(timeStamp);
     scene.update && scene.update(timeStamp);
     window.requestAnimationFrame(onAnimationFrameHandler);
-    if (scene.over) console.log("hello")
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 
@@ -151,6 +150,7 @@ function start() {
     console.log(start);
     scene.start = true;
     sound.play();
+    sound.setLoop(false);
     playing = true;
     closeInstructions();
 }
