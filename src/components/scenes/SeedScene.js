@@ -17,6 +17,10 @@ class SeedScene extends Scene {
 
 	this.score = new HighScore();
 
+	// keeps track of whether or not the game is still going on
+	// or if it is over
+	this.over = false;
+
 	// keep track of if game has started
 	this.start = false;
 
@@ -226,6 +230,18 @@ addLetter(scene, third, color) {
 
   dispose() {
 	this.tracker.dispose();
+	while(this.children.length > 1){ 
+		if (this.children[this.children.length - 1] == this.title)
+			continue;
+		this.remove(this.children[this.children.length - 1]); 
+	}
+  }
+
+  disposeAll() {
+	this.tracker.dispose();
+	while(this.children.length > 0){ 
+		this.remove(this.children[0]); 
+	}
   }
 
   update(timeStamp) {
@@ -237,7 +253,6 @@ addLetter(scene, third, color) {
 	if (this.start) {
 		this.start = false;
 		for (let i = 4; i < this.info.length; i += 2) {
-      // for (let i = 0; i < info.length; i = i + 1) {
         // assuming it takes 4000 ms for letter to fall to its target
         const fallTime = 4000;
         // obtain note from pitch
@@ -259,7 +274,7 @@ addLetter(scene, third, color) {
           this,
           third,
           this.noteToColor[note]
-        );
+		);
       }
   }
 
@@ -299,7 +314,13 @@ addLetter(scene, third, color) {
     // update each object in updateList
     // passes in corresponding target object to check position values in Letter.js
     for (let i = 0; i < updateList.length; i++) {
-    	updateList[i].update(timeStamp, updateListTarget[i]);
+		updateList[i].update(timeStamp, updateListTarget[i]);
+
+		// clear scene when game is over 
+		if (updateList.length == 0) {
+			this.over = true;
+			this.dispose()
+		}
     }
   }
 }

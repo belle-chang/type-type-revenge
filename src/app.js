@@ -14,7 +14,6 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import mp3 from "./sounds/grenade.mp3";
-import $ from "jquery";
 
 // Initialize core ThreeJS components
 let playing = false;
@@ -43,7 +42,7 @@ var height =
 var width = (height / window.innerHeight) * window.innerWidth;
 
 // initialize scene
-const scene = new SeedScene(width, height);
+let scene = new SeedScene(width, height);
 
 // Set up renderer, canvas, and minor CSS adjustments
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -125,9 +124,7 @@ audioLoader.load(mp3, function (buffer) {
 
 // Render loop
 const onAnimationFrameHandler = timeStamp => {
-    // controls.update();
-    // renderer.render(scene, camera);
-    
+
     composer.render(timeStamp);
     scene.update && scene.update(timeStamp);
     window.requestAnimationFrame(onAnimationFrameHandler);
@@ -147,7 +144,6 @@ function toggle() {
 }
 
 function start() {
-    console.log(start);
     scene.start = true;
     sound.play();
     sound.setLoop(false);
@@ -158,7 +154,3 @@ function start() {
 function closeInstructions() {
     document.getElementById("instructions").className = "instructions hidden";
 }
-
-// $.getJSON( "./json/exampleSong.json", function( json ) {
-//     console.log( "JSON Data: " + json.notes[ 3 ].note );
-//    });
