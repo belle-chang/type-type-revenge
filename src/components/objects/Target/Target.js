@@ -78,6 +78,7 @@ class Target extends Group {
         });
 
         parent.addToUpdateListTarget(this);
+        parent.addToUpdateSetTarget(this);
 
     }
 
@@ -96,10 +97,18 @@ class Target extends Group {
     }
 
     // dispose of letter after it falls out of frame
-    dispose() {
+    disposeTarget(reload) {
+        // debugger;
         this.tracker.dispose();
         if (this.parent != null) {
-            this.parent.state.updateListTarget.shift();
+
+            this.parent.state.updateSetTarget.delete(this);
+            // if (reload) {
+            //     this.parent.state.updateListTarget.pop()
+            // }
+            // if (!reload) {
+            //     this.parent.state.updateListTarget.shift();
+            // }
             this.parent.remove(this);
         }
     }

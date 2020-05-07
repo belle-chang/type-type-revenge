@@ -15,11 +15,10 @@ class SeedScene extends Scene {
 
     this.score = new HighScore();
 
-    // keeps track of whether or not the game is still going on
-    // or if it is over
-    this.over = false;
+    // keeps track of whether or not the game is currently running
+    this.running = false;
 
-    // keep track of if game has started
+    // keep track of if game is now starting
     this.start = false;
 
     // string version of json file, for now
@@ -48,11 +47,13 @@ class SeedScene extends Scene {
       // gui: new Dat.GUI(), // Create GUI for scene
       rotationSpeed: 1,
       key: "",
-      spheres: [],
       updateList: [],
       updateSet: new Set(),
       updateListTarget: [], // list of targets that correspond to objects in updateList
-      lettersOnScreen: []
+      updateSetTarget: new Set(),
+      lettersOnScreen: [],
+      lettersOnScreenSet: new Set(),
+      timeoutList: [] // all variables set with timeouts
     };
 
     // create title
@@ -80,48 +81,48 @@ class SeedScene extends Scene {
     // rain effect
     // setInterval(makeLine, 60, this);
 
-    // function makeLine(scene) {
-    //   // get random position for the line
-    //   function getRandomInt(min, max) {
-    //     min = Math.ceil(min);
-    //     max = Math.floor(max);
-    //     return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-    //   }
+    function makeLine(scene) {
+      // get random position for the line
+      function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+      }
 
-    //   // add resource tracker to dispose of lines once they have fallen out of the scene
-    //   let rt = new ResourceTracker();
-    //   const track = rt.track.bind(rt);
+      // add resource tracker to dispose of lines once they have fallen out of the scene
+      let rt = new ResourceTracker();
+      const track = rt.track.bind(rt);
 
-    //   // create new line segment object and add to top of scene
-    //   var geometry = track(new THREE.Geometry());
-    //   var xPos = getRandomInt(-1 * scene.width, scene.width);
-    //   var yPos = scene.height + 4; // add "padding" to make lines start above the top of the screen
-    //   var length = getRandomInt(0, 3);
-    //   geometry.vertices.push(
-    //     track(new THREE.Vector3(xPos, yPos, 0)),
-    //     track(new THREE.Vector3(xPos, yPos - length, 0))
-    //   );
-    //   var material = track(
-    //     new THREE.LineBasicMaterial({ color: "rgb(70,70,70)" })
-    //   );
-    //   var line = track(new THREE.LineSegments(geometry, material));
-    //   scene.add(line);
+      // create new line segment object and add to top of scene
+      var geometry = track(new THREE.Geometry());
+      var xPos = getRandomInt(-1 * scene.width, scene.width);
+      var yPos = scene.height + 4; // add "padding" to make lines start above the top of the screen
+      var length = getRandomInt(0, 3);
+      geometry.vertices.push(
+        track(new THREE.Vector3(xPos, yPos, 0)),
+        track(new THREE.Vector3(xPos, yPos - length, 0))
+      );
+      var material = track(
+        new THREE.LineBasicMaterial({ color: "rgb(70,70,70)" })
+      );
+      var line = track(new THREE.LineSegments(geometry, material));
+      scene.add(line);
 
-    //   // animate line
-    //   var start = { x: xPos, y: yPos };
-    //   var target = { x: xPos, y: -20 };
-    //   const tween = new TWEEN.Tween(start).to(target, 4500);
-    //   tween.onUpdate(function () {
-    //     line.position.y = start.y;
-    //   });
-    //   tween.start();
+      // animate line
+      var start = { x: xPos, y: yPos };
+      var target = { x: xPos, y: -20 };
+      const tween = new TWEEN.Tween(start).to(target, 4500);
+      tween.onUpdate(function () {
+        line.position.y = start.y;
+      });
+      tween.start();
 
-    //   // dispose of line and remove from scene
-    //   tween.onComplete(() => {
-    //     rt.dispose();
-    //     scene.remove(line);
-    //   });
-    // }
+      // dispose of line and remove from scene
+      tween.onComplete(() => {
+        rt.dispose();
+        scene.remove(line);
+      });
+    }
 
     // convert string into array of numbers
     // var info = starwars.split(" ");
@@ -223,6 +224,16 @@ class SeedScene extends Scene {
     this.state.updateSet.add(object);
   }
 
+// add letter object to updateSet
+addToUpdateSetTarget(object) {
+    this.state.updateSetTarget.add(object);
+}
+
+// add letter object to updateSet
+addToLettersOnScreenSet(object) {
+    this.state.lettersOnScreenSet.add(object);
+}
+
   // add target object to updateListTarget
   addToUpdateListTarget(object) {
     this.state.updateListTarget.push(object);
@@ -233,22 +244,26 @@ class SeedScene extends Scene {
   }
 
   dispose() {
-    while(this.children.length > 2){ 
-      if ((this.children[this.children.length - 1] == this.title) || 
-          (this.children[this.children.length - 1] == this.lights))
-        continue;
-      this.remove(this.children[this.children.length - 1]); 
-    }
     this.tracker.dispose();
-    console.log(this)
-    console.log(this.children.length);
+    this.state.updateSet.forEach((k, v) => v.disposeLetter(true));
+    console.log("children")
     console.log(this.children);
+    console.log(this.state);
+    while (this.children.length > 2) {
+        if (this.children[2] == this.title ||
+            this.children[2] == this.lights) {
+          continue;
+        }
+        this.remove(this.children[this.children.length - 1]);
+      }
+    this.add(this.incorrect);
+    // debugger;
   }
 
   disposeAll() {
-	this.tracker.dispose();
-    while(this.children.length > 0){ 
-      this.remove(this.children[0]); 
+    this.tracker.dispose();
+    while (this.children.length > 0) {
+      this.remove(this.children[0]);
     }
   }
 
@@ -259,8 +274,28 @@ class SeedScene extends Scene {
     // for every 90 indices (30 notes) where info[i] = time, info[i+1] = note, info[i+2] = velocity
     // start game -- only runsonce
     if (this.start) {
+      // if another game was currently running
+      
+      if (this.running) {
+        for (let i = 0; i < this.state.timeoutList; i++) {
+          clearTimeout(this.state.timeoutList[i]);
+        }
+        this.dispose();
+        // this.state.updateList = [];
+        // this.state.updateSet.clear();
+        // this.state.updateListTarget = [];
+        // this.state.lettersOnScreen = [];
+        this.state.timeoutList = [];
+
+        // this.running = false;
+        // sessionStorage.setItem("reloading", "true");
+        // location.reload();
+        // document.getElementById("start").addEventListener(click, start)
+      }
       this.start = false;
-      for (let i = 4; i < this.info.length; i += 2) {
+      this.running = true;
+    //   if (!this.running) {
+      for (let i = 4; i < 8; i += 2) {
         // assuming it takes 4000 ms for letter to fall to its target
         const fallTime = 4000;
         // obtain note from pitch
@@ -276,20 +311,24 @@ class SeedScene extends Scene {
           third = 2;
         }
         // add a random letter from "letters" string after specified time
-        setTimeout(
+        this.timer = setTimeout(
           this.addLetter,
           parseInt(this.info[i].time) - fallTime,
           this,
           third,
           this.noteToColor[note]
-		);
+        );
+        this.state.timeoutList.push(this.timer);
       }
+    // }
     }
+
 
     // error bar logic
     if (this.key != "" && this.key != undefined) {
       // see if key pressed is any of the letters on the screen
-      const found = this.state.lettersOnScreen.indexOf(this.key);
+      // const found = this.state.lettersOnScreen.indexOf(this.key);
+      const found = Array.from(this.state.lettersOnScreenSet).indexOf(this.key);
       // if not turn on error bar
       if (found == -1) {
         this.score.reset();
@@ -298,7 +337,8 @@ class SeedScene extends Scene {
         setTimeout(() => (this.incorrect.visible = false), 300);
       } else {
         // find letter
-        let found_letter = updateList[found];
+        // let found_letter = updateList[found];
+        let found_letter =  Array.from(this.state.updateSet)[found];
         // if found letter is before target, turn on error bar
         if (
           found_letter.position.y >
@@ -324,13 +364,18 @@ class SeedScene extends Scene {
 
     // update each object in updateList
     // passes in corresponding target object to check position values in Letter.js
-    for (let i = 0; i < updateList.length; i++) {
+    // for (let i = 0; i < updateList.length; i++) {
+    for (let i = 0; i < this.state.updateSet.size; i++) {
+        Array.from(this.state.updateSet)[i].update(timeStamp, 
+            Array.from(this.state.updateSetTarget)[i]);
       updateList[i].update(timeStamp, updateListTarget[i]);
 
       // clear scene when game is over
-      if (updateList.length == 0) {
-        this.over = true;
+      if (this.state.updateSet.size == 0) {
+      // if (updateList.length == 0) {
+        this.running = false;
         this.dispose();
+        // ADD SCOREBOARD HERE!
       }
     }
   }
