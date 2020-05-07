@@ -78,50 +78,50 @@ class SeedScene extends Scene {
     this.add(lights);
 
     // rain effect
-    setInterval(makeLine, 60, this);
+    // setInterval(makeLine, 60, this);
 
-    function makeLine(scene) {
-      // get random position for the line
-      function getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-      }
+    // function makeLine(scene) {
+    //   // get random position for the line
+    //   function getRandomInt(min, max) {
+    //     min = Math.ceil(min);
+    //     max = Math.floor(max);
+    //     return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+    //   }
 
-      // add resource tracker to dispose of lines once they have fallen out of the scene
-      let rt = new ResourceTracker();
-      const track = rt.track.bind(rt);
+    //   // add resource tracker to dispose of lines once they have fallen out of the scene
+    //   let rt = new ResourceTracker();
+    //   const track = rt.track.bind(rt);
 
-      // create new line segment object and add to top of scene
-      var geometry = track(new THREE.Geometry());
-      var xPos = getRandomInt(-1 * scene.width, scene.width);
-      var yPos = scene.height + 4; // add "padding" to make lines start above the top of the screen
-      var length = getRandomInt(0, 3);
-      geometry.vertices.push(
-        track(new THREE.Vector3(xPos, yPos, 0)),
-        track(new THREE.Vector3(xPos, yPos - length, 0))
-      );
-      var material = track(
-        new THREE.LineBasicMaterial({ color: "rgb(70,70,70)" })
-      );
-      var line = track(new THREE.LineSegments(geometry, material));
-      scene.add(line);
+    //   // create new line segment object and add to top of scene
+    //   var geometry = track(new THREE.Geometry());
+    //   var xPos = getRandomInt(-1 * scene.width, scene.width);
+    //   var yPos = scene.height + 4; // add "padding" to make lines start above the top of the screen
+    //   var length = getRandomInt(0, 3);
+    //   geometry.vertices.push(
+    //     track(new THREE.Vector3(xPos, yPos, 0)),
+    //     track(new THREE.Vector3(xPos, yPos - length, 0))
+    //   );
+    //   var material = track(
+    //     new THREE.LineBasicMaterial({ color: "rgb(70,70,70)" })
+    //   );
+    //   var line = track(new THREE.LineSegments(geometry, material));
+    //   scene.add(line);
 
-      // animate line
-      var start = { x: xPos, y: yPos };
-      var target = { x: xPos, y: -20 };
-      const tween = new TWEEN.Tween(start).to(target, 4500);
-      tween.onUpdate(function () {
-        line.position.y = start.y;
-      });
-      tween.start();
+    //   // animate line
+    //   var start = { x: xPos, y: yPos };
+    //   var target = { x: xPos, y: -20 };
+    //   const tween = new TWEEN.Tween(start).to(target, 4500);
+    //   tween.onUpdate(function () {
+    //     line.position.y = start.y;
+    //   });
+    //   tween.start();
 
-      // dispose of line and remove from scene
-      tween.onComplete(() => {
-        rt.dispose();
-        scene.remove(line);
-      });
-    }
+    //   // dispose of line and remove from scene
+    //   tween.onComplete(() => {
+    //     rt.dispose();
+    //     scene.remove(line);
+    //   });
+    // }
 
     // convert string into array of numbers
     // var info = starwars.split(" ");
@@ -233,13 +233,16 @@ class SeedScene extends Scene {
   }
 
   dispose() {
-  this.tracker.dispose();
     while(this.children.length > 2){ 
       if ((this.children[this.children.length - 1] == this.title) || 
           (this.children[this.children.length - 1] == this.lights))
         continue;
       this.remove(this.children[this.children.length - 1]); 
     }
+    this.tracker.dispose();
+    console.log(this)
+    console.log(this.children.length);
+    console.log(this.children);
   }
 
   disposeAll() {
@@ -328,7 +331,6 @@ class SeedScene extends Scene {
       if (updateList.length == 0) {
         this.over = true;
         this.dispose();
-        this.disposedOf = true;
       }
     }
   }
