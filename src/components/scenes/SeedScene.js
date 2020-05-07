@@ -6,7 +6,6 @@ import * as THREE from "three";
 import { TWEEN } from "three/examples/jsm/libs/tween.module.min.js";
 import { PositionFinder } from "positioning";
 import { HighScore } from "interface";
-import $ from "jquery";
 import SONG from './grenade.json';
 
 
@@ -16,10 +15,6 @@ class SeedScene extends Scene {
     super();
 
 	this.score = new HighScore();
-
-	// did not dispose of elements of the scene yet
-	// include this flag so it doesn't run infinitely
-	this.disposedOf = false;
 
 	// keeps track of whether or not the game is still going on
 	// or if it is over
@@ -321,7 +316,7 @@ addLetter(scene, third, color) {
 		updateList[i].update(timeStamp, updateListTarget[i]);
 
 		// clear scene when game is over 
-		if ((updateList.length == 0) && !this.disposedOf) {
+		if ((updateList.length == 0)) {
 			this.over = true;
 			this.dispose()
 			this.disposedOf = true;
