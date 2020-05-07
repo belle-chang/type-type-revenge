@@ -6,7 +6,6 @@ import * as THREE from "three";
 import { TWEEN } from "three/examples/jsm/libs/tween.module.min.js";
 import { PositionFinder } from "positioning";
 import { HighScore } from "interface";
-import $ from "jquery";
 import SONG from "./grenade.json";
 
 class SeedScene extends Scene {
@@ -15,6 +14,10 @@ class SeedScene extends Scene {
     super();
 
     this.score = new HighScore();
+
+    // keeps track of whether or not the game is still going on
+    // or if it is over
+    this.over = false;
 
     // keep track of if game has started
     this.start = false;
@@ -230,6 +233,17 @@ class SeedScene extends Scene {
 
   dispose() {
     this.tracker.dispose();
+    while (this.children.length > 1) {
+      if (this.children[this.children.length - 1] == this.title) continue;
+      this.remove(this.children[this.children.length - 1]);
+    }
+  }
+
+  disposeAll() {
+    this.tracker.dispose();
+    while (this.children.length > 0) {
+      this.remove(this.children[0]);
+    }
   }
 
   update(timeStamp) {
@@ -241,7 +255,6 @@ class SeedScene extends Scene {
     if (this.start) {
       this.start = false;
       for (let i = 4; i < this.info.length; i += 2) {
-        // for (let i = 0; i < info.length; i = i + 1) {
         // assuming it takes 4000 ms for letter to fall to its target
         const fallTime = 4000;
         // obtain note from pitch
@@ -307,6 +320,13 @@ class SeedScene extends Scene {
     // passes in corresponding target object to check position values in Letter.js
     for (let i = 0; i < updateList.length; i++) {
       updateList[i].update(timeStamp, updateListTarget[i]);
+
+      // clear scene when game is over
+      if (updateList.length == 0) {
+        this.over = true;
+        this.dispose();
+        this.disposedOf = true;
+      }
     }
   }
 }

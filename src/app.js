@@ -14,9 +14,9 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import mp3 from "./sounds/grenade.mp3";
-import $ from "jquery";
 
 // Initialize core ThreeJS components
+let muted = false;
 let playing = false;
 // const camera = new PerspectiveCamera();
 const camera = new THREE.PerspectiveCamera(
@@ -43,7 +43,7 @@ var height =
 var width = (height / window.innerHeight) * window.innerWidth;
 
 // initialize scene
-const scene = new SeedScene(width, height);
+let scene = new SeedScene(width, height);
 
 // Set up renderer, canvas, and minor CSS adjustments
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -127,9 +127,6 @@ audioLoader.load(mp3, function (buffer) {
 
 // Render loop
 const onAnimationFrameHandler = timeStamp => {
-  // controls.update();
-  // renderer.render(scene, camera);
-
   composer.render(timeStamp);
   scene.update && scene.update(timeStamp);
   window.requestAnimationFrame(onAnimationFrameHandler);
@@ -137,30 +134,28 @@ const onAnimationFrameHandler = timeStamp => {
 window.requestAnimationFrame(onAnimationFrameHandler);
 
 function toggle() {
-  if (playing) {
-    sound.pause();
-    playing = false;
-  } else {
-    sound.play();
-    playing = true;
+  // if it's muted, turn volume up
+  if (muted) {
+    sound.setVolume(0.5);
+    muted = false;
+  }
+  // if it's not muted, change volume to 0
+  else {
+    sound.setVolume(0);
+    muted = true;
   }
   scene.playing = playing;
 }
 
 function start() {
-  console.log(start);
   scene.start = true;
-  sound.stop(); // stop so that it starts from beginning
+  sound.stop(); // so that song starts from beginning w/ new game
   sound.play();
-  sound.setLoop(false);
   playing = true;
+  sound.setLoop(false);
   closeInstructions();
 }
 
 function closeInstructions() {
   document.getElementById("instructions").className = "instructions hidden";
 }
-
-// $.getJSON( "./json/exampleSong.json", function( json ) {
-//     console.log( "JSON Data: " + json.notes[ 3 ].note );
-//    });
