@@ -73,6 +73,7 @@ class SeedScene extends Scene {
 
     // Add lights to scene
     const lights = new BasicLights();
+    this.lights = lights;
     this.add(lights);
 
     // rain effect
@@ -232,11 +233,12 @@ class SeedScene extends Scene {
 
   dispose() {
     this.tracker.dispose();
-    while (this.children.length > 1) {
-      if (this.children[this.children.length - 1] == this.title) {
-        // while (this.children[this.children.length -1] )
+    while (this.children.length > 2) {
+      if (
+        this.children[this.children.length - 1] == this.title ||
+        this.children[this.children.length - 1] == this.lights
+      )
         continue;
-      }
       if (this.children[this.children.length - 1] instanceof Letter) {
         this.children[this.children.length - 1].disposeLetter();
       }

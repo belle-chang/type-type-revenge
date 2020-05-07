@@ -124,7 +124,7 @@ class Letter extends Mesh {
   }
 
   // dispose of letter and its target after it falls out of frame
-  disposeLetter() {
+  dispose() {
     this.tracker.dispose();
     // need to add a null check for some reason
     if (this.parent !== null) {
@@ -150,7 +150,7 @@ class Letter extends Mesh {
 
     fallDown.start();
     // after letter finishes falling down, dispose of it
-    fallDown.onComplete(() => this.disposeLetter());
+    fallDown.onComplete(() => this.dispose());
     this.fallDown = fallDown;
   }
 
