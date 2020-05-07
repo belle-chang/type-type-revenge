@@ -76,6 +76,7 @@ class SeedScene extends Scene {
 
     // Add lights to scene
     const lights = new BasicLights();
+    this.lights = lights;
     this.add(lights);
 
     // rain effect
@@ -228,19 +229,20 @@ addLetter(scene, third, color) {
   }
 
   dispose() {
-	this.tracker.dispose();
-	while(this.children.length > 1){ 
-		if (this.children[this.children.length - 1] == this.title)
-			continue;
-		this.remove(this.children[this.children.length - 1]); 
-	}
+  this.tracker.dispose();
+    while(this.children.length > 2){ 
+      if ((this.children[this.children.length - 1] == this.title) || 
+          (this.children[this.children.length - 1] == this.lights))
+        continue;
+      this.remove(this.children[this.children.length - 1]); 
+    }
   }
 
   disposeAll() {
 	this.tracker.dispose();
-	while(this.children.length > 0){ 
-		this.remove(this.children[0]); 
-	}
+    while(this.children.length > 0){ 
+      this.remove(this.children[0]); 
+    }
   }
 
   update(timeStamp) {
@@ -251,7 +253,8 @@ addLetter(scene, third, color) {
 	// start game -- only runsonce
 	if (this.start) {
 		this.start = false;
-		for (let i = 4; i < this.info.length; i += 2) {
+		// for (let i = 4; i < this.info.length; i += 2) {
+    for (let i = 4; i < 7; i += 2) {
         // assuming it takes 4000 ms for letter to fall to its target
         const fallTime = 4000;
         // obtain note from pitch
@@ -273,7 +276,7 @@ addLetter(scene, third, color) {
           this,
           third,
           this.noteToColor[note]
-		);
+		    );
       }
   }
 
