@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Type Type Revenge</title>
-    <link
-      rel="stylesheet"
-      href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css"
-    />
-    <link rel="icon" href="/type-type-revenge/favicon.ico" /></head
-  ><style>
-    html,
+<!doctype html><html><head><meta charset="utf-8"/><title>Type Type Revenge</title><link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css"><link rel="icon" href="/favicon.ico"></head><style>html,
     body {
       margin: 0;
       height: 100%;
@@ -45,12 +34,17 @@
       left: 50%;
       transform: translate(-50%, -50%);
       color: white;
-      background-color: silver;
+      background-color:silver;
       /* padding-top: 1em; */
       padding-left: 1em;
       padding-right: 1em;
       padding-bottom: 1em;
       border-radius: 5px;
+
+
+      width: 40%;
+      height: 40%;
+
     }
     .instructions-heading {
       text-align: center;
@@ -71,38 +65,16 @@
       font-size: 1.5em;
       color: white;
       align-content: right;
-      margin-top: 4em;
+      margin-top: 4.5em;
     }
     .instructions-open:hover {
       color: aquamarine;
     }
     .hidden {
       display: none;
-    }
-  </style>
-  <body>
-    <div class="instructions-open" onclick="openInstructions()">
-      <i class="far fa-question-circle"></i>
-    </div>
-    <div class="instructions" id="instructions">
-      <p class="instructions-close" onclick="closeInstructions()">x</p>
-      <h1 class="instructions-heading">instructions</h1>
-      <p class="instructions-text">
-        When the falling letters match up with their target outlines at the
-        bottom of the screen, hit the corresponding letter on your keyboard to
-        earn points. Maintain a streak of correctly pressed notes to earn more
-        points! Make sure you turn your volume up so you can hear the music.
-      </p>
-    </div>
-    <script>
-      function closeInstructions() {
-        document.getElementById("instructions").className =
-          "instructions hidden";
-      }
-      function openInstructions() {
-        document.getElementById("instructions").className = "instructions";
-      }
-    </script>
-    <script src="/type-type-revenge/main.d65094acf2ff6d849fa6.js"></script>
-  </body>
-</html>
+    }</style><body><div class="instructions-open" onclick="openInstructions()"><i class="far fa-question-circle"></i></div><div class="instructions" id="instructions"><p class="instructions-close" onclick="closeInstructions()">x</p><h1 class="instructions-heading">instructions</h1><p class="instructions-text">When the falling letters match up with their target outlines at the bottom of the screen, hit the corresponding letter on your keyboard to earn points. Maintain a streak of correctly pressed notes to earn more points! Make sure you turn your volume up so you can hear the music.</p><button id="toggle" style="top:50%; left:50%;">play/pause music!</button> <button id="start" style="top:50%; left:50%;">start game!</button></div><script>function closeInstructions() {
+          document.getElementById("instructions").className = "instructions hidden";
+        }
+        function openInstructions() {
+          document.getElementById("instructions").className = "instructions";
+        }</script><script src="/main.bf0be1622727f44fed8c.js"></script></body></html>
