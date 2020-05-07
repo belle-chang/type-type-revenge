@@ -53,11 +53,8 @@ class Target extends Group {
                 color: 0xffffff,
             } ));
             let mesh = track( new THREE.Mesh(textGeo, phong) );
-            // mesh.position.set(x, -9, 0);
             mesh.position.set(x, -1 * (parent.height - 3), 0);
             mesh.rotateY(Math.PI / 9);
-            // mesh.visible = true;
-            // this.uponPressed = mesh;
             mesh.visible = false;
             this.add(mesh);
 
@@ -82,35 +79,20 @@ class Target extends Group {
 
         parent.addToUpdateListTarget(this);
 
-        // Populate GUI
-        // this.state.gui.add(this.state);
     }
 
     geoToSolid(color) {
         let ind = color.lastIndexOf("%")
         let l = color.slice(ind - 2, ind);
-        let update_l = (parseInt(l) - 50 <= 0) ? 10 : (parseInt(l) - 50);
 
         // darken color so it's not too bright 
         let new_color = color.replace(l, 9);
         this.state.mesh.material.color = new Color(new_color);
         this.state.mesh.visible = true;
-
-
-        // this.state.mesh.geometry = this.normalGeometry;
-        // debugger;
-        // let mat = this.tracker.track( new THREE.MeshBasicMaterial({ color: new Color(color) }));
-        // this.state.mesh = this.tracker.track(new THREE.Mesh(this.normalGeometry, mat));
-        // debugger;
     }
 
     changeColor(color) {
         this.state.edgesMesh.material.color = new Color(color);
-    }
-
-    // figure out how to make it fill with color when pressed...
-    isTyped() {
-
     }
 
     // dispose of letter after it falls out of frame
@@ -120,40 +102,6 @@ class Target extends Group {
             this.parent.state.updateListTarget.shift();
             this.parent.remove(this);
         }
-    }
-    
-
-    fall() {
-
-        // Use timing library for more precice "bounce" animation
-        // TweenJS guide: http://learningthreejs.com/blog/2011/08/17/tweenjs-for-smooth-animation/
-        // Possible easings: http://sole.github.io/tween.js/examples/03_graphs.html
-        const fallDown = new TWEEN.Tween(this.position)
-            .to({ y: -24 }, 5000);
-
-        fallDown.start();
-        // after letter finishes falling down, dispose of it
-        fallDown.onComplete(() => this.dispose());
-        
-    }
-
-    move() {
-        const fallDown = new TWEEN.Tween(this.position)
-        .to({ y: -45 }, 10000).start();
-        // fallDown.start();
-        // after letter finishes falling down, dispose of it
-        fallDown.onComplete(() => this.dispose());
-    }
-
-    update() {
-        // Bob back and forth
-        // this.rotation.z = 0.05 * Math.sin(timeStamp / 300)
-
-        // Advance tween animations, if any exist
-        TWEEN.update();
-        // uncomment this to move it automatically
-        // this.move();
-
     }
 }
 

@@ -2,8 +2,6 @@ import { Mesh } from 'three';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 import { ResourceTracker } from 'tracker';
 
-
-// import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import * as THREE from 'three';
 
 
@@ -34,7 +32,6 @@ class Letter extends Mesh {
 
         // load font for textgeometry
         var loader = new THREE.FontLoader();
-        // const json = require('json-loader!./fonts/ncaa.json');
 
 
         this.color = color;
@@ -73,16 +70,8 @@ class Letter extends Mesh {
             // add mesh to scene
             this.add(textMesh);
 
-            // this.state.gui.add(this.state, 'fall');
         });
 
-
-        // get random position for the mesh
-        function getRandomInt(min, max) {
-            min = Math.ceil(min);
-            max = Math.floor(max);
-            return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-        }
 
         // generate random pastel color
         function getPastelColor(x, parent) {
@@ -124,17 +113,6 @@ class Letter extends Mesh {
 
         this.scoreAccountedFor = false;
 
-        // Populate GUI
-        // this.state.gui.add(this.state, 'fall');
-    }
-
-
-    // figure out how to make it fill with color when pressed...
-    isTyped() {
-        // debugger;
-        // let update_material = this.tracker.track(new THREE.MeshPhongMaterial( 
-        //     { color: this.color, specular: 0xffffff }
-        // ));
     }
 
     // dispose of letter and its target after it falls out of frame
@@ -154,18 +132,20 @@ class Letter extends Mesh {
         }
     }
 
-    // MOVE FALL TO update() FOR IT TO AUTOMATICALLY FALL!
     fall() {
 
         // Use timing library for more precice "bounce" animation
         // TweenJS guide: http://learningthreejs.com/blog/2011/08/17/tweenjs-for-smooth-animation/
         // Possible easings: http://sole.github.io/tween.js/examples/03_graphs.html
+        // let tween = Tween.get(this.position).to({y:-40}, 5000);
+
         const fallDown = new TWEEN.Tween(this.position)
             .to({ y: -40 }, 5000);
 
         fallDown.start();
         // after letter finishes falling down, dispose of it
         fallDown.onComplete(() => this.dispose());
+        this.fallDown = fallDown;
 
     }
 
@@ -174,8 +154,6 @@ class Letter extends Mesh {
     }
 
     update(timeStamp, target) {
-        // Bob back and forth
-
         // add null check -- idk why but it needs this
         if (this.parent != null && !this.scoreAccountedFor) {
             // if falling letter hits its corresponding target object when the correct key is pressed, flash bright background color
@@ -187,13 +165,13 @@ class Letter extends Mesh {
                 this.parent.score.update();
                 this.scoreAccountedFor = true;
 
-              // trying to figure out how to make letter glow lol, to no avail
+                // make letter glow
                 // this.target.children[0].material.color = new THREE.Color(0xff0000);
                 // this.target.changeColor(this.textMesh.material.color.clone());
                 this.target.geoToSolid(this.color);
                 this.parent.key = ""
             }
-            // // return to black background once letter passes through target
+            // change color of target if incorrect
             if (this.position.y < -1 * (this.coords.y + Math.abs(target.coords.y) + 2)
                     && this.position.y > -24
                     && this.parent.key != this.name) {
@@ -201,19 +179,11 @@ class Letter extends Mesh {
                 this.parent.score.reset();
             }
         }
-        // else if (this.parent != null && this.scoreAccountedFor) {
-        //     if (this.position.y < -1 * (this.coords.y + Math.abs(target.coords.y) + 2)
-        //             && this.position.y > -24
-        //             && this.parent.key != this.name) {
-        //         this.target.changeColor(0xff0000);
-        //         this.parent.score.reset();
-        //     }
-        // }
 
         // Advance tween animations, if any exist
         TWEEN.update();
         // let it fall automatically
-        this.fall();
+        this.fall();        
     }
 }
 
