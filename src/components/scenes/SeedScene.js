@@ -21,6 +21,7 @@ class SeedScene extends Scene {
 
 	// keep track of if game has started
 	this.start = false;
+
     // string version of json file, for now
     // this is star wars theme song
     const starwars =
@@ -268,6 +269,7 @@ addLetter(scene, third, color) {
 				this.noteToColor[note]
 			);
 			if (i == (this.info.length - 1)) this.over = true;
+			console.log(this.over)
 		}
 	}
 

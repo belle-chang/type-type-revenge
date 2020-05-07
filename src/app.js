@@ -79,17 +79,6 @@ var bloomPass = new UnrealBloomPass(
 bloomPass.renderToScreen = true;
 composer.addPass(bloomPass);
 
-// Render loop
-const onAnimationFrameHandler = timeStamp => {
-    // controls.update();
-    // renderer.render(scene, camera);
-    
-    composer.render(timeStamp);
-    scene.update && scene.update(timeStamp);
-    window.requestAnimationFrame(onAnimationFrameHandler);
-};
-window.requestAnimationFrame(onAnimationFrameHandler);
-
 // Resize Handler
 const windowResizeHandler = () => {
   const { innerHeight, innerWidth } = window;
@@ -105,6 +94,7 @@ window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
 document.getElementById("toggle").addEventListener("click", toggle);
 document.getElementById("start").addEventListener("click", start);
+document.getElementById("instructions-close").addEventListener("click", closeInstructions);
 // when key is pressed save event key to key parameter of SeedScene
 function handleKeyDown(event) {
   if (!event.metaKey && !event.altKey && !event.controlKey)
@@ -132,6 +122,18 @@ audioLoader.load(mp3, function (buffer) {
   sound.setVolume(0.5);
 });
 
+// Render loop
+const onAnimationFrameHandler = timeStamp => {
+    // controls.update();
+    // renderer.render(scene, camera);
+    
+    composer.render(timeStamp);
+    scene.update && scene.update(timeStamp);
+    window.requestAnimationFrame(onAnimationFrameHandler);
+    if (scene.over) console.log("hello")
+};
+window.requestAnimationFrame(onAnimationFrameHandler);
+
 function toggle() {
     if(playing){
         sound.pause();
@@ -149,6 +151,11 @@ function start() {
     scene.start = true;
     sound.play();
     playing = true;
+    closeInstructions();
+}
+
+function closeInstructions() {
+    document.getElementById("instructions").className = "instructions hidden";
 }
 
 // $.getJSON( "./json/exampleSong.json", function( json ) {
