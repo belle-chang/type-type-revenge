@@ -6,8 +6,9 @@ import * as THREE from "three";
 import { TWEEN } from "three/examples/jsm/libs/tween.module.min.js";
 import { PositionFinder } from "positioning";
 import { HighScore } from "interface";
+import $ from "jquery";
+import SONG from './grenade.json';
 
-import SONG from './exampleSong.json';
 
 class SeedScene extends Scene {
   constructor(width, height) {
@@ -15,9 +16,6 @@ class SeedScene extends Scene {
     super();
 
 	this.score = new HighScore();
-
-	// keep track of whether or not game is over
-	this.over = false;
 
 	// keep track of if game has started
 	this.start = false;
@@ -123,15 +121,9 @@ class SeedScene extends Scene {
 	  });
     }
 
-    let jsonObj = SONG;
-    console.log(SONG);
-
-
     // convert string into array of numbers
-	var info = starwars.split(" ");
-	this.info = info;
-    // let info = SONG.notes;
-
+    // var info = starwars.split(" ");
+    this.info = SONG.notes;
 
     // version of addLetter that takes in a string of possible letters
     function noteToLetter(scene, letters, color) {
@@ -244,34 +236,32 @@ addLetter(scene, third, color) {
 	// start game -- only runsonce
 	if (this.start) {
 		this.start = false;
-		for (let i = 0; i < this.info.length; i = i + 90) {
-			// assuming it takes 4000 ms for letter to fall to its target
-			const fallTime = 4000;
-			// obtain note from pitch
-			let note = (parseInt(this.info[i + 1]) - 21) % 12;
-			let third;
-			// map note to corresponding section of the keyboard, update string of possible letters
-			// TODO: generate xPos that corresponds to section on keyboard
-			if (note >= 0 && note <= 3) {
-			  third = 0;
-			} else if (note <= 7) {
-			  third = 1;
-			} else {
-			  third = 2;
-			}
-			// add a random letter from "letters" string after specified time
-			setTimeout(
-				this.addLetter,
-				parseInt(this.info[i]) - fallTime,
-				// parseInt(info[i].time) - fallTime,
-				this,
-				third,
-				this.noteToColor[note]
-			);
-			if (i == (this.info.length - 1)) this.over = true;
-			console.log(this.over)
-		}
-	}
+		for (let i = 4; i < this.info.length; i += 2) {
+      // for (let i = 0; i < info.length; i = i + 1) {
+        // assuming it takes 4000 ms for letter to fall to its target
+        const fallTime = 4000;
+        // obtain note from pitch
+        let note = (parseInt(this.info[i].note) - 21) % 12;
+        let third;
+        // map note to corresponding section of the keyboard, update string of possible letters
+        // TODO: generate xPos that corresponds to section on keyboard
+        if (note >= 0 && note <= 3) {
+          third = 0;
+        } else if (note <= 7) {
+          third = 1;
+        } else {
+          third = 2;
+        }
+        // add a random letter from "letters" string after specified time
+        setTimeout(
+          this.addLetter,
+          parseInt(this.info[i].time) - fallTime,
+          this,
+          third,
+          this.noteToColor[note]
+        );
+      }
+  }
 
     // error bar logic
     if (this.key != "" && this.key != undefined) {
