@@ -87,8 +87,8 @@ const onAnimationFrameHandler = timeStamp => {
     composer.render(timeStamp);
     scene.update && scene.update(timeStamp);
     window.requestAnimationFrame(onAnimationFrameHandler);
-  };
-  window.requestAnimationFrame(onAnimationFrameHandler);
+};
+window.requestAnimationFrame(onAnimationFrameHandler);
 
 // Resize Handler
 const windowResizeHandler = () => {
@@ -99,9 +99,11 @@ const windowResizeHandler = () => {
   camera.updateProjectionMatrix();
 };
 windowResizeHandler();
+
 window.addEventListener("resize", windowResizeHandler, false);
 window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
+document.getElementById("toggle").addEventListener("click", toggle);
 document.getElementById("start").addEventListener("click", start);
 // when key is pressed save event key to key parameter of SeedScene
 function handleKeyDown(event) {
@@ -128,11 +130,9 @@ audioLoader.load(mp3, function (buffer) {
   sound.setBuffer(buffer);
   sound.setLoop(true);
   sound.setVolume(0.5);
-  sound.play();
-  playing = true;
 });
 
-function start() {
+function toggle() {
     if(playing){
         sound.pause();
         playing = false;
@@ -144,16 +144,12 @@ function start() {
     scene.playing = playing;
 }
 
-// const onAnimationFrameHandler = timeStamp => {
-//     // controls.update();
-//     // renderer.render(scene, camera);
-//     composer.render(timeStamp);
-//     if (scene.playing) {
-//         scene.update && scene.update(timeStamp);
-//     }
-//     window.requestAnimationFrame(onAnimationFrameHandler);
-// };
-// window.requestAnimationFrame(onAnimationFrameHandler);
+function start() {
+    console.log(start);
+    scene.start = true;
+    sound.play();
+    playing = true;
+}
 
 // $.getJSON( "./json/exampleSong.json", function( json ) {
 //     console.log( "JSON Data: " + json.notes[ 3 ].note );
