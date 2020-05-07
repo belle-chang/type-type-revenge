@@ -51,7 +51,8 @@ class SeedScene extends Scene {
       updateSet: new Set(),
       updateListTarget: [], // list of targets that correspond to objects in updateList
       lettersOnScreen: [],
-      timeoutList: [] // all variables set with timeouts
+      timeoutList: [], // all variables set with timeouts,
+      round: 0
     };
 
     // create title
@@ -77,7 +78,7 @@ class SeedScene extends Scene {
     this.add(lights);
 
     // rain effect
-    // setInterval(makeLine, 60, this);
+    setInterval(makeLine, 60, this);
 
     function makeLine(scene) {
       // get random position for the line
@@ -160,7 +161,8 @@ class SeedScene extends Scene {
   // END OF CONSTRUCTOR
   // ------------------------------------------------------------------------
 
-  addLetter(scene, third, color) {
+  addLetter(scene, third, color, round) {
+    if (round != scene.state.round) return;
     // selects a random x position then randomly selects a character based on the x coordinate and number of sections
     // the order of possibleLetters is from left to right on the keyboard, the order matters for selecting
     function getRandomLetter(xPos) {
@@ -262,7 +264,9 @@ class SeedScene extends Scene {
     if (this.start) {
       // if another game was currently running
       if (this.running) {
-        // solution 1: actually clear everything but it's not working?
+        // alright this is the ratchet solution to make sure we refresh the letters
+        this.state.round += 1;
+        // but also here's the proper garbage disposal stuff hopefully it works
         for (let i = 0; i < this.state.timeoutList; i++) {
           clearTimeout(this.state.timeoutList[i]);
         }
@@ -272,11 +276,6 @@ class SeedScene extends Scene {
         this.state.updateListTarget = [];
         this.state.lettersOnScreen = [];
         this.state.timeoutList = [];
-        //
-        // SOLUTION 2: just reload everything but audio won't start again bc needs user interaction
-        // this.running = false;
-        // sessionStorage.setItem("reloading", "true");
-        // location.reload();
       }
       this.start = false;
       this.running = true;
@@ -296,14 +295,15 @@ class SeedScene extends Scene {
           third = 2;
         }
         // add a random letter from "letters" string after specified time
-        this.timer = setTimeout(
+        var timer = setTimeout(
           this.addLetter,
           parseInt(this.info[i].time) - fallTime,
           this,
           third,
-          this.noteToColor[note]
+          this.noteToColor[note],
+          this.state.round
         );
-        this.state.timeoutList.push(this.timer);
+        this.state.timeoutList.push(timer);
       }
     }
 
