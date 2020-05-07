@@ -56,7 +56,8 @@ class SeedScene extends Scene {
     };
 
     // create title
-    const title = new Title(this);
+	const title = new Title(this);
+	this.title = title;
     this.add(title);
 
     // add position tracker to ensure there aren't any overlapping letters
@@ -147,56 +148,6 @@ class SeedScene extends Scene {
       scene.add(letter, target);
     }
 
-    // add a new random letter every second, stops after 10th letter to prevent overloading
-    // var id = setInterval(addLetter, 1000, this);
-
-    // original version of addLetter that generates a random letter
-    function addLetter(scene, third, color) {
-      // selects a random x position then randomly selects a character based on the x coordinate and number of sections
-      // the order of possibleLetters is from left to right on the keyboard, the order matters for selecting
-      function getRandomLetter(xPos) {
-        let possibleLetters = "qazwsxedcrfvtgbyhnujmikolp";
-        let numSections = 3;
-        let offset = numSections - 1;
-        let fraction =
-          (xPos - scene.allPositions.minx) /
-          (scene.allPositions.maxx - scene.allPositions.minx);
-        for (let i = numSections - 1; i >= 1; i--) {
-          if (fraction < i / numSections) offset = i - 1;
-        }
-        return possibleLetters[
-          Math.floor((Math.random() / numSections + offset / numSections) * 26)
-        ];
-      }
-      // ensure different characters on the screen at all times
-      // remove this if we want to support sentences
-      let xPos;
-      let length = scene.allPositions.maxx - scene.allPositions.minx;
-      if (third == 0) {
-        xPos = scene.allPositions.add(scene.allPositions.minx, Math.floor(scene.allPositions.minx + length / 3));
-      }
-      else if (third == 1) {
-        xPos = scene.allPositions.add(Math.floor(scene.allPositions.minx + length / 3), Math.floor(scene.allPositions.minx + 2 * length / 3));
-      }
-      else {
-        xPos = scene.allPositions.add(Math.floor(scene.allPositions.minx + 2 * length / 3), scene.allPositions.maxx);
-      }
-      let character = getRandomLetter(xPos);
-      while (
-        scene.state.lettersOnScreen.find(element => element == character) !=
-        undefined
-      ) {
-        character = getRandomLetter(xPos);
-      }
-      const letter = new Letter(scene, character, xPos, color);
-      const target = new Target(scene, character, letter.coords.x);
-      letter.addTarget(target);
-
-      scene.add(letter, target);
-      // if (scene.state.updateList.length > 10) {
-      //     clearInterval(id);
-      // }
-    }
 
     // add error bar for incorrect letter
     this.tracker = new ResourceTracker();
@@ -285,11 +236,13 @@ addLetter(scene, third, color) {
   }
 
   update(timeStamp) {
+	this.title.update(timeStamp);
 	const { updateList, updateListTarget } = this.state;
 
 	// for every 90 indices (30 notes) where info[i] = time, info[i+1] = note, info[i+2] = velocity
 	// start game -- only runsonce
 	if (this.start) {
+		this.start = false;
 		for (let i = 0; i < this.info.length; i = i + 90) {
 			// assuming it takes 4000 ms for letter to fall to its target
 			const fallTime = 4000;
@@ -316,7 +269,6 @@ addLetter(scene, third, color) {
 			);
 			if (i == (this.info.length - 1)) this.over = true;
 		}
-		this.start = false;
 	}
 
     // error bar logic

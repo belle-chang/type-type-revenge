@@ -1,10 +1,7 @@
 import { Mesh } from 'three';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
-import { Tween } from "@createjs/tweenjs";
 import { ResourceTracker } from 'tracker';
 
-
-// import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import * as THREE from 'three';
 
 
@@ -135,7 +132,6 @@ class Letter extends Mesh {
         }
     }
 
-    // MOVE FALL TO update() FOR IT TO AUTOMATICALLY FALL!
     fall() {
 
         // Use timing library for more precice "bounce" animation
