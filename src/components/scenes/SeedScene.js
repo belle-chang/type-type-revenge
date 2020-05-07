@@ -319,7 +319,6 @@ addLetter(scene, third, color) {
 		if ((updateList.length == 0)) {
 			this.over = true;
 			this.dispose()
-			this.disposedOf = true;
 		}
     }
   }
