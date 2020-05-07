@@ -95,7 +95,9 @@ window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
 document.getElementById("toggle").addEventListener("click", toggle);
 document.getElementById("start").addEventListener("click", start);
-document.getElementById("instructions-close").addEventListener("click", closeInstructions);
+document
+  .getElementById("instructions-close")
+  .addEventListener("click", closeInstructions);
 // when key is pressed save event key to key parameter of SeedScene
 function handleKeyDown(event) {
   if (!event.metaKey && !event.altKey && !event.controlKey)
@@ -125,35 +127,35 @@ audioLoader.load(mp3, function (buffer) {
 
 // Render loop
 const onAnimationFrameHandler = timeStamp => {
-
-    composer.render(timeStamp);
-    scene.update && scene.update(timeStamp);
-    window.requestAnimationFrame(onAnimationFrameHandler);
+  composer.render(timeStamp);
+  scene.update && scene.update(timeStamp);
+  window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 
 function toggle() {
-    // if it's muted, turn volume up
-    if ( muted ){
-        sound.setVolume(0.5)
-        muted = false;
-    }
-    // if it's not muted, change volume to 0
-    else {
-        sound.setVolume(0);
-        muted = true;
-    }
-    scene.playing = playing;
+  // if it's muted, turn volume up
+  if (muted) {
+    sound.setVolume(0.5);
+    muted = false;
+  }
+  // if it's not muted, change volume to 0
+  else {
+    sound.setVolume(0);
+    muted = true;
+  }
+  scene.playing = playing;
 }
 
 function start() {
-    scene.start = true;
-    sound.play();
-    playing = true;
-    sound.setLoop(false);
-    closeInstructions();
+  scene.start = true;
+  sound.stop(); // so that song starts from beginning w/ new game
+  sound.play();
+  playing = true;
+  sound.setLoop(false);
+  closeInstructions();
 }
 
 function closeInstructions() {
-    document.getElementById("instructions").className = "instructions hidden";
+  document.getElementById("instructions").className = "instructions hidden";
 }
