@@ -242,7 +242,6 @@ class SeedScene extends Scene {
       }
       this.remove(this.children[this.children.length - 1]);
     }
-    console.log(this.children);
   }
 
   disposeAll() {
@@ -261,19 +260,21 @@ class SeedScene extends Scene {
     if (this.start) {
       // if another game was currently running
       if (this.running) {
-        // for (let i = 0; i < this.state.timeoutList; i++) {
-        //   clearTimeout(this.state.timeoutList[i]);
-        // }
-        // this.dispose();
-        // this.state.updateList = [];
-        // this.state.updateSet.clear();
-        // this.state.updateListTarget = [];
-        // this.state.lettersOnScreen = [];
-        // this.state.timeoutList = [];
-        this.running = false;
-        sessionStorage.setItem("reloading", "true");
-        location.reload();
-        // document.getElementById("start").addEventListener(click, start)
+        // solution 1: actually clear everything but it's not working?
+        for (let i = 0; i < this.state.timeoutList; i++) {
+          clearTimeout(this.state.timeoutList[i]);
+        }
+        this.dispose();
+        this.state.updateList = [];
+        this.state.updateSet.clear();
+        this.state.updateListTarget = [];
+        this.state.lettersOnScreen = [];
+        this.state.timeoutList = [];
+        //
+        // SOLUTION 2: just reload everything but audio won't start again bc needs user interaction
+        // this.running = false;
+        // sessionStorage.setItem("reloading", "true");
+        // location.reload();
       }
       this.start = false;
       this.running = true;

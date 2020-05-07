@@ -126,17 +126,18 @@ audioLoader.load(mp3, function (buffer) {
 });
 
 // if it's a reload
-window.onload = function () {
-  var reloading = sessionStorage.getItem("reloading");
-  if (reloading) {
-    sessionStorage.removeItem("reloading");
-    scene.start = true;
-    closeInstructions();
-    sound.setVolume(0.5);
-    sound.play();
-    playing = true;
-  }
-};
+// window.onload = function () {
+//   var reloading = sessionStorage.getItem("reloading");
+//   if (reloading) {
+//     sessionStorage.removeItem("reloading");
+//     scene.start = true;
+//     closeInstructions();
+//     console.log(sound);
+//     sound.setVolume(0.5);
+//     sound.play();
+//     playing = true;
+//   }
+// };
 
 // Render loop
 const onAnimationFrameHandler = timeStamp => {
