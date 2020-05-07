@@ -253,7 +253,9 @@ class SeedScene extends Scene {
     // for every 90 indices (30 notes) where info[i] = time, info[i+1] = note, info[i+2] = velocity
     // start game -- only runsonce
     if (this.start) {
+      // this.dispose();
       this.start = false;
+      // this.over = false;
       for (let i = 4; i < this.info.length; i += 2) {
         // assuming it takes 4000 ms for letter to fall to its target
         const fallTime = 4000;
@@ -325,7 +327,7 @@ class SeedScene extends Scene {
       if (updateList.length == 0) {
         this.over = true;
         this.dispose();
-        this.disposedOf = true;
+        // ADD SCOREBOARD HERE!
       }
     }
   }

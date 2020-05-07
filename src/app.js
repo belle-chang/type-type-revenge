@@ -149,7 +149,7 @@ function toggle() {
 
 function start() {
   scene.start = true;
-  sound.stop(); // so that song starts from beginning w/ new game
+  if (playing) sound.stop(); // so that song starts from beginning w/ new game
   sound.play();
   playing = true;
   sound.setLoop(false);
