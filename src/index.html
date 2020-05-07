@@ -8,9 +8,10 @@
   <style>
     html,
     body {
-      margin: 0;
+      /* margin: 0; */
       height: 100%;
       overflow: hidden;
+      text-align: center;
     }
     a {
       font-family: "Helvetica Neue";
@@ -24,12 +25,25 @@
 
     div {
       font-family: "Helvetica Neue";
-      font-size: 1.25em;
-      position: fixed;
+      font-size: 1em;
+      color: white;
+    }
+    .score {
+      line-height: 40px;
+      background: #7271be;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      text-align: center;
+      border: 3px solid white;
+    }
+    .score-container {
+      right: 0%;
       margin-top: 50px;
       margin-right: 50px;
-      right: 0%;
-      color: white;
+      position: fixed;
+
     }
     /* a:nth-child(2){ */
     #description {
@@ -37,18 +51,23 @@
       text-align: center;
     }
     .instructions {
-      display: block;
+      display: inline-block;
       top: 50%;
-      left: 50%;
+      /* left: 50%; */
       transform: translate(-50%, -50%);
       color: white;
-      background-color:silver;
+      background-color:#5250a4;
       /* padding-top: 1em; */
-      padding-left: 1em;
-      padding-right: 1em;
-      padding-bottom: 1em;
-      border-radius: 5px;
-
+      padding: 30px 5em 50px 5em;
+      border-radius: 10px;
+      /* padding-top: 0px; */
+      opacity: 0.85;
+      width: 500px;
+      /* height: 40%; */
+      position: absolute;
+      /* margin: 0px 30%; */
+      text-align: center;
+      /* border: 3px solid white; */
     }
     .instructions-heading {
       text-align: center;
@@ -57,42 +76,81 @@
     .instructions-text {
       text-align: center;
       font-size: 1em;
+      line-height: 30px;
     }
-    .instructions-close {
+    /* .instructions-close {
       text-align: right !important;
-      font-size: 1.5em;
+      font-size: 1em;
+      margin: 0;
+      padding: 0;
     }
     .instructions-close:hover {
       color: aquamarine;
-    }
+    } */
     .instructions-open {
       font-size: 1.5em;
       color: white;
       align-content: right;
-      margin-top: 4.5em;
+      margin-top: 7.5em;
     }
     .instructions-open:hover {
-      color: aquamarine;
+      color: #7271be;
     }
     .hidden {
       display: none;
+    }
+    button {
+      width: 170px;
+      height: 50px;
+      color: #232577;
+      background-color: #acace6;
+      /* padding: 10px; */
+      margin: 1em auto;
+      text-align: center;
+      border-radius: 6px;
+      border: none;
+      font-size: 15px;
+      font-weight: 700;
+    }
+    button:hover {
+      color: white;
+      background-color: #232577;
+      border: none;
+    }
+    .button-container {
+      /* position: absolute; */
+      /* top: 50%; */
+      /* left: 50%; */
+      /* text-align: center; */
     }
   </style>
   <body>
     <!-- <a id="description">type each letter as they fall! 
       [pls edit this. also there is a delay to the game bc otherwise the error bars go crazy lol] </a> -->
-      <div class="instructions-open" onClick="openInstructions()">
+      <div class="instructions-open score-container" onClick="openInstructions()">
           <i class="far fa-question-circle"></i>
       </div>
       <div class="instructions" id="instructions">
-        <p class="instructions-close" onClick="closeInstructions()">x</p>
-        <h1 class="instructions-heading">instructions</h1>
+        <!-- <p class="instructions-close" onClick="closeInstructions()">x</p> -->
+        
+        <h1 class="instructions-heading">HOW TO PLAY</h1>
         <p class="instructions-text">
           When the falling letters match up with their target outlines at the
           bottom of the screen, hit the corresponding letter on your keyboard to
-          earn points. Maintain a streak of correctly pressed notes to earn more
-          points! Make sure you turn your volume up so you can hear the music.
+          earn points. 
+          <br><br>
+          Maintain a streak of correctly pressed notes to earn more
+          points! 
+          <br><br>
+          Make sure you turn your volume up so you can hear the music.
         </p>
+        <div class="button-container">
+          <button id="toggle">play / pause music</button>
+          <br>
+          <button id="start">start game</button>
+          <br>
+          <button class="instructions-close" id="instructions-close">exit</button>
+        </div>
       </div>
       <!-- add in gif example here? -->
       <!-- add in options to choose song? -->

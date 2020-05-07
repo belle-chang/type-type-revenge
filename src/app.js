@@ -13,11 +13,11 @@ import { SeedScene } from "scenes";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
-import mp3 from "./sounds/WiiThemeSong.mp3";
+import mp3 from "./sounds/grenade.mp3";
 import $ from "jquery";
 
 // Initialize core ThreeJS components
-
+let playing = false;
 // const camera = new PerspectiveCamera();
 const camera = new THREE.PerspectiveCamera(
   75,
@@ -80,16 +80,6 @@ var bloomPass = new UnrealBloomPass(
 bloomPass.renderToScreen = true;
 composer.addPass(bloomPass);
 
-// Render loop
-const onAnimationFrameHandler = timeStamp => {
-  // controls.update();
-  // renderer.render(scene, camera);
-  composer.render(timeStamp);
-  scene.update && scene.update(timeStamp);
-  window.requestAnimationFrame(onAnimationFrameHandler);
-};
-window.requestAnimationFrame(onAnimationFrameHandler);
-
 // Resize Handler
 const windowResizeHandler = () => {
   const { innerHeight, innerWidth } = window;
@@ -99,10 +89,13 @@ const windowResizeHandler = () => {
   camera.updateProjectionMatrix();
 };
 windowResizeHandler();
+
 window.addEventListener("resize", windowResizeHandler, false);
 window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
-
+document.getElementById("toggle").addEventListener("click", toggle);
+document.getElementById("start").addEventListener("click", start);
+document.getElementById("instructions-close").addEventListener("click", closeInstructions);
 // when key is pressed save event key to key parameter of SeedScene
 function handleKeyDown(event) {
   if (!event.metaKey && !event.altKey && !event.controlKey)
@@ -126,10 +119,45 @@ var sound = new THREE.Audio(listener);
 var audioLoader = new THREE.AudioLoader();
 audioLoader.load(mp3, function (buffer) {
   sound.setBuffer(buffer);
-  sound.setLoop(true);
+  sound.setLoop(false);
   sound.setVolume(0.5);
-  sound.play();
 });
+
+// Render loop
+const onAnimationFrameHandler = timeStamp => {
+    // controls.update();
+    // renderer.render(scene, camera);
+    
+    composer.render(timeStamp);
+    scene.update && scene.update(timeStamp);
+    window.requestAnimationFrame(onAnimationFrameHandler);
+};
+window.requestAnimationFrame(onAnimationFrameHandler);
+
+function toggle() {
+    if(playing){
+        sound.pause();
+        playing = false;
+    }
+    else{
+        sound.play();
+        playing = true;
+    }
+    scene.playing = playing;
+}
+
+function start() {
+    console.log(start);
+    scene.start = true;
+    sound.play();
+    sound.setLoop(false);
+    playing = true;
+    closeInstructions();
+}
+
+function closeInstructions() {
+    document.getElementById("instructions").className = "instructions hidden";
+}
 
 // $.getJSON( "./json/exampleSong.json", function( json ) {
 //     console.log( "JSON Data: " + json.notes[ 3 ].note );
