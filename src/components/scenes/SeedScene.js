@@ -8,7 +8,7 @@ import { TWEEN } from "three/examples/jsm/libs/tween.module.min.js";
 import { PositionFinder } from "positioning";
 import { HighScore } from "interface";
 import $ from "jquery";
-import SONG from './exampleSong.json';
+import SONG from './grenade.json';
 
 class SeedScene extends Scene {
   constructor(width, height) {
@@ -172,16 +172,16 @@ class SeedScene extends Scene {
     // ------------------------------------------------------------------------
 
     // convert string into array of numbers
-    var info = starwars.split(" ");
-    // let info = SONG.notes;
+    // var info = starwars.split(" ");
+    let info = SONG.notes;
 
     //  for every 90 indices (30 notes) where info[i] = time, info[i+1] = note, info[i+2] = velocity
-    for (let i = 0; i < info.length; i = i + 90) {
+    for (let i = 4; i < info.length; i += 2) {
     // for (let i = 0; i < info.length; i = i + 1) {
       // assuming it takes 4000 ms for letter to fall to its target
       const fallTime = 4000;
       // obtain note from pitch
-      let note = (parseInt(info[i + 1]) - 21) % 12;
+      let note = (parseInt(info[i].note) - 21) % 12;
       let third;
       // map note to corresponding section of the keyboard, update string of possible letters
       // TODO: generate xPos that corresponds to section on keyboard
@@ -195,7 +195,7 @@ class SeedScene extends Scene {
       // add a random letter from "letters" string after specified time
       setTimeout(
         addLetter,
-        parseInt(info[i]) - fallTime,
+        parseInt(info[i].time) - fallTime,
         // parseInt(info[i].time) - fallTime,
         this,
         third,
