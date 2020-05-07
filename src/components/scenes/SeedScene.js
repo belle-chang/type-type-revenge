@@ -15,11 +15,10 @@ class SeedScene extends Scene {
 
     this.score = new HighScore();
 
-    // keeps track of whether or not the game is still going on
-    // or if it is over
-    this.over = false;
+    // keeps track of whether or not the game is currently running
+    this.running = false;
 
-    // keep track of if game has started
+    // keep track of if game is now starting
     this.start = false;
 
     // string version of json file, for now
@@ -48,11 +47,11 @@ class SeedScene extends Scene {
       // gui: new Dat.GUI(), // Create GUI for scene
       rotationSpeed: 1,
       key: "",
-      spheres: [],
       updateList: [],
       updateSet: new Set(),
       updateListTarget: [], // list of targets that correspond to objects in updateList
-      lettersOnScreen: []
+      lettersOnScreen: [],
+      timeoutList: [] // all variables set with timeouts
     };
 
     // create title
@@ -77,7 +76,7 @@ class SeedScene extends Scene {
     this.add(lights);
 
     // rain effect
-    setInterval(makeLine, 60, this);
+    // setInterval(makeLine, 60, this);
 
     function makeLine(scene) {
       // get random position for the line
@@ -234,9 +233,16 @@ class SeedScene extends Scene {
   dispose() {
     this.tracker.dispose();
     while (this.children.length > 1) {
-      if (this.children[this.children.length - 1] == this.title) continue;
+      if (this.children[this.children.length - 1] == this.title) {
+        // while (this.children[this.children.length -1] )
+        continue;
+      }
+      if (this.children[this.children.length - 1] instanceof Letter) {
+        this.children[this.children.length - 1].disposeLetter();
+      }
       this.remove(this.children[this.children.length - 1]);
     }
+    console.log(this.children);
   }
 
   disposeAll() {
@@ -253,9 +259,24 @@ class SeedScene extends Scene {
     // for every 90 indices (30 notes) where info[i] = time, info[i+1] = note, info[i+2] = velocity
     // start game -- only runsonce
     if (this.start) {
-      // this.dispose();
+      // if another game was currently running
+      if (this.running) {
+        // for (let i = 0; i < this.state.timeoutList; i++) {
+        //   clearTimeout(this.state.timeoutList[i]);
+        // }
+        // this.dispose();
+        // this.state.updateList = [];
+        // this.state.updateSet.clear();
+        // this.state.updateListTarget = [];
+        // this.state.lettersOnScreen = [];
+        // this.state.timeoutList = [];
+        this.running = false;
+        sessionStorage.setItem("reloading", "true");
+        location.reload();
+        // document.getElementById("start").addEventListener(click, start)
+      }
       this.start = false;
-      // this.over = false;
+      this.running = true;
       for (let i = 4; i < this.info.length; i += 2) {
         // assuming it takes 4000 ms for letter to fall to its target
         const fallTime = 4000;
@@ -272,13 +293,14 @@ class SeedScene extends Scene {
           third = 2;
         }
         // add a random letter from "letters" string after specified time
-        setTimeout(
+        this.timer = setTimeout(
           this.addLetter,
           parseInt(this.info[i].time) - fallTime,
           this,
           third,
           this.noteToColor[note]
         );
+        this.state.timeoutList.push(this.timer);
       }
     }
 
@@ -325,7 +347,7 @@ class SeedScene extends Scene {
 
       // clear scene when game is over
       if (updateList.length == 0) {
-        this.over = true;
+        this.running = false;
         this.dispose();
         // ADD SCOREBOARD HERE!
       }
