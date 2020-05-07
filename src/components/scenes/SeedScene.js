@@ -7,18 +7,17 @@ import { TWEEN } from "three/examples/jsm/libs/tween.module.min.js";
 import { PositionFinder } from "positioning";
 import { HighScore } from "interface";
 import $ from "jquery";
-import SONG from './grenade.json';
-
+import SONG from "./grenade.json";
 
 class SeedScene extends Scene {
   constructor(width, height) {
     // Call parent Scene() constructor
     super();
 
-	this.score = new HighScore();
+    this.score = new HighScore();
 
-	// keep track of if game has started
-	this.start = false;
+    // keep track of if game has started
+    this.start = false;
 
     // string version of json file, for now
     // this is star wars theme song
@@ -27,20 +26,19 @@ class SeedScene extends Scene {
 
     // use HSL instead of RGB so you can control the glow of the letters in target
     this.noteToColor = {
-        0: "hsl(265, 26%, 81%)",
-        1: "hsl(204, 100%, 33%)",
-        2: "hsl(262, 83%, 51%)",
-        3: "hsl(204, 57%, 80%)",
-        4: "hsl(179, 33%, 73%)",
-        5: "hsl(84, 53%, 59%)",
-        6: "hsl(139, 48%, 88%)",
-        7: "hsl(53, 100%, 71%)",
-        8: "hsl(14, 89%, 69%)",
-        9: "hsl(0, 72%, 53%)",
-        10: "hsl(324, 100%, 46%)",
-        11: "hsl(353, 84%, 88%)"
-      };
-  
+      0: "hsl(265, 26%, 81%)",
+      1: "hsl(204, 100%, 33%)",
+      2: "hsl(262, 83%, 51%)",
+      3: "hsl(204, 57%, 80%)",
+      4: "hsl(179, 33%, 73%)",
+      5: "hsl(84, 53%, 59%)",
+      6: "hsl(139, 48%, 88%)",
+      7: "hsl(53, 100%, 71%)",
+      8: "hsl(14, 89%, 69%)",
+      9: "hsl(0, 72%, 53%)",
+      10: "hsl(324, 100%, 46%)",
+      11: "hsl(353, 84%, 88%)"
+    };
 
     // Init state
     this.state = {
@@ -55,8 +53,8 @@ class SeedScene extends Scene {
     };
 
     // create title
-	const title = new Title(this);
-	this.title = title;
+    const title = new Title(this);
+    this.title = title;
     this.add(title);
 
     // add position tracker to ensure there aren't any overlapping letters
@@ -118,7 +116,7 @@ class SeedScene extends Scene {
       tween.onComplete(() => {
         rt.dispose();
         scene.remove(line);
-	  });
+      });
     }
 
     // convert string into array of numbers
@@ -141,7 +139,6 @@ class SeedScene extends Scene {
       scene.add(letter, target);
     }
 
-
     // add error bar for incorrect letter
     this.tracker = new ResourceTracker();
     const track = this.tracker.track.bind(this.tracker);
@@ -152,57 +149,64 @@ class SeedScene extends Scene {
       )
     );
     error_bar.position.set(0, -1 * this.height - 0.25, 0);
-	error_bar.visible = false;
+    error_bar.visible = false;
     this.incorrect = error_bar;
     this.add(error_bar);
   }
-// ------------------------------------------------------------------------
-// END OF CONSTRUCTOR
-// ------------------------------------------------------------------------
+  // ------------------------------------------------------------------------
+  // END OF CONSTRUCTOR
+  // ------------------------------------------------------------------------
 
-addLetter(scene, third, color) {
-	// selects a random x position then randomly selects a character based on the x coordinate and number of sections
-	// the order of possibleLetters is from left to right on the keyboard, the order matters for selecting
-	function getRandomLetter(xPos) {
-	  let possibleLetters = "qazwsxedcrfvtgbyhnujmikolp";
-	  let numSections = 3;
-	  let offset = numSections - 1;
-	  let fraction =
-		(xPos - scene.allPositions.minx) /
-		(scene.allPositions.maxx - scene.allPositions.minx);
-	  for (let i = numSections - 1; i >= 1; i--) {
-		if (fraction < i / numSections) offset = i - 1;
-	  }
-	  return possibleLetters[
-		Math.floor((Math.random() / numSections + offset / numSections) * 26)
-	  ];
-	}
-	let xPos;
-	let length = scene.allPositions.maxx - scene.allPositions.minx;
-	if (third == 0) {
-	  xPos = scene.allPositions.add(scene.allPositions.minx, Math.floor(scene.allPositions.minx + length / 3));
-	}
-	else if (third == 1) {
-	  xPos = scene.allPositions.add(Math.floor(scene.allPositions.minx + length / 3), Math.floor(scene.allPositions.minx + 2 * length / 3));
-	}
-	else {
-	  xPos = scene.allPositions.add(Math.floor(scene.allPositions.minx + 2 * length / 3), scene.allPositions.maxx);
-	}
+  addLetter(scene, third, color) {
+    // selects a random x position then randomly selects a character based on the x coordinate and number of sections
+    // the order of possibleLetters is from left to right on the keyboard, the order matters for selecting
+    function getRandomLetter(xPos) {
+      let possibleLetters = "qazwsxedcrfvtgbyhnujmikolp";
+      let numSections = 3;
+      let offset = numSections - 1;
+      let fraction =
+        (xPos - scene.allPositions.minx) /
+        (scene.allPositions.maxx - scene.allPositions.minx);
+      for (let i = numSections - 1; i >= 1; i--) {
+        if (fraction < i / numSections) offset = i - 1;
+      }
+      return possibleLetters[
+        Math.floor((Math.random() / numSections + offset / numSections) * 26)
+      ];
+    }
+    let xPos;
+    let length = scene.allPositions.maxx - scene.allPositions.minx;
+    if (third == 0) {
+      xPos = scene.allPositions.add(
+        scene.allPositions.minx,
+        Math.floor(scene.allPositions.minx + length / 3)
+      );
+    } else if (third == 1) {
+      xPos = scene.allPositions.add(
+        Math.floor(scene.allPositions.minx + length / 3),
+        Math.floor(scene.allPositions.minx + (2 * length) / 3)
+      );
+    } else {
+      xPos = scene.allPositions.add(
+        Math.floor(scene.allPositions.minx + (2 * length) / 3),
+        scene.allPositions.maxx
+      );
+    }
 
-	// ensure different characters on the screen at all times
-	// remove this if we want to support sentences
-	let character = getRandomLetter(xPos);
-	while (
-	  scene.state.lettersOnScreen.find(element => element == character) !=
-	  undefined
-	) 
-	character = getRandomLetter(xPos);
-	
-	const letter = new Letter(scene, character, xPos, color);
-	const target = new Target(scene, character, letter.coords.x);
-	letter.addTarget(target);
+    // ensure different characters on the screen at all times
+    // remove this if we want to support sentences
+    let character = getRandomLetter(xPos);
+    while (
+      scene.state.lettersOnScreen.find(element => element == character) !=
+      undefined
+    )
+      character = getRandomLetter(xPos);
 
-	scene.add(letter, target);
+    const letter = new Letter(scene, character, xPos, color);
+    const target = new Target(scene, character, letter.coords.x);
+    letter.addTarget(target);
+
+    scene.add(letter, target);
   }
 
   // add letter object to updateList
@@ -225,19 +229,19 @@ addLetter(scene, third, color) {
   }
 
   dispose() {
-	this.tracker.dispose();
+    this.tracker.dispose();
   }
 
   update(timeStamp) {
-	this.title.update(timeStamp);
-	const { updateList, updateListTarget } = this.state;
+    this.title.update(timeStamp);
+    const { updateList, updateListTarget } = this.state;
 
-	// for every 90 indices (30 notes) where info[i] = time, info[i+1] = note, info[i+2] = velocity
-	// start game -- only runsonce
-	if (this.start) {
-		this.start = false;
-		for (let i = 4; i < this.info.length; i += 2) {
-      // for (let i = 0; i < info.length; i = i + 1) {
+    // for every 90 indices (30 notes) where info[i] = time, info[i+1] = note, info[i+2] = velocity
+    // start game -- only runsonce
+    if (this.start) {
+      this.start = false;
+      for (let i = 4; i < this.info.length; i += 2) {
+        // for (let i = 0; i < info.length; i = i + 1) {
         // assuming it takes 4000 ms for letter to fall to its target
         const fallTime = 4000;
         // obtain note from pitch
@@ -261,45 +265,48 @@ addLetter(scene, third, color) {
           this.noteToColor[note]
         );
       }
-  }
+    }
 
     // error bar logic
     if (this.key != "" && this.key != undefined) {
-	  // see if key pressed is any of the letters on the screen
-	  const found = this.state.lettersOnScreen.indexOf(this.key);
-		// if not turn on error bar
-		if (found == -1) {
-			this.score.reset();
-			this.incorrect.visible = true;
-			//         this.parent.key = "";
-			setTimeout(() => (this.incorrect.visible = false), 300);
-		} 
-		else {
-			// find letter
-			let found_letter = updateList[found];
-			// if found letter is before target, turn on error bar
-			if (
-			found_letter.position.y > -1 * (found_letter.coords.y + Math.abs(found_letter.target.coords.y)) + 1.5) {
-				this.score.reset();
-				this.incorrect.visible = true;
-				this.key = "";
-				setTimeout(() => (this.incorrect.visible = false), 300);
-			}
-			// if found letter has already been pressed, turn on error bar
-			if (found_letter.target.state.mesh.visible) {
-				this.score.reset();
-				found_letter.target.changeColor(0xff0000);
-				this.incorrect.visible = true;
-				this.key = "";
-				setTimeout(() => (this.incorrect.visible = false), 300);
-			}
-      	}
+      // see if key pressed is any of the letters on the screen
+      const found = this.state.lettersOnScreen.indexOf(this.key);
+      // if not turn on error bar
+      if (found == -1) {
+        this.score.reset();
+        this.incorrect.visible = true;
+        //         this.parent.key = "";
+        setTimeout(() => (this.incorrect.visible = false), 300);
+      } else {
+        // find letter
+        let found_letter = updateList[found];
+        // if found letter is before target, turn on error bar
+        if (
+          found_letter.position.y >
+          -1 *
+            (found_letter.coords.y + Math.abs(found_letter.target.coords.y)) +
+            1.5
+        ) {
+          this.score.reset();
+          this.incorrect.visible = true;
+          this.key = "";
+          setTimeout(() => (this.incorrect.visible = false), 300);
+        }
+        // if found letter has already been pressed, turn on error bar
+        if (found_letter.target.state.mesh.visible) {
+          this.score.reset();
+          found_letter.target.changeColor(0xff0000);
+          this.incorrect.visible = true;
+          this.key = "";
+          setTimeout(() => (this.incorrect.visible = false), 300);
+        }
+      }
     }
 
     // update each object in updateList
     // passes in corresponding target object to check position values in Letter.js
     for (let i = 0; i < updateList.length; i++) {
-    	updateList[i].update(timeStamp, updateListTarget[i]);
+      updateList[i].update(timeStamp, updateListTarget[i]);
     }
   }
 }

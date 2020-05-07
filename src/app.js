@@ -95,7 +95,9 @@ window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
 document.getElementById("toggle").addEventListener("click", toggle);
 document.getElementById("start").addEventListener("click", start);
-document.getElementById("instructions-close").addEventListener("click", closeInstructions);
+document
+  .getElementById("instructions-close")
+  .addEventListener("click", closeInstructions);
 // when key is pressed save event key to key parameter of SeedScene
 function handleKeyDown(event) {
   if (!event.metaKey && !event.altKey && !event.controlKey)
@@ -125,38 +127,38 @@ audioLoader.load(mp3, function (buffer) {
 
 // Render loop
 const onAnimationFrameHandler = timeStamp => {
-    // controls.update();
-    // renderer.render(scene, camera);
-    
-    composer.render(timeStamp);
-    scene.update && scene.update(timeStamp);
-    window.requestAnimationFrame(onAnimationFrameHandler);
+  // controls.update();
+  // renderer.render(scene, camera);
+
+  composer.render(timeStamp);
+  scene.update && scene.update(timeStamp);
+  window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 
 function toggle() {
-    if(playing){
-        sound.pause();
-        playing = false;
-    }
-    else{
-        sound.play();
-        playing = true;
-    }
-    scene.playing = playing;
+  if (playing) {
+    sound.pause();
+    playing = false;
+  } else {
+    sound.play();
+    playing = true;
+  }
+  scene.playing = playing;
 }
 
 function start() {
-    console.log(start);
-    scene.start = true;
-    sound.play();
-    sound.setLoop(false);
-    playing = true;
-    closeInstructions();
+  console.log(start);
+  scene.start = true;
+  sound.stop(); // stop so that it starts from beginning
+  sound.play();
+  sound.setLoop(false);
+  playing = true;
+  closeInstructions();
 }
 
 function closeInstructions() {
-    document.getElementById("instructions").className = "instructions hidden";
+  document.getElementById("instructions").className = "instructions hidden";
 }
 
 // $.getJSON( "./json/exampleSong.json", function( json ) {
