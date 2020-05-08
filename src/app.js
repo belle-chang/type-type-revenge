@@ -7,9 +7,9 @@
  *
  */
 import * as THREE from "three";
-import { WebGLRenderer, PerspectiveCamera, Vector3 } from "three";
+import { WebGLRenderer, PerspectiveCamera, Vector3, Scene } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { SeedScene } from "scenes";
+import { SeedScene, CubeScene } from "scenes";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
@@ -26,7 +26,7 @@ const camera = new THREE.PerspectiveCamera(
   1000
 );
 const renderer = new WebGLRenderer({ antialias: true });
-
+renderer.setClearColor(0xffffff, 0);
 // Set up camera
 camera.position.set(0, 0, 16);
 camera.lookAt(new Vector3(0, 0, 0));
@@ -64,6 +64,13 @@ document.body.appendChild(canvas);
 // controls.maxDistance = 16;
 // controls.update();
 
+let cubeScene = new CubeScene(width, height);
+let cubePass = new RenderPass(cubeScene, camera);
+cubePass.clear = false;
+cubePass.clearDepth = true;
+let cubeComposer = new EffectComposer(renderer);
+cubeComposer.addPass(cubePass);
+
 // ADD POSTPROCESSING EFFECT SUPPORT
 var composer = new EffectComposer(renderer);
 // first and mandatory pass
@@ -79,6 +86,7 @@ var bloomPass = new UnrealBloomPass(
 );
 bloomPass.renderToScreen = true;
 composer.addPass(bloomPass);
+// composer.addPass(cubePass);
 
 // Resize Handler
 const windowResizeHandler = () => {
@@ -128,7 +136,12 @@ audioLoader.load(mp3, function (buffer) {
 // Render loop
 const onAnimationFrameHandler = timeStamp => {
   composer.render(timeStamp);
+  renderer.autoClear = false;
+  cubeComposer.render(timeStamp);
+//   renderer.autoClear = false;
+  renderer.render(cubeScene, camera);
   scene.update && scene.update(timeStamp);
+  cubeScene.update && cubeScene.update(timeStamp);
   window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);

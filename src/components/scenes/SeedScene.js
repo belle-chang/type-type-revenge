@@ -1,5 +1,5 @@
 import { Scene, Color, AnimationObjectGroup } from "three";
-import { Letter, Target, Title } from "objects";
+import { Letter, Target, Title, Cube } from "objects";
 import { ResourceTracker } from "tracker";
 import { BasicLights } from "lights";
 import * as THREE from "three";
@@ -56,9 +56,9 @@ class SeedScene extends Scene {
     };
 
     // create title
-    const title = new Title(this);
-    this.title = title;
-    this.add(title);
+    // const title = new Title(this);
+    // this.title = title;
+    // this.add(title);
 
     // add position tracker to ensure there aren't any overlapping letters
     this.width = width;
@@ -70,12 +70,16 @@ class SeedScene extends Scene {
 
     // Set background to a nice color
     // this.background = new Color(0x7ec0ee);
-    this.background = new Color(0x000000);
+    // this.background = new Color(0x000000);
 
     // Add lights to scene
     const lights = new BasicLights();
     this.lights = lights;
     this.add(lights);
+
+    // Add cube to scene
+    // const cube = new Cube(this);
+    // this.add(cube);
 
     // rain effect
     setInterval(makeLine, 60, this);
@@ -256,7 +260,7 @@ class SeedScene extends Scene {
   }
 
   update(timeStamp) {
-    this.title.update(timeStamp);
+    // this.title.update(timeStamp);
     const { updateList, updateListTarget } = this.state;
 
     // for every 90 indices (30 notes) where info[i] = time, info[i+1] = note, info[i+2] = velocity
