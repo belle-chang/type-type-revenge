@@ -51,6 +51,7 @@
       text-align: center;
     }
     .instructions {
+      z-index: 1;
       display: inline-block;
       top: 50%;
       left: 50%;
@@ -125,6 +126,15 @@
       /* left: 50%; */
       /* text-align: center; */
     }
+    .message {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.3;
+      color: lightgoldenrodyellow;
+      font-size: 4em;
+    }
   </style>
   <body>
     <!-- <a id="description">type each letter as they fall! 
@@ -153,6 +163,9 @@
           <br>
           <button class="instructions-close" id="instructions-close">close this box</button>
         </div>
+      </div>
+      <div class="message" id="message">
+        <h1></h1>
       </div>
       <!-- add in gif example here? -->
       <!-- add in options to choose song? -->
