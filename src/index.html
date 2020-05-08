@@ -98,6 +98,21 @@
     .instructions-open:hover {
       color: #7271be;
     }
+    .mute-container {
+      right: 2%;
+      margin-top: 50px;
+      margin-right: 50px;
+      position: fixed;
+    }
+    .mute {
+      font-size: 1.5em;
+      color: white;
+      align-content: right;
+      margin-top: 7.5em;
+    }
+    .mute:hover {
+      color: #7271be;
+    }
     .hidden {
       display: none;
     }
@@ -132,6 +147,18 @@
       <div class="instructions-open score-container" onClick="openInstructions()">
           <i class="far fa-question-circle"></i>
       </div>
+      <div id="volume-controls">
+        <div id="mute" class="mute mute-container hidden">
+          <!-- <i class="fas fa-volume-up"></i> -->
+          <i class="fas fa-volume-mute"></i>
+          <!-- <i class="fas fa-volume-up"></i> -->
+        </div>
+        <div id="volume" class="mute mute-container hidden">
+          <!-- <i class="fas fa-volume-mute"></i> -->
+          <i class="fas fa-volume-up"></i>
+        </div>
+      </div>
+
       <div class="instructions" id="instructions">
         <!-- <p class="instructions-close" onClick="closeInstructions()">x</p> -->
         
@@ -147,8 +174,6 @@
           Make sure you turn your volume up so you can hear the music.
         </p>
         <div class="button-container">
-          <button id="toggle">mute music</button>
-          <br>
           <button id="start">start new game</button>
           <br>
           <button class="instructions-close" id="instructions-close">exit</button>
