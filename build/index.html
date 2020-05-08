@@ -1,6 +1,11 @@
-<!doctype html><html><head><meta charset="utf-8"/><title>Type Type Revenge</title><link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css"><link rel="icon" href="/type-type-revenge/favicon.ico"></head><style>html,
+<!doctype html><html><head><meta charset="utf-8"/><title>Type Type Revenge</title><link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css"/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-165939739-1"></script><script>window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-165939739-1");</script><link rel="icon" href="/type-type-revenge/favicon.ico"></head><style>html,
     body {
-      /* margin: 0; */
       height: 100%;
       overflow: hidden;
       text-align: center;
@@ -35,9 +40,7 @@
       margin-top: 50px;
       margin-right: 50px;
       position: fixed;
-
     }
-    /* a:nth-child(2){ */
     #description {
       margin-top: 90px;
       text-align: center;
@@ -49,20 +52,13 @@
       left: 50%;
       transform: translate(-50%, -50%);
       color: white;
-      background-color:#5250a4;
-      /* padding-top: 1em; */
+      background-color: #5250a4;
       padding: 30px 5em 50px 5em;
       border-radius: 10px;
-      /* padding-top: 0px; */
       opacity: 0.85;
-      /* opacity: 0.95; */
       width: 500px;
-      /* width: 40%; */
-      /* height: 52%; */
       position: absolute;
-      /* margin: 0px 30%; */
       text-align: center;
-      /* border: 3px solid white; */
     }
     .instructions-heading {
       text-align: center;
@@ -73,15 +69,6 @@
       font-size: 1em;
       line-height: 30px;
     }
-    /* .instructions-close {
-      text-align: right !important;
-      font-size: 1em;
-      margin: 0;
-      padding: 0;
-    }
-    .instructions-close:hover {
-      color: aquamarine;
-    } */
     .instructions-open {
       font-size: 1.5em;
       color: white;
@@ -89,6 +76,21 @@
       margin-top: 7.5em;
     }
     .instructions-open:hover {
+      color: #7271be;
+    }
+    .mute-container {
+      right: 2%;
+      margin-top: 50px;
+      margin-right: 50px;
+      position: fixed;
+    }
+    .mute {
+      font-size: 1.5em;
+      color: white;
+      align-content: right;
+      margin-top: 7.5em;
+    }
+    .mute:hover {
       color: #7271be;
     }
     .hidden {
@@ -99,7 +101,6 @@
       height: 50px;
       color: #232577;
       background-color: #acace6;
-      /* padding: 10px; */
       margin: 1em auto;
       text-align: center;
       border-radius: 6px;
@@ -112,12 +113,6 @@
       background-color: #232577;
       border: none;
     }
-    .button-container {
-      /* position: absolute; */
-      /* top: 50%; */
-      /* left: 50%; */
-      /* text-align: center; */
-    }
     .message {
       position: fixed;
       top: 50%;
@@ -126,9 +121,10 @@
       opacity: 0.3;
       color: lightgoldenrodyellow;
       font-size: 4em;
-    }</style><body><div class="instructions-open score-container" onclick="openInstructions()"><i class="far fa-question-circle"></i></div><div class="instructions" id="instructions"><h1 class="instructions-heading">HOW TO PLAY</h1><p class="instructions-text">When the falling letters match up with their target outlines at the bottom of the screen, hit the corresponding letter on your keyboard to earn points.<br><br>Maintain a streak of correctly pressed notes to earn more points!<br><br>Make sure you turn your volume up so you can hear the music.</p><div class="button-container"><button id="toggle">unmute music</button><br><button id="start">start new game</button><br><button class="instructions-close" id="instructions-close">close this box</button></div></div><div class="message" id="message"><h1></h1></div><script>function closeInstructions() {
-          document.getElementById("instructions").className = "instructions hidden";
-        }
-        function openInstructions() {
-          document.getElementById("instructions").className = "instructions";
-        }</script><script src="/type-type-revenge/main.c85ac923b352b377eca5.js"></script></body></html>
+    }</style><body><div class="instructions-open score-container" onclick="openInstructions()"><i class="far fa-question-circle"></i></div><div id="volume-controls"><div id="mute" class="mute-container mute hidden"><i class="fas fa-volume-mute"></i></div><div id="volume" class="mute-container mute hidden"><i class="fas fa-volume-up"></i></div></div><div class="instructions" id="instructions"><h1 class="instructions-heading">HOW TO PLAY</h1><p class="instructions-text">When the falling letters match up with their target outlines at the bottom of the screen, hit the corresponding letter on your keyboard to earn points.<br/><br/>Maintain a streak of correctly pressed notes to earn more points!<br/><br/>Make sure you turn your volume up so you can hear the music.</p><div class="button-container"><button id="start">start new game</button><br/><button class="instructions-close" id="instructions-close">close this box</button></div></div><div class="message" id="message"><h1></h1></div><script>function closeInstructions() {
+        document.getElementById("instructions").className =
+          "instructions hidden";
+      }
+      function openInstructions() {
+        document.getElementById("instructions").className = "instructions";
+      }</script><script src="/type-type-revenge/main.61255bca451dbcf4c663.js"></script></body></html>
