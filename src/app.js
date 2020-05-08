@@ -133,6 +133,19 @@ audioLoader.load(mp3, function (buffer) {
   sound.setVolume(0.5);
 });
 
+// if it's a reload
+window.onload = function () {
+  var reloading = sessionStorage.getItem("reloading");
+  if (reloading) {
+    sessionStorage.removeItem("reloading");
+    scene.start = true;
+    closeInstructions();
+    sound.setVolume(0.5);
+    sound.play();
+    playing = true;
+  }
+};
+
 // Render loop
 const onAnimationFrameHandler = timeStamp => {
   composer.render(timeStamp);

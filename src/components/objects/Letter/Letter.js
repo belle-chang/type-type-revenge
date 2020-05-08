@@ -116,15 +116,15 @@ class Letter extends Mesh {
       );
     }
 
-    parent.addToUpdateList(this);
-    parent.addToLettersOnScreen(letter);
     parent.addToUpdateSet(this);
+    parent.addToLettersOnScreenSet(letter);
 
     this.scoreAccountedFor = false;
   }
 
   // dispose of letter and its target after it falls out of frame
   disposeLetter() {
+	//   debugger;
     this.tracker.dispose();
     // need to add a null check for some reason
     if (this.parent !== null) {
@@ -133,10 +133,10 @@ class Letter extends Mesh {
       // THE "THIS" OBJECT TO BE AT THE BEGINNING OF THE ARRAY.
       // set might be more expensive to add to tho???
       this.parent.state.updateSet.delete(this);
-      this.parent.state.lettersOnScreen.shift();
-      this.parent.state.updateList.shift();
+      this.parent.state.lettersOnScreenSet.delete(this.name);
+      
+      this.target.disposeTarget();
       this.parent.remove(this);
-      this.target.dispose();
     }
   }
 
