@@ -152,7 +152,7 @@ const onAnimationFrameHandler = timeStamp => {
   renderer.autoClear = false;
   cubeComposer.render(timeStamp);
 //   renderer.autoClear = false;
-  renderer.render(cubeScene, camera);
+  // renderer.render(cubeScene, camera);
   scene.update && scene.update(timeStamp);
   if (!scene.running) {
     document.getElementById("volume").className="mute mute-container hidden";
