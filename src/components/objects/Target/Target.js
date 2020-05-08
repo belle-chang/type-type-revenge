@@ -77,7 +77,6 @@ class Target extends Group {
 
         });
 
-        parent.addToUpdateListTarget(this);
         parent.addToUpdateSetTarget(this);
 
     }
@@ -96,19 +95,13 @@ class Target extends Group {
         this.state.edgesMesh.material.color = new Color(color);
     }
 
-    // dispose of letter after it falls out of frame
-    disposeTarget(reload) {
+    // dispose of target after it falls out of frame
+    disposeTarget() {
         // debugger;
         this.tracker.dispose();
         if (this.parent != null) {
 
             this.parent.state.updateSetTarget.delete(this);
-            // if (reload) {
-            //     this.parent.state.updateListTarget.pop()
-            // }
-            // if (!reload) {
-            //     this.parent.state.updateListTarget.shift();
-            // }
             this.parent.remove(this);
         }
     }

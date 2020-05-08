@@ -47,13 +47,11 @@ class SeedScene extends Scene {
       // gui: new Dat.GUI(), // Create GUI for scene
       rotationSpeed: 1,
       key: "",
-      updateList: [],
       updateSet: new Set(),
-      updateListTarget: [], // list of targets that correspond to objects in updateList
       updateSetTarget: new Set(),
-      lettersOnScreen: [],
       lettersOnScreenSet: new Set(),
-      timeoutList: [] // all variables set with timeouts
+      timeoutList: [], // all variables set with timeouts
+      round: 0
     };
 
     // create title
@@ -79,7 +77,7 @@ class SeedScene extends Scene {
     this.add(lights);
 
     // rain effect
-    // setInterval(makeLine, 60, this);
+    setInterval(makeLine, 60, this);
 
     function makeLine(scene) {
       // get random position for the line
@@ -129,20 +127,20 @@ class SeedScene extends Scene {
     this.info = SONG.notes;
 
     // version of addLetter that takes in a string of possible letters
-    function noteToLetter(scene, letters, color) {
-      let xPos = scene.allPositions.add();
-      let character = letters[Math.floor(Math.random() * letters.length)];
-      while (
-        scene.state.lettersOnScreen.find(element => element == character) !=
-        undefined
-      ) {
-        character = letters[Math.floor(Math.random() * letters.length)];
-      }
-      const letter = new Letter(scene, character, xPos, color);
-      const target = new Target(scene, character, letter.coords.x);
-      letter.addTarget(target);
-      scene.add(letter, target);
-    }
+    // function noteToLetter(scene, letters, color) {
+    //   let xPos = scene.allPositions.add();
+    //   let character = letters[Math.floor(Math.random() * letters.length)];
+    //   while (
+    //     scene.state.lettersOnScreen.find(element => element == character) !=
+    //     undefined
+    //   ) {
+    //     character = letters[Math.floor(Math.random() * letters.length)];
+    //   }
+    //   const letter = new Letter(scene, character, xPos, color);
+    //   const target = new Target(scene, character, letter.coords.x);
+    //   letter.addTarget(target);
+    //   scene.add(letter, target);
+    // }
 
     // add error bar for incorrect letter
     this.tracker = new ResourceTracker();
@@ -162,7 +160,8 @@ class SeedScene extends Scene {
   // END OF CONSTRUCTOR
   // ------------------------------------------------------------------------
 
-  addLetter(scene, third, color) {
+  addLetter(scene, third, color, round) {
+    if (round != scene.state.round) return;
     // selects a random x position then randomly selects a character based on the x coordinate and number of sections
     // the order of possibleLetters is from left to right on the keyboard, the order matters for selecting
     function getRandomLetter(xPos) {
@@ -202,7 +201,7 @@ class SeedScene extends Scene {
     // remove this if we want to support sentences
     let character = getRandomLetter(xPos);
     while (
-      scene.state.lettersOnScreen.find(element => element == character) !=
+      Array.from(scene.state.lettersOnScreenSet).find(element => element == character) !=
       undefined
     )
       character = getRandomLetter(xPos);
@@ -214,10 +213,6 @@ class SeedScene extends Scene {
     scene.add(letter, target);
   }
 
-  // add letter object to updateList
-  addToUpdateList(object) {
-    this.state.updateList.push(object);
-  }
 
   // add letter object to updateSet
   addToUpdateSet(object) {
@@ -234,30 +229,17 @@ addToLettersOnScreenSet(object) {
     this.state.lettersOnScreenSet.add(object);
 }
 
-  // add target object to updateListTarget
-  addToUpdateListTarget(object) {
-    this.state.updateListTarget.push(object);
-  }
-
-  addToLettersOnScreen(object) {
-    this.state.lettersOnScreen.push(object);
-  }
-
   dispose() {
     this.tracker.dispose();
-    this.state.updateSet.forEach((k, v) => v.disposeLetter(true));
-    console.log("children")
-    console.log(this.children);
-    console.log(this.state);
+    this.state.updateSet.forEach((k, v) => v.disposeLetter());
     while (this.children.length > 2) {
         if (this.children[2] == this.title ||
             this.children[2] == this.lights) {
           continue;
         }
         this.remove(this.children[this.children.length - 1]);
-      }
+    }
     this.add(this.incorrect);
-    // debugger;
   }
 
   disposeAll() {
@@ -269,33 +251,28 @@ addToLettersOnScreenSet(object) {
 
   update(timeStamp) {
     this.title.update(timeStamp);
-    const { updateList, updateListTarget } = this.state;
+    // const { updateList, updateListTarget } = this.state;
 
     // for every 90 indices (30 notes) where info[i] = time, info[i+1] = note, info[i+2] = velocity
     // start game -- only runsonce
     if (this.start) {
       // if another game was currently running
-      
       if (this.running) {
+        // alright this is the ratchet solution to make sure we refresh the letters
+        this.state.round += 1;
+        // but also here's the proper garbage disposal stuff hopefully it works
         for (let i = 0; i < this.state.timeoutList; i++) {
           clearTimeout(this.state.timeoutList[i]);
         }
         this.dispose();
-        // this.state.updateList = [];
-        // this.state.updateSet.clear();
-        // this.state.updateListTarget = [];
-        // this.state.lettersOnScreen = [];
+        this.state.updateSet.clear();
+        this.state.updateSetTarget.clear();
+        this.state.lettersOnScreenSet.clear();
         this.state.timeoutList = [];
-
-        // this.running = false;
-        // sessionStorage.setItem("reloading", "true");
-        // location.reload();
-        // document.getElementById("start").addEventListener(click, start)
       }
       this.start = false;
       this.running = true;
-    //   if (!this.running) {
-      for (let i = 4; i < 8; i += 2) {
+      for (let i = 4; i < this.info.length; i += 2) {
         // assuming it takes 4000 ms for letter to fall to its target
         const fallTime = 4000;
         // obtain note from pitch
@@ -311,33 +288,30 @@ addToLettersOnScreenSet(object) {
           third = 2;
         }
         // add a random letter from "letters" string after specified time
-        this.timer = setTimeout(
+        var timer = setTimeout(
           this.addLetter,
           parseInt(this.info[i].time) - fallTime,
           this,
           third,
-          this.noteToColor[note]
+          this.noteToColor[note],
+          this.state.round
         );
-        this.state.timeoutList.push(this.timer);
+        this.state.timeoutList.push(timer);
       }
-    // }
     }
 
 
     // error bar logic
     if (this.key != "" && this.key != undefined) {
       // see if key pressed is any of the letters on the screen
-      // const found = this.state.lettersOnScreen.indexOf(this.key);
       const found = Array.from(this.state.lettersOnScreenSet).indexOf(this.key);
       // if not turn on error bar
       if (found == -1) {
         this.score.reset();
         this.incorrect.visible = true;
-        //         this.parent.key = "";
         setTimeout(() => (this.incorrect.visible = false), 300);
       } else {
         // find letter
-        // let found_letter = updateList[found];
         let found_letter =  Array.from(this.state.updateSet)[found];
         // if found letter is before target, turn on error bar
         if (
@@ -364,20 +338,18 @@ addToLettersOnScreenSet(object) {
 
     // update each object in updateList
     // passes in corresponding target object to check position values in Letter.js
-    // for (let i = 0; i < updateList.length; i++) {
     for (let i = 0; i < this.state.updateSet.size; i++) {
-        Array.from(this.state.updateSet)[i].update(timeStamp, 
-            Array.from(this.state.updateSetTarget)[i]);
-      updateList[i].update(timeStamp, updateListTarget[i]);
+        let current_letter = Array.from(this.state.updateSet)[i];
+        current_letter.update(timeStamp, current_letter.target);
 
       // clear scene when game is over
       if (this.state.updateSet.size == 0) {
-      // if (updateList.length == 0) {
         this.running = false;
         this.dispose();
         // ADD SCOREBOARD HERE!
       }
     }
+    console.log(this.state)
   }
 }
 

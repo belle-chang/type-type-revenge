@@ -116,16 +116,14 @@ class Letter extends Mesh {
       );
     }
 
-    parent.addToUpdateList(this);
-	  parent.addToLettersOnScreen(letter);
-	  parent.addToLettersOnScreenSet(letter);
-    parent.addToUpdateSet(this);
+	parent.addToUpdateSet(this);
+	parent.addToLettersOnScreenSet(letter);
 
     this.scoreAccountedFor = false;
   }
 
   // dispose of letter and its target after it falls out of frame
-  disposeLetter(reload) {
+  disposeLetter() {
 	//   debugger;
     this.tracker.dispose();
     // need to add a null check for some reason
@@ -136,16 +134,8 @@ class Letter extends Mesh {
       // set might be more expensive to add to tho???
       this.parent.state.updateSet.delete(this);
       this.parent.state.lettersOnScreenSet.delete(this.name);
-    //   console.log(this.parent.state.lettersOnScreen);
-      // if (reload) {
-      // this.parent.state.lettersOnScreen.pop();
-      // this.parent.state.updateList.pop();
-      // }
-      // if (!reload) {
-      // this.parent.state.lettersOnScreen.shift();
-      // this.parent.state.updateList.shift();
-      // }
-      this.target.disposeTarget(reload);
+      
+      this.target.disposeTarget();
       this.parent.remove(this);
     }
   }
@@ -160,7 +150,7 @@ class Letter extends Mesh {
 
     fallDown.start();
     // after letter finishes falling down, dispose of it
-    fallDown.onComplete(() => this.disposeLetter(false));
+    fallDown.onComplete(() => this.disposeLetter());
     this.fallDown = fallDown;
   }
 
