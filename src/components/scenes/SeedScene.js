@@ -353,7 +353,7 @@ class SeedScene extends Scene {
         // ADD SCOREBOARD HERE!
       }
     }
-    console.log(this.state)
+    // console.log(this.state)
   }
 }
 
