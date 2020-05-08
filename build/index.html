@@ -43,6 +43,7 @@
       text-align: center;
     }
     .instructions {
+      z-index: 1;
       display: inline-block;
       top: 50%;
       left: 50%;
@@ -116,9 +117,18 @@
       /* top: 50%; */
       /* left: 50%; */
       /* text-align: center; */
-    }</style><body><div class="instructions-open score-container" onclick="openInstructions()"><i class="far fa-question-circle"></i></div><div class="instructions" id="instructions"><h1 class="instructions-heading">HOW TO PLAY</h1><p class="instructions-text">When the falling letters match up with their target outlines at the bottom of the screen, hit the corresponding letter on your keyboard to earn points.<br><br>Maintain a streak of correctly pressed notes to earn more points!<br><br>Make sure you turn your volume up so you can hear the music.</p><div class="button-container"><button id="toggle">mute music</button><br><button id="start">start new game</button><br><button class="instructions-close" id="instructions-close">exit</button></div></div><script>function closeInstructions() {
+    }
+    .message {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.3;
+      color: lightgoldenrodyellow;
+      font-size: 4em;
+    }</style><body><div class="instructions-open score-container" onclick="openInstructions()"><i class="far fa-question-circle"></i></div><div class="instructions" id="instructions"><h1 class="instructions-heading">HOW TO PLAY</h1><p class="instructions-text">When the falling letters match up with their target outlines at the bottom of the screen, hit the corresponding letter on your keyboard to earn points.<br><br>Maintain a streak of correctly pressed notes to earn more points!<br><br>Make sure you turn your volume up so you can hear the music.</p><div class="button-container"><button id="toggle">unmute music</button><br><button id="start">start new game</button><br><button class="instructions-close" id="instructions-close">close this box</button></div></div><div class="message" id="message"><h1></h1></div><script>function closeInstructions() {
           document.getElementById("instructions").className = "instructions hidden";
         }
         function openInstructions() {
           document.getElementById("instructions").className = "instructions";
-        }</script><script src="/type-type-revenge/main.ecd51ae5b1e199201495.js"></script></body></html>
+        }</script><script src="/type-type-revenge/main.c85ac923b352b377eca5.js"></script></body></html>
