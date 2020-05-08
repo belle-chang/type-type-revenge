@@ -16,11 +16,11 @@ class Title extends Group {
         this.tracker = new ResourceTracker();
         const track = this.tracker.track.bind(this.tracker);
 
-        this.state = {
-            gui: parent.state.gui,
-            // fall: this.fall.bind(this),
-            paused: false
-        };
+        // this.state = {
+        //     gui: parent.state.gui,
+        //     // fall: this.fall.bind(this),
+        //     paused: false
+        // };
 
         // load font for textgeometry
         var loader = new THREE.FontLoader();

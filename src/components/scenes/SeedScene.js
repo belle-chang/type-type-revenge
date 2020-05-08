@@ -232,16 +232,16 @@ class SeedScene extends Scene {
   addToLettersOnScreenSet(object) {
       this.state.lettersOnScreenSet.add(object);
   }
+  
 
   dispose() {
     this.tracker.dispose();
     this.state.updateSet.forEach((k, v) => v.disposeLetter());
-    while (this.children.length > 2) {
-        if (this.children[2] == this.title ||
-            this.children[2] == this.lights) {
+    while (this.children.length > 1) {
+        if (this.children[1] == this.lights) {
           continue;
         }
-        this.remove(this.children[this.children.length - 1]);
+        this.remove(this.children[1]);
     }
     this.add(this.incorrect);
   }
@@ -260,6 +260,9 @@ class SeedScene extends Scene {
     // for every 90 indices (30 notes) where info[i] = time, info[i+1] = note, info[i+2] = velocity
     // start game -- only runsonce
     if (this.start) {
+      // need to reset score/streak
+      this.score.fullReset();
+      // console.log(this.score.reset());
       // if another game was currently running
       if (this.running) {
         // alright this is the ratchet solution to make sure we refresh the letters
@@ -353,7 +356,6 @@ class SeedScene extends Scene {
         // ADD SCOREBOARD HERE!
       }
     }
-    console.log(this.state)
   }
 }
 
