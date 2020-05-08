@@ -232,6 +232,7 @@ class SeedScene extends Scene {
   addToLettersOnScreenSet(object) {
       this.state.lettersOnScreenSet.add(object);
   }
+  
 
   dispose() {
     this.tracker.dispose();
