@@ -219,15 +219,15 @@ class SeedScene extends Scene {
     this.state.updateSet.add(object);
   }
 
-// add letter object to updateSet
-addToUpdateSetTarget(object) {
-    this.state.updateSetTarget.add(object);
-}
+  // add letter object to updateSet
+  addToUpdateSetTarget(object) {
+      this.state.updateSetTarget.add(object);
+  }
 
-// add letter object to updateSet
-addToLettersOnScreenSet(object) {
-    this.state.lettersOnScreenSet.add(object);
-}
+  // add letter object to updateSet
+  addToLettersOnScreenSet(object) {
+      this.state.lettersOnScreenSet.add(object);
+  }
 
   dispose() {
     this.tracker.dispose();
