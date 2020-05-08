@@ -86,7 +86,7 @@ class Target extends Group {
         let l = color.slice(ind - 2, ind);
 
         // darken color so it's not too bright 
-        let new_color = color.replace(l, 9);
+        let new_color = color.replace(l, 17);
         this.state.mesh.material.color = new Color(new_color);
         this.state.mesh.visible = true;
     }
