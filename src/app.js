@@ -192,6 +192,7 @@ function start() {
   if (playing) sound.stop(); // so that song starts from beginning w/ new game
   sound.play();
   playing = true;
+  muted = false;
   sound.setLoop(false);
   closeInstructions();
   document.getElementById("volume").className="mute mute-container";
