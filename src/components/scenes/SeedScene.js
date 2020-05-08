@@ -236,12 +236,11 @@ class SeedScene extends Scene {
   dispose() {
     this.tracker.dispose();
     this.state.updateSet.forEach((k, v) => v.disposeLetter());
-    while (this.children.length > 2) {
-        if (this.children[2] == this.title ||
-            this.children[2] == this.lights) {
+    while (this.children.length > 1) {
+        if (this.children[1] == this.lights) {
           continue;
         }
-        this.remove(this.children[this.children.length - 1]);
+        this.remove(this.children[1]);
     }
     this.add(this.incorrect);
   }
