@@ -31,7 +31,7 @@ class PositionFinder {
       }
       let random = getRandomInt(minimum, maximum);
       // debugger;
-      while (this.allPositions[random + this.maxx]) {
+      while (this.allPositions[random + this.maxx] || this.allPositions[random + this.maxx + 1] || this.allPositions[random + this.maxx - 1]) {
         random = getRandomInt(this.minx, this.maxx);
       }
       this.allPositions[random + this.maxx] = true;
