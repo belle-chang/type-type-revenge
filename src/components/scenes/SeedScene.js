@@ -260,6 +260,9 @@ class SeedScene extends Scene {
     // for every 90 indices (30 notes) where info[i] = time, info[i+1] = note, info[i+2] = velocity
     // start game -- only runsonce
     if (this.start) {
+      // need to reset score/streak
+      this.score.fullReset();
+      // console.log(this.score.reset());
       // if another game was currently running
       if (this.running) {
         // alright this is the ratchet solution to make sure we refresh the letters
