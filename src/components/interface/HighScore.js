@@ -14,6 +14,49 @@ class HighScore {
     this.streak += 1;
     this.element.innerText =
       "Score: " + this.score + "\nStreak: " + this.streak;
+
+    if (this.streak == 10) {
+      document.getElementById("message").innerHTML = "perfect!";
+      setTimeout(function () {
+        document.getElementById("message").innerHTML = "";
+      }, 1500);
+    }
+    if (this.streak == 20) {
+      document.getElementById("message").innerHTML = "wow!";
+      setTimeout(function () {
+        document.getElementById("message").innerHTML = "";
+      }, 1500);
+    }
+    if (this.streak == 30) {
+      document.getElementById("message").innerHTML = "amazing!";
+      setTimeout(function () {
+        document.getElementById("message").innerHTML = "";
+      }, 1500);
+    }
+    if (this.streak == 40) {
+      document.getElementById("message").innerHTML = "wowowowowowow!";
+      setTimeout(function () {
+        document.getElementById("message").innerHTML = "";
+      }, 1500);
+    }
+    if (this.streak == 50) {
+      document.getElementById("message").innerHTML = "don't screw up now lmao!";
+      setTimeout(function () {
+        document.getElementById("message").innerHTML = "";
+      }, 1500);
+    }
+    if (this.score == 60) {
+      document.getElementById("message").innerHTML = "awesome!";
+      setTimeout(function () {
+        document.getElementById("message").innerHTML = "";
+      }, 1500);
+    }
+    if (this.score == 75 && this.streak == 75) {
+      document.getElementById("message").innerHTML = "literal perfection";
+      setTimeout(function () {
+        document.getElementById("message").innerHTML = "";
+      }, 1500);
+    }
   }
 
   reset() {

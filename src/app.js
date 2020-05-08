@@ -16,7 +16,7 @@ import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPa
 import mp3 from "./sounds/grenade.mp3";
 
 // Initialize core ThreeJS components
-let muted = false;
+let muted = true;
 let playing = false;
 // const camera = new PerspectiveCamera();
 const camera = new THREE.PerspectiveCamera(
@@ -162,13 +162,19 @@ window.requestAnimationFrame(onAnimationFrameHandler);
 function toggle() {
   // if it's muted, turn volume up
   if (muted) {
+    if (!playing) {
+      sound.play();
+      playing = true;
+    }
     sound.setVolume(0.5);
     muted = false;
+    document.getElementById("toggle").innerHTML = "mute music";
   }
   // if it's not muted, change volume to 0
   else {
     sound.setVolume(0);
     muted = true;
+    document.getElementById("toggle").innerHTML = "unmute music";
   }
   scene.playing = playing;
 }
