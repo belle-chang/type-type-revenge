@@ -205,8 +205,9 @@ class SeedScene extends Scene {
     // remove this if we want to support sentences
     let character = getRandomLetter(xPos);
     while (
-      Array.from(scene.state.lettersOnScreenSet).find(element => element == character) !=
-      undefined
+      Array.from(scene.state.lettersOnScreenSet).find(
+        element => element == character
+      ) != undefined
     )
       character = getRandomLetter(xPos);
 
@@ -217,7 +218,6 @@ class SeedScene extends Scene {
     scene.add(letter, target);
   }
 
-
   // add letter object to updateSet
   addToUpdateSet(object) {
     this.state.updateSet.add(object);
@@ -225,23 +225,22 @@ class SeedScene extends Scene {
 
   // add letter object to updateSet
   addToUpdateSetTarget(object) {
-      this.state.updateSetTarget.add(object);
+    this.state.updateSetTarget.add(object);
   }
 
   // add letter object to updateSet
   addToLettersOnScreenSet(object) {
-      this.state.lettersOnScreenSet.add(object);
+    this.state.lettersOnScreenSet.add(object);
   }
-  
 
   dispose() {
     this.tracker.dispose();
     this.state.updateSet.forEach((k, v) => v.disposeLetter());
     while (this.children.length > 1) {
-        if (this.children[1] == this.lights) {
-          continue;
-        }
-        this.remove(this.children[1]);
+      if (this.children[1] == this.lights) {
+        continue;
+      }
+      this.remove(this.children[1]);
     }
     this.add(this.incorrect);
   }
@@ -307,7 +306,6 @@ class SeedScene extends Scene {
       }
     }
 
-
     // error bar logic
     if (this.key != "" && this.key != undefined) {
       // see if key pressed is any of the letters on the screen
@@ -319,7 +317,7 @@ class SeedScene extends Scene {
         setTimeout(() => (this.incorrect.visible = false), 300);
       } else {
         // find letter
-        let found_letter =  Array.from(this.state.updateSet)[found];
+        let found_letter = Array.from(this.state.updateSet)[found];
         // if found letter is before target, turn on error bar
         if (
           found_letter.position.y >
@@ -346,14 +344,14 @@ class SeedScene extends Scene {
     // update each object in updateList
     // passes in corresponding target object to check position values in Letter.js
     for (let i = 0; i < this.state.updateSet.size; i++) {
-        let current_letter = Array.from(this.state.updateSet)[i];
-        current_letter.update(timeStamp, current_letter.target);
+      let current_letter = Array.from(this.state.updateSet)[i];
+      current_letter.update(timeStamp, current_letter.target);
 
       // clear scene when game is over
       if (this.state.updateSet.size == 0) {
         this.running = false;
         this.dispose();
-        // ADD SCOREBOARD HERE!
+        this.score.displayScore();
       }
     }
   }

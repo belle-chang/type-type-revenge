@@ -155,7 +155,7 @@
       </div>
     </div>
 
-    <div class="instructions" id="instructions">
+    <div class="instructions hidden" id="instructions">
       <h1 class="instructions-heading">HOW TO PLAY</h1>
       <p class="instructions-text">
         When the falling letters match up with their target outlines at the
@@ -181,13 +181,30 @@
     <!-- add in options to choose song? -->
     <!-- add in options to choose difficulty? -->
     <!-- mb add in something that dims the rest of the background when this box opens up -->
-
+    <div class="instructions" id="game-over">
+      <h1 class="instructions-heading">GREAT JOB !</h1>
+      <p class="instructions-text" id="final-score"></p>
+      <div class="button-container">
+        <button id="start-over">start over</button>
+      </div>
+      <button class="instructions-close" onClick="closeGameOver()">
+        close this box
+      </button>
+    </div>
     <script>
       function closeInstructions() {
         document.getElementById("instructions").className =
           "instructions hidden";
       }
+      function closeGameOver() {
+        document.getElementById("game-over").className = "instructions hidden";
+      }
       function openInstructions() {
+        // if the game over box was open, close it before opening instructions.
+        if ((document.getElementById("game-over").className = "instructions")) {
+          document.getElementById("game-over").className =
+            "instructions hidden";
+        }
         document.getElementById("instructions").className = "instructions";
       }
     </script>
