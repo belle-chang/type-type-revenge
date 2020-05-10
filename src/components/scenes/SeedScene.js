@@ -21,6 +21,9 @@ class SeedScene extends Scene {
     // keep track of if game is now starting
     this.start = false;
 
+    // keep track of difficulty (set to zero automatically)
+    this.difficulty = 0;
+
     // string version of json file, for now
     // this is star wars theme song
     const starwars =
@@ -278,14 +281,17 @@ class SeedScene extends Scene {
       }
       this.start = false;
       this.running = true;
-      for (let i = 4; i < this.info.length; i += 2) {
+      let delta;
+      if (this.difficulty == 0) delta = 5;
+      if (this.difficulty == 1) delta = 3;
+      if (this.difficulty == 2) delta = 2;
+      for (let i = 4; i < this.info.length; i += delta) {
         // assuming it takes 4000 ms for letter to fall to its target
         const fallTime = 4000;
         // obtain note from pitch
         let note = (parseInt(this.info[i].note) - 21) % 12;
         let third;
         // map note to corresponding section of the keyboard, update string of possible letters
-        // TODO: generate xPos that corresponds to section on keyboard
         if (note >= 0 && note <= 3) {
           third = 0;
         } else if (note <= 7) {
