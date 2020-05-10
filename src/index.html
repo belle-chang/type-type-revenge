@@ -3,12 +3,28 @@
   <head>
     <meta charset="utf-8" />
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css"
+    />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-165939739-1"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-165939739-1");
+    </script>
   </head>
   <style>
     html,
     body {
-      /* margin: 0; */
       height: 100%;
       overflow: hidden;
       text-align: center;
@@ -43,9 +59,7 @@
       margin-top: 50px;
       margin-right: 50px;
       position: fixed;
-
     }
-    /* a:nth-child(2){ */
     #description {
       margin-top: 90px;
       text-align: center;
@@ -57,20 +71,13 @@
       left: 50%;
       transform: translate(-50%, -50%);
       color: white;
-      background-color:#5250a4;
-      /* padding-top: 1em; */
+      background-color: #5250a4;
       padding: 30px 5em 50px 5em;
       border-radius: 10px;
-      /* padding-top: 0px; */
       opacity: 0.85;
-      /* opacity: 0.95; */
       width: 500px;
-      /* width: 40%; */
-      /* height: 52%; */
       position: absolute;
-      /* margin: 0px 30%; */
       text-align: center;
-      /* border: 3px solid white; */
     }
     .instructions-heading {
       text-align: center;
@@ -81,20 +88,11 @@
       font-size: 1em;
       line-height: 30px;
     }
-    /* .instructions-close {
-      text-align: right !important;
-      font-size: 1em;
-      margin: 0;
-      padding: 0;
-    }
-    .instructions-close:hover {
-      color: aquamarine;
-    } */
     .instructions-open {
-      font-size: 1.5em;
+      font-size: 1.75em;
       color: white;
       align-content: right;
-      margin-top: 7.5em;
+      margin-top: 6.5em;
     }
     .instructions-open:hover {
       color: #7271be;
@@ -102,14 +100,14 @@
     .mute-container {
       right: 2%;
       margin-top: 50px;
-      margin-right: 50px;
+      margin-right: 2.25em;
       position: fixed;
     }
     .mute {
-      font-size: 1.5em;
+      font-size: 1.75em;
       color: white;
       align-content: right;
-      margin-top: 7.5em;
+      margin-top: 6.5em;
     }
     .mute:hover {
       color: #7271be;
@@ -122,7 +120,6 @@
       height: 50px;
       color: #232577;
       background-color: #acace6;
-      /* padding: 10px; */
       margin: 1em auto;
       text-align: center;
       border-radius: 6px;
@@ -130,16 +127,16 @@
       font-size: 15px;
       font-weight: 700;
     }
+
+    .Button:active, .active {
+    background-color: #232577;
+    color: #acace6;
+    }
+
     button:hover {
       color: white;
       background-color: #232577;
       border: none;
-    }
-    .button-container {
-      /* position: absolute; */
-      /* top: 50%; */
-      /* left: 50%; */
-      /* text-align: center; */
     }
     .message {
       position: fixed;
@@ -152,56 +149,57 @@
     }
   </style>
   <body>
-    <!-- <a id="description">type each letter as they fall! 
-      [pls edit this. also there is a delay to the game bc otherwise the error bars go crazy lol] </a> -->
-      <div class="instructions-open score-container" onClick="openInstructions()">
-          <i class="far fa-question-circle"></i>
+    <div class="instructions-open score-container" onClick="openInstructions()">
+      <i class="far fa-question-circle"></i>
+    </div>
+    <div id="volume-controls">
+      <div id="mute" class="mute-container mute hidden">
+        <i class="fas fa-volume-mute"></i>
       </div>
-      <div id="volume-controls">
-        <div id="mute" class="mute-container mute hidden">
-          <i class="fas fa-volume-mute"></i>
-        </div>
-        <div id="volume" class="mute-container mute hidden">
-          <i class="fas fa-volume-up"></i>
-        </div>
+      <div id="volume" class="mute-container mute hidden">
+        <i class="fas fa-volume-up"></i>
       </div>
-
-      <div class="instructions" id="instructions">
-        <!-- <p class="instructions-close" onClick="closeInstructions()">x</p> -->
-        
-        <h1 class="instructions-heading">HOW TO PLAY</h1>
-        <p class="instructions-text">
-          When the falling letters match up with their target outlines at the
-          bottom of the screen, hit the corresponding letter on your keyboard to
-          earn points. 
-          <br><br>
-          Maintain a streak of correctly pressed notes to earn more
-          points! 
-          <br><br>
-          Make sure you turn your volume up so you can hear the music.
-        </p>
-        <div class="button-container">
-          <button id="start">start new game</button>
-          <br>
-          <button class="instructions-close" id="instructions-close">close this box</button>
-        </div>
-      </div>
-      <div class="message" id="message">
-        <h1></h1>
-      </div>
-      <!-- add in gif example here? -->
-      <!-- add in options to choose song? -->
-      <!-- add in options to choose difficulty? -->
-      <!-- mb add in something that dims the rest of the background when this box opens up -->
     </div>
 
+    <div class="instructions" id="instructions">
+      <h1 class="instructions-heading">HOW TO PLAY</h1>
+      <p class="instructions-text">
+        When the falling letters match up with their target outlines at the
+        bottom of the screen, hit the corresponding letter on your keyboard to
+        earn points.
+        <br /><br />
+        Maintain a streak of correctly pressed notes to earn more points!
+        <br /><br />
+        Make sure you turn your volume up so you can hear the music.
+      </p>
+      <div class="button-container">
+        <button id="easy" style="width: 140px;" class="active">easy</button>
+        <button id="medium" style="width: 140px;">medium</button>
+        <button id="hard" style="width: 140px;">hard</button>
+        <br />
+        <button id="start">start new game</button>
+        <br />
+        <button class="instructions-close" id="instructions-close">
+          close this box
+        </button>
+      </div>
+    </div>
+    <div class="message" id="message">
+      <h1></h1>
+    </div>
+    <!-- add in gif example here? -->
+    <!-- add in options to choose song? -->
+    <!-- add in options to choose difficulty? -->
+    <!-- mb add in something that dims the rest of the background when this box opens up -->
+
     <script>
-        function closeInstructions() {
-          document.getElementById("instructions").className = "instructions hidden";
-        }
-        function openInstructions() {
-          document.getElementById("instructions").className = "instructions";
-        }
-        </script>
+      function closeInstructions() {
+        document.getElementById("instructions").className =
+          "instructions hidden";
+      }
+      function openInstructions() {
+        document.getElementById("instructions").className = "instructions";
+      }
+    </script>
   </body>
 </html>

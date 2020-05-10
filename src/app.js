@@ -102,6 +102,9 @@ window.addEventListener("resize", windowResizeHandler, false);
 window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
 document.getElementById("start").addEventListener("click", start);
+document.getElementById("easy").addEventListener("click", setEasy);
+document.getElementById("medium").addEventListener("click", setMedium);
+document.getElementById("hard").addEventListener("click", setHard);
 document.getElementById("volume-controls").addEventListener("click", toggleVolume);
 document
   .getElementById("instructions-close")
@@ -197,6 +200,27 @@ function start() {
   sound.setLoop(false);
   closeInstructions();
   document.getElementById("volume").className="mute mute-container";
+}
+
+function setEasy() {
+  scene.difficulty = 0;
+  document.getElementById("easy").className="active";
+  document.getElementById("medium").className="";
+  document.getElementById("hard").className="";
+}
+
+function setMedium() {
+  scene.difficulty = 1;
+  document.getElementById("medium").className="active";
+  document.getElementById("easy").className="";
+  document.getElementById("hard").className="";
+}
+
+function setHard() {
+  scene.difficulty = 2;
+  document.getElementById("hard").className="active";
+  document.getElementById("easy").className="";
+  document.getElementById("medium").className="";
 }
 
 function closeInstructions() {
