@@ -14,7 +14,9 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import mp3 from "./sounds/grenade.mp3";
-import { Title } from "objects";
+import { Title, Key } from 'objects'
+// import { BasicLights } from 'objects'
+import { BasicLights } from "lights";
 
 // Initialize core ThreeJS components
 let muted = true;
@@ -278,14 +280,25 @@ const l_scene = new THREE.Scene();
 l_scene.height = height;
 l_scene.width = width;
 
-var l_renderer = new THREE.WebGLRenderer({ alpha: true });
-l_renderer.setClearColor(0x000000, 0); // the default
+// const controls = new OrbitControls(l_cam, container);
+// controls.enableDamping = false;
+// controls.enablePan = false;
+// controls.minDistance = 16;
+// controls.maxDistance = 16;
+// controls.update();
+
+var l_renderer = new THREE.WebGLRenderer({alpha: true});
+l_renderer.setClearColor( 0x000000, 0 ); // the default
 l_renderer.setSize(window.innerWidth, window.innerHeight);
 container.appendChild(l_renderer.domElement);
 
 let stop_loader = false;
 var l_title = new Title(height);
+var key = new Key(height, "a");
+// key.position.set(width - 10, height - 10, 0);
 l_scene.add(l_title);
+// l_scene.add(key);
+l_scene.add(new BasicLights());
 var animate = function (timeStamp) {
   if (!stop_loader) {
     requestAnimationFrame(animate);
