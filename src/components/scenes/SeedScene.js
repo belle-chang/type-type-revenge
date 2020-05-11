@@ -270,7 +270,7 @@ class SeedScene extends Scene {
         // alright this is the ratchet solution to make sure we refresh the letters
         this.state.round += 1;
         // but also here's the proper garbage disposal stuff hopefully it works
-        for (let i = 0; i < this.state.timeoutList; i++) {
+        for (let i = 0; i < 8; i++) {
           clearTimeout(this.state.timeoutList[i]);
         }
         this.dispose();

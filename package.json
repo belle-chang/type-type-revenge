@@ -21,7 +21,7 @@
     "build": "npm run prebuild && webpack --mode production --output-public-path '/'",
     "format": "prettier --write '*.js' 'src/**/*.js'",
     "deploy": "npm run prebuild && webpack --mode production && gh-pages -d build",
-    "server": "python3 -m http.server 8000"
+    "server": "cd build && python3 -m http.server 8000"
   },
   "dependencies": {
     "dat.gui": "^0.7.7",
