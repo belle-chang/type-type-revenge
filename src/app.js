@@ -113,7 +113,6 @@ document
 document
   .getElementById("instructions-close")
   .addEventListener("click", closeInstructions);
-
 // when key is pressed save event key to key parameter of SeedScene
 function handleKeyDown(event) {
   if (!event.metaKey && !event.altKey && !event.controlKey)
