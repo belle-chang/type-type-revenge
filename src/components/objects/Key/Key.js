@@ -19,14 +19,15 @@ class Key extends Group {
       key_geometry.rotateX( Math.PI / 2 );
       // key_geometry.rotateX( Math.PI / 5 );
       key_geometry.computeFlatVertexNormals();
-      var key_material = track(new THREE.MeshNormalMaterial());
+      // var key_material = track(new THREE.MeshNormalMaterial());
       // Then, when you create the mesh, you can scale it:
 
-      var material = new THREE.MeshPhongMaterial( { ambient: 0x050505, color: 0xfcfce8, specular: 0x555555, shininess: 30 } );
+      var material = track(new THREE.MeshPhongMaterial( { ambient: 0x050505, color: 0xfcfce8, specular: 0x555555, shininess: 30 } ));
 
 
-      let key_mesh = new THREE.Mesh( key_geometry, material );
-
+      let key_mesh = track(new THREE.Mesh( key_geometry, material ));
+      this.state = {};
+      this.state.key = key_mesh;
       
 
       key_mesh.scale.set( 2.5, 2.5, 2.5 );
@@ -49,12 +50,13 @@ class Key extends Group {
         // randomize position between top left corner and top right corner of the screen
         // let newx = getRandomInt(-22, 22);
         // textMesh0.position.set(-.2, .5, 0);
-        textMesh0.position.set(0,0,.75);
+        textMesh0.position.set(0,0,.85);
         // console.log(key_mesh.position);
         // textMesh0.rotateZ(Math.PI / 9);
         // textMesh0.rotateX( -Math.PI / 3.25 );
         // textMesh0.rotateZ( Math.PI / 4 );
 
+        this.state.letter = textMesh0;
         this.add(textMesh0);
       });
 
@@ -65,20 +67,37 @@ class Key extends Group {
       // this.rotateX(Math.PI / 5);
 
       // this.rotateZ(.1);
-      // this.scale.set(1,1,1);
+      // this.scale.set(1,1,1);      
       this.position.set(0,1,0)
       
     }  
 
-    update(timeStamp) {
+    dispose() {
+      this.tracker.dispose();
+    }
+
+    rotate() {
+      const rt = new TWEEN.Tween( this.rotation ).to( {  y:0}, 1000 ).start()
+    }
+
+    impress() {
+      const impress = new TWEEN.Tween(this.state.letter.position).to({ z: .38 }, 1000);
+      // const impress = new TWEEN.Tween(this.state.letter.position).to({ z: 0 }, 1000);
+      console.log("executing");
+      impress.start();
+      // after letter finishes falling down, dispose of it
+      impress.onComplete(() => this.rotate());
+      // this.fallDown = fallDown;
+
+    }
+
+    update() {
         // Bob back and forth
         // this.rotation.z = 0.05 * Math.sin(timeStamp / 300);
 
         // Advance tween animations, if any exist
-        // TWEEN.update();
-        // uncomment this to move it automatically
-        // this.move();
-
+        TWEEN.update();
+        this.impress();
     }
 }
 
