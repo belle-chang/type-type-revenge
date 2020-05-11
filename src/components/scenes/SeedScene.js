@@ -246,6 +246,7 @@ class SeedScene extends Scene {
       this.remove(this.children[1]);
     }
     this.add(this.incorrect);
+    debugger;
   }
 
   disposeAll() {
@@ -276,8 +277,8 @@ class SeedScene extends Scene {
 
     // if it's within 2 miliseconds in either direction, make rain
     if (
-      timeStamp - this.nextTime < 100 ||
-      (timeStamp - this.nextTime > -100 && this.running)
+      timeStamp - this.nextTime < 5 ||
+      (timeStamp - this.nextTime > -5 && this.running)
     ) {
       // trying to figure out how to do a rainbow
       if (this.score.streak >= 60) this.makeLine(this, getColor());
@@ -291,6 +292,7 @@ class SeedScene extends Scene {
     // start game -- only runsonce
     if (this.start) {
       // need to reset score/streak
+      this.dispose();
       this.score.fullReset();
       // console.log(this.score.reset());
       // if another game was currently running
