@@ -141,11 +141,7 @@ var sound = new THREE.Audio(listener);
 
 // load a sound and set it as the Audio object's buffer
 var audioLoader = new THREE.AudioLoader();
-audioLoader.load(mp3, function (buffer) {
-  sound.setBuffer(buffer);
-  sound.setLoop(false);
-  sound.setVolume(0.5);
-});
+// loadGrenade();
 
 // if it's a reload
 window.onload = function () {
@@ -201,14 +197,37 @@ function toggleVolume() {
   // scene.playing = playing;
 }
 
-function start() {
+function loadGrenade() {
+  audioLoader.load(mp3, function (buffer) {
+    sound.setBuffer(buffer);
+    sound.setLoop(false);
+    sound.setVolume(0.5);
+  });
+}
+
+function loadWii() {
+  audioLoader.load(wii_mp3, function (buffer) {
+    sound.setBuffer(buffer);
+    sound.setLoop(false);
+    sound.setVolume(0.5);
+  });
+}
+
+async function start() {
+  closeInstructions();
+  if (scene.song == 0) {
+    loadGrenade();
+  }
+  else if (scene.song == 1) {
+    loadWii();
+  }
+  await new Promise(r => setTimeout(r, 1200));
   scene.start = true;
   if (playing) sound.stop(); // so that song starts from beginning w/ new game
   sound.play();
   playing = true;
   muted = false;
   sound.setLoop(false);
-  closeInstructions();
   document.getElementById("volume").className = "mute mute-container";
 }
 
@@ -239,22 +258,14 @@ function setGrenade() {
   scene.song = 0;
   document.getElementById("grenade").className = "active";
   document.getElementById("wii").className = "";
-  audioLoader.load(mp3, function (buffer) {
-    sound.setBuffer(buffer);
-    sound.setLoop(false);
-    sound.setVolume(0.5);
-  });
+  // loadGrenade();
 }
 
 function setWii() {
   scene.song = 1;
   document.getElementById("wii").className = "active";
   document.getElementById("grenade").className = "";
-  audioLoader.load(wii_mp3, function (buffer) {
-    sound.setBuffer(buffer);
-    sound.setLoop(false);
-    sound.setVolume(0.5);
-  });
+  // loadWii();
 }
 
 function setEasy() {

@@ -283,21 +283,24 @@ class SeedScene extends Scene {
       this.start = false;
       this.running = true;
       let info;
+      let start;
       let delta;
       if (this.song == 0) {
         info = SONG0.notes;
+        start = 6;
         if (this.difficulty == 0) delta = 5;
         if (this.difficulty == 1) delta = 3;
         if (this.difficulty == 2) delta = 2;
       }
       else if (this.song == 1) {
         info = SONG1.notes;
+        start = 20;
         if (this.difficulty == 0) delta = 12;
         if (this.difficulty == 1) delta = 9;
         if (this.difficulty == 2) delta = 7;
       }
       
-      for (let i = 6; i < info.length; i += delta) {
+      for (let i = start; i < info.length; i += delta) {
         // assuming it takes 4000 ms for letter to fall to its target
         const fallTime = 4000;
         // obtain note from pitch
