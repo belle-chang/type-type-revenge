@@ -14,6 +14,7 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import mp3 from "./sounds/grenade.mp3";
+import wii_mp3 from "./sounds/WiiThemeSong.mp3"
 import { Title } from "objects";
 
 // Initialize core ThreeJS components
@@ -105,6 +106,8 @@ window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
 document.getElementById("start").addEventListener("click", start);
 document.getElementById("start-over").addEventListener("click", startOver);
+document.getElementById("grenade").addEventListener("click", setGrenade);
+document.getElementById("wii").addEventListener("click", setWii);
 document.getElementById("easy").addEventListener("click", setEasy);
 document.getElementById("medium").addEventListener("click", setMedium);
 document.getElementById("hard").addEventListener("click", setHard);
@@ -230,6 +233,28 @@ function startOver() {
 
 function closeGameOver() {
   document.getElementById("game-over").className = "instructions hidden";
+}
+
+function setGrenade() {
+  scene.song = 0;
+  document.getElementById("grenade").className = "active";
+  document.getElementById("wii").className = "";
+  audioLoader.load(mp3, function (buffer) {
+    sound.setBuffer(buffer);
+    sound.setLoop(false);
+    sound.setVolume(0.5);
+  });
+}
+
+function setWii() {
+  scene.song = 1;
+  document.getElementById("wii").className = "active";
+  document.getElementById("grenade").className = "";
+  audioLoader.load(wii_mp3, function (buffer) {
+    sound.setBuffer(buffer);
+    sound.setLoop(false);
+    sound.setVolume(0.5);
+  });
 }
 
 function setEasy() {
