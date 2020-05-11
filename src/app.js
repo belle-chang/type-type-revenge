@@ -14,6 +14,7 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import mp3 from "./sounds/grenade.mp3";
+import { Title } from 'objects'
 
 // Initialize core ThreeJS components
 let muted = true;
@@ -242,4 +243,47 @@ function startOver() {
 
 function closeGameOver() {
   document.getElementById("game-over").className = "instructions hidden";
+}
+
+
+//---------------------------------------------------
+// LOADER PAGE
+//---------------------------------------------------
+var container = document.getElementById( 'container' );
+
+var l_cam = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+l_cam.position.set(0, 0, 16);
+l_cam.lookAt(new THREE.Vector3(0, 0, 0));
+
+const l_scene = new THREE.Scene();
+l_scene.height = height;
+l_scene.width = width;
+
+
+var l_renderer = new THREE.WebGLRenderer({alpha: true});
+l_renderer.setClearColor( 0x000000, 0 ); // the default
+l_renderer.setSize(window.innerWidth, window.innerHeight);
+container.appendChild(l_renderer.domElement);
+
+let stop_loader = false;
+var l_title = new Title(height);
+l_scene.add(l_title);
+var animate = function (timeStamp) {
+    if (!stop_loader) {
+      requestAnimationFrame(animate);
+      for (let children of l_scene.children)
+        children.rotation.z = 0.05 * Math.sin(timeStamp / 300);
+      l_renderer.render(l_scene, l_cam);
+    }
+};
+
+animate();
+document.getElementById("loader-button").addEventListener("click", clean);
+function clean() {
+  l_title.tracker.dispose;
+  while (l_scene.children.length > 0) {
+    l_scene.remove(l_scene.children[0]);
+  }
+  stop_loader = true;
+  document.getElementById("loader").className = "hidden";
 }
