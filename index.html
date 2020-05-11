@@ -155,7 +155,41 @@
       left: 50%;
       transform: translateX(-50%);
       /* color: white; */
-    }</style><body><div id="loader" class=""><a>Type Type Revenge is a typing practice game modeled after the classic iPhone game, Tap Tap Revenge.</a><a id="loader-instruct">Press p to play!</a><div id="container"></div></div><div class="instructions-open score-container" onclick="openInstructions()" id="instructions-open"><i class="far fa-question-circle"></i></div><div id="volume-controls"><div id="mute" class="mute-container mute hidden"><i class="fas fa-volume-mute"></i></div><div id="volume" class="mute-container mute hidden"><i class="fas fa-volume-up"></i></div></div><div class="instructions" id="instructions"><h1 class="instructions-heading">HOW TO PLAY</h1><p class="instructions-text">When the falling letters match up with their target outlines at the bottom of the screen, hit the corresponding letter on your keyboard to earn points.<br/><br/>Maintain a streak of correctly pressed notes to earn more points!<br/><br/>Make sure you turn your volume up so you can hear the music.</p><div class="button-container"><button id="easy" style="width: 140px;" class="active">easy</button> <button id="medium" style="width: 140px;">medium</button> <button id="hard" style="width: 140px;">hard</button><br/><button id="start">start new game</button><br/><button class="instructions-close" id="instructions-close">close this box</button></div></div><div class="message" id="message"><h1></h1></div><div class="instructions hidden" id="game-over"><h1 class="instructions-heading">GREAT JOB !</h1><p class="instructions-text" id="final-score"></p><div class="button-container"><button id="start-over">start over</button></div><button class="instructions-close" onclick="closeGameOver()">close this box</button></div><script>function closeInstructions() {
+    }
+
+    #score-msg {
+      font-size: 2em;
+      position: fixed;
+      bottom: 60%;
+      left: 50%;
+      transform: translateX(-50%);
+      /* color: white; */
+    }
+    #score-show1 {
+      font-size: 1.5em;
+      position: fixed;
+      bottom: 21%;
+      left: 50%;
+      transform: translateX(-50%);
+      /* color: white; */
+    }
+    #score-show2 {
+      font-size: 1.5em;
+      position: fixed;
+      bottom: 18%;
+      left: 50%;
+      transform: translateX(-50%);
+      /* color: white; */
+    }
+    #restart-button {
+      width: 170px;
+      height: 85px;
+      font-size: 1.75em;
+      position: fixed;
+      bottom: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+    }</style><body><div id="loader" class=""><a>Type Type Revenge is a typing practice game modeled after the classic iPhone game, Tap Tap Revenge.</a><a id="loader-instruct">Press p to play!</a><div id="container"></div></div><div class="instructions-open score-container" onclick="openInstructions()" id="instructions-open"><i class="far fa-question-circle"></i></div><div id="volume-controls"><div id="mute" class="mute-container mute hidden"><i class="fas fa-volume-mute"></i></div><div id="volume" class="mute-container mute hidden"><i class="fas fa-volume-up"></i></div></div><div id="percent-score" class="hidden"><p id="score-msg"></p><p id="score-show1"></p><p id="score-show2"></p><button id="restart-button">start over</button></div><div class="instructions" id="instructions"><h1 class="instructions-heading">HOW TO PLAY</h1><p class="instructions-text">When the falling letters match up with their target outlines at the bottom of the screen, hit the corresponding letter on your keyboard to earn points.<br/><br/>Maintain a streak of correctly pressed notes to earn more points!<br/><br/>Make sure you turn your volume up so you can hear the music.</p><div class="button-container"><button id="easy" style="width: 140px;" class="active">easy</button> <button id="medium" style="width: 140px;">medium</button> <button id="hard" style="width: 140px;">hard</button><br/><button id="start">start new game</button><br/><button class="instructions-close" id="instructions-close">close this box</button></div></div><div class="message" id="message"><h1></h1></div><div class="instructions hidden" id="game-over"><h1 class="instructions-heading">GREAT JOB !</h1><p class="instructions-text" id="final-score"></p><div class="button-container"><button id="start-over">start over</button></div><button class="instructions-close" onclick="closeGameOver()">close this box</button></div><script>function closeInstructions() {
         document.getElementById("instructions").className =
           "instructions hidden";
       }
@@ -169,4 +203,4 @@
             "instructions hidden";
         }
         document.getElementById("instructions").className = "instructions";
-      }</script><script src="/type-type-revenge/main.0cc08606d56512b2ac79.js"></script></body></html>
+      }</script><script src="/type-type-revenge/main.97e78c95050a75550ccc.js"></script></body></html>
