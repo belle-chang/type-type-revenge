@@ -181,6 +181,7 @@ class SeedScene extends Scene {
     // the order of possibleLetters is from left to right on the keyboard, the order matters for selecting
     function getRandomLetter(xPos) {
       let possibleLetters = "qazwsxedcrfvtgbyhnujmikolp";
+      // let possibleLetters = "pppppppppppppppppppppppppp";
       let numSections = 3;
       let offset = numSections - 1;
       let fraction = (xPos - minX) / (maxX - minX);
@@ -246,7 +247,7 @@ class SeedScene extends Scene {
       this.remove(this.children[1]);
     }
     this.add(this.incorrect);
-    debugger;
+    // debugger;
   }
 
   disposeAll() {

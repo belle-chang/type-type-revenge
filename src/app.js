@@ -121,7 +121,7 @@ document
   .addEventListener("click", closeInstructions);
 // when key is pressed save event key to key parameter of SeedScene
 function handleKeyDown(event) {
-  if ((event.key == "p") && (document.getElementById("loader").className != "hidden"))
+  if ((event.key == "p") && (document.getElementById("loader").style.display != "none"))
     fly();
   else {
     if (!event.metaKey && !event.altKey && !event.controlKey)
