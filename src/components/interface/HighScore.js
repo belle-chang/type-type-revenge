@@ -10,8 +10,15 @@ class HighScore {
   }
 
   update() {
-    this.score += 1;
     this.streak += 1;
+
+    // streak multiplier
+    if (this.streak < 5) this.score += 1;
+    else if (this.streak < 10) this.score += 2;
+    else if (this.streak < 15) this.score += 3;
+    else if (this.streak < 20) this.score += 4;
+    else this.score += 5;
+
     this.element.innerText =
       "Score: " + this.score + "\nStreak: " + this.streak;
 
@@ -59,6 +66,7 @@ class HighScore {
     }
   }
 
+  // reset streak
   reset() {
     this.streak = 0;
     this.element.innerText =
@@ -70,6 +78,12 @@ class HighScore {
     this.streak = 0;
     this.element.innerText =
       "Score: " + this.score + "\nStreak: " + this.streak;
+  }
+
+  displayScore() {
+    document.getElementById("final-score").innerHTML =
+      "Final score: " + this.score;
+    document.getElementById("game-over").className = "instructions";
   }
 }
 export default HighScore;

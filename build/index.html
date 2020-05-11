@@ -4,7 +4,7 @@
       }
       gtag("js", new Date());
 
-      gtag("config", "UA-165939739-1");</script><link rel="icon" href="/type-type-revenge/favicon.ico"></head><style>html,
+      gtag("config", "UA-165939739-1");</script><link rel="icon" href="/favicon.ico"></head><style>html,
     body {
       height: 100%;
       overflow: hidden;
@@ -70,10 +70,10 @@
       line-height: 30px;
     }
     .instructions-open {
-      font-size: 1.5em;
+      font-size: 1.75em;
       color: white;
       align-content: right;
-      margin-top: 7.5em;
+      margin-top: 6.5em;
     }
     .instructions-open:hover {
       color: #7271be;
@@ -81,14 +81,14 @@
     .mute-container {
       right: 2%;
       margin-top: 50px;
-      margin-right: 50px;
+      margin-right: 2.25em;
       position: fixed;
     }
     .mute {
-      font-size: 1.5em;
+      font-size: 1.75em;
       color: white;
       align-content: right;
-      margin-top: 7.5em;
+      margin-top: 6.5em;
     }
     .mute:hover {
       color: #7271be;
@@ -121,10 +121,18 @@
       opacity: 0.3;
       color: lightgoldenrodyellow;
       font-size: 4em;
-    }</style><body><div class="instructions-open score-container" onclick="openInstructions()"><i class="far fa-question-circle"></i></div><div id="volume-controls"><div id="mute" class="mute-container mute hidden"><i class="fas fa-volume-mute"></i></div><div id="volume" class="mute-container mute hidden"><i class="fas fa-volume-up"></i></div></div><div class="instructions" id="instructions"><h1 class="instructions-heading">HOW TO PLAY</h1><p class="instructions-text">When the falling letters match up with their target outlines at the bottom of the screen, hit the corresponding letter on your keyboard to earn points.<br/><br/>Maintain a streak of correctly pressed notes to earn more points!<br/><br/>Make sure you turn your volume up so you can hear the music.</p><div class="button-container"><button id="start">start new game</button><br/><button class="instructions-close" id="instructions-close">close this box</button></div></div><div class="message" id="message"><h1></h1></div><script>function closeInstructions() {
+    }</style><body><div class="instructions-open score-container" onclick="openInstructions()"><i class="far fa-question-circle"></i></div><div id="volume-controls"><div id="mute" class="mute-container mute hidden"><i class="fas fa-volume-mute"></i></div><div id="volume" class="mute-container mute hidden"><i class="fas fa-volume-up"></i></div></div><div class="instructions" id="instructions"><h1 class="instructions-heading">HOW TO PLAY</h1><p class="instructions-text">When the falling letters match up with their target outlines at the bottom of the screen, hit the corresponding letter on your keyboard to earn points.<br/><br/>Maintain a streak of correctly pressed notes to earn more points!<br/><br/>Make sure you turn your volume up so you can hear the music.</p><div class="button-container"><button id="start">start new game</button><br/><button class="instructions-close" id="instructions-close">close this box</button></div></div><div class="message" id="message"><h1></h1></div><div class="instructions hidden" id="game-over"><h1 class="instructions-heading">GREAT JOB !</h1><p class="instructions-text" id="final-score"></p><div class="button-container"><button id="start-over">start over</button></div><button class="instructions-close" onclick="closeGameOver()">close this box</button></div><script>function closeInstructions() {
         document.getElementById("instructions").className =
           "instructions hidden";
       }
+      function closeGameOver() {
+        document.getElementById("game-over").className = "instructions hidden";
+      }
       function openInstructions() {
+        // if the game over box was open, close it before opening instructions.
+        if ((document.getElementById("game-over").className = "instructions")) {
+          document.getElementById("game-over").className =
+            "instructions hidden";
+        }
         document.getElementById("instructions").className = "instructions";
-      }</script><script src="/type-type-revenge/main.61255bca451dbcf4c663.js"></script></body></html>
+      }</script><script src="/main.bc42933d819290bc1d0b.js"></script></body></html>

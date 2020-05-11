@@ -102,10 +102,13 @@ window.addEventListener("resize", windowResizeHandler, false);
 window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
 document.getElementById("start").addEventListener("click", start);
+document.getElementById("start-over").addEventListener("click", startOver);
 document.getElementById("easy").addEventListener("click", setEasy);
 document.getElementById("medium").addEventListener("click", setMedium);
 document.getElementById("hard").addEventListener("click", setHard);
-document.getElementById("volume-controls").addEventListener("click", toggleVolume);
+document
+  .getElementById("volume-controls")
+  .addEventListener("click", toggleVolume);
 document
   .getElementById("instructions-close")
   .addEventListener("click", closeInstructions);
@@ -155,18 +158,17 @@ const onAnimationFrameHandler = timeStamp => {
   composer.render(timeStamp);
   renderer.autoClear = false;
   cubeComposer.render(timeStamp);
-//   renderer.autoClear = false;
+  //   renderer.autoClear = false;
   // renderer.render(cubeScene, camera);
   scene.update && scene.update(timeStamp);
   if (!scene.running) {
-    document.getElementById("volume").className="mute mute-container hidden";
-    document.getElementById("mute").className="mute mute-container hidden";
+    document.getElementById("volume").className = "mute mute-container hidden";
+    document.getElementById("mute").className = "mute mute-container hidden";
   }
   cubeScene.update && cubeScene.update(timeStamp);
   window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
-
 
 function toggleVolume() {
   // if it's muted, turn volume up
@@ -177,15 +179,15 @@ function toggleVolume() {
     }
     sound.setVolume(0.5);
     muted = false;
-    document.getElementById("volume").className="mute mute-container";
-    document.getElementById("mute").className="mute mute-container hidden";
+    document.getElementById("volume").className = "mute mute-container";
+    document.getElementById("mute").className = "mute mute-container hidden";
   }
   // if it's not muted, change volume to 0
   else {
     sound.setVolume(0);
     muted = true;
-    document.getElementById("mute").className="mute mute-container";
-    document.getElementById("volume").className="mute mute-container hidden";
+    document.getElementById("mute").className = "mute mute-container";
+    document.getElementById("volume").className = "mute mute-container hidden";
   }
   // dunno what this is -- it's not in seedscene either lol
   // scene.playing = playing;
@@ -199,30 +201,46 @@ function start() {
   muted = false;
   sound.setLoop(false);
   closeInstructions();
-  document.getElementById("volume").className="mute mute-container";
+  document.getElementById("volume").className = "mute mute-container";
 }
 
 function setEasy() {
   scene.difficulty = 0;
-  document.getElementById("easy").className="active";
-  document.getElementById("medium").className="";
-  document.getElementById("hard").className="";
+  document.getElementById("easy").className = "active";
+  document.getElementById("medium").className = "";
+  document.getElementById("hard").className = "";
 }
 
 function setMedium() {
   scene.difficulty = 1;
-  document.getElementById("medium").className="active";
-  document.getElementById("easy").className="";
-  document.getElementById("hard").className="";
+  document.getElementById("medium").className = "active";
+  document.getElementById("easy").className = "";
+  document.getElementById("hard").className = "";
 }
 
 function setHard() {
   scene.difficulty = 2;
-  document.getElementById("hard").className="active";
-  document.getElementById("easy").className="";
-  document.getElementById("medium").className="";
+  document.getElementById("hard").className = "active";
+  document.getElementById("easy").className = "";
+  document.getElementById("medium").className = "";
 }
 
 function closeInstructions() {
   document.getElementById("instructions").className = "instructions hidden";
+}
+
+// literally same but closes different box
+function startOver() {
+  scene.start = true;
+  if (playing) sound.stop(); // so that song starts from beginning w/ new game
+  sound.play();
+  playing = true;
+  muted = false;
+  sound.setLoop(false);
+  closeGameOver();
+  document.getElementById("volume").className = "mute mute-container";
+}
+
+function closeGameOver() {
+  document.getElementById("game-over").className = "instructions hidden";
 }
