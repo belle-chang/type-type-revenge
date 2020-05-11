@@ -118,9 +118,10 @@
       font-weight: 700;
     }
 
-    .Button:active, .active {
-    background-color: #232577;
-    color: #acace6;
+    .Button:active,
+    .active {
+      background-color: #232577;
+      color: #acace6;
     }
 
     button:hover {
@@ -160,21 +161,28 @@
       width: 170px;
       height: 85px;
       font-size: 1.75em;
-      position:fixed;
+      position: fixed;
       bottom: 20%;
       left: 50%;
       transform: translateX(-50%);
       /* color: white; */
     }
   </style>
-  
+
   <body>
     <div id="loader" class="">
-      <a>Type Type Revenge is a typing practice game modeled after the classic iPhone game, Tap Tap Revenge.</a>
+      <a
+        >Type Type Revenge is a typing practice game modeled after the classic
+        iPhone game, Tap Tap Revenge.</a
+      >
       <button id="loader-button">let's play!</button>
       <div id="container"></div>
     </div>
-    <div class="instructions-open score-container" onClick="openInstructions()">
+    <div
+      class="instructions-open score-container"
+      onClick="openInstructions()"
+      id="instructions-open"
+    >
       <i class="far fa-question-circle"></i>
     </div>
     <div id="volume-controls">

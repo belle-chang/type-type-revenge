@@ -21,6 +21,9 @@ class SeedScene extends Scene {
     // keep track of if game is now starting
     this.start = false;
 
+    // keep track of if the game is paused
+    this.pause = false;
+
     // keep track of difficulty (set to zero automatically)
     this.difficulty = 0;
 

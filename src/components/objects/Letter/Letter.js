@@ -3,6 +3,7 @@ import { TWEEN } from "three/examples/jsm/libs/tween.module.min.js";
 import { ResourceTracker } from "tracker";
 
 import * as THREE from "three";
+import { runInThisContext } from "vm";
 
 class Letter extends Mesh {
   constructor(parent, letter, x, color) {
@@ -124,7 +125,7 @@ class Letter extends Mesh {
 
   // dispose of letter and its target after it falls out of frame
   disposeLetter() {
-	//   debugger;
+    //   debugger;
     this.tracker.dispose();
     // need to add a null check for some reason
     if (this.parent !== null) {
@@ -134,7 +135,7 @@ class Letter extends Mesh {
       // set might be more expensive to add to tho???
       this.parent.state.updateSet.delete(this);
       this.parent.state.lettersOnScreenSet.delete(this.name);
-      
+
       this.target.disposeTarget();
       this.parent.remove(this);
     }
@@ -192,13 +193,7 @@ class Letter extends Mesh {
       }
     }
 
-    // const paused = document
-    //   .getElementById("instructions")
-    //   .className.localeCompare("instructions"); // 0 if paused
-
-    // Advance tween animations, if any exist
     TWEEN.update();
-    // let it fall automatically
     this.fall();
   }
 }
