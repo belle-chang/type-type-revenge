@@ -65,9 +65,13 @@ class SeedScene extends Scene {
     // add position tracker to ensure there aren't any overlapping letters
     this.width = width;
     this.height = height;
+    // this.allPositions = new PositionFinder(
+    //   -1 * (this.width - 2),
+    //   this.width - 2
+    // );
     this.allPositions = new PositionFinder(
-      -1 * (this.width - 2),
-      this.width - 2
+      -(2.0 / 3.0) * this.width,
+      (2.0 / 3.0) * this.width
     );
 
     // Set background to a nice color
@@ -169,15 +173,16 @@ class SeedScene extends Scene {
 
   addLetter(scene, third, color, round) {
     if (round != scene.state.round) return;
+    // narrow down width of game screen to 2/3 of computer screen
+    let minX = scene.allPositions.minx;
+    let maxX = scene.allPositions.maxx;
     // selects a random x position then randomly selects a character based on the x coordinate and number of sections
     // the order of possibleLetters is from left to right on the keyboard, the order matters for selecting
     function getRandomLetter(xPos) {
       let possibleLetters = "qazwsxedcrfvtgbyhnujmikolp";
       let numSections = 3;
       let offset = numSections - 1;
-      let fraction =
-        (xPos - scene.allPositions.minx) /
-        (scene.allPositions.maxx - scene.allPositions.minx);
+      let fraction = (xPos - minX) / (maxX - minX);
       for (let i = numSections - 1; i >= 1; i--) {
         if (fraction < i / numSections) offset = i - 1;
       }
@@ -186,22 +191,16 @@ class SeedScene extends Scene {
       ];
     }
     let xPos;
-    let length = scene.allPositions.maxx - scene.allPositions.minx;
+    let length = maxX - minX;
     if (third == 0) {
-      xPos = scene.allPositions.add(
-        scene.allPositions.minx,
-        Math.floor(scene.allPositions.minx + length / 3)
-      );
+      xPos = scene.allPositions.add(minX, Math.floor(minX + length / 3));
     } else if (third == 1) {
       xPos = scene.allPositions.add(
-        Math.floor(scene.allPositions.minx + length / 3),
-        Math.floor(scene.allPositions.minx + (2 * length) / 3)
+        Math.floor(minX + length / 3),
+        Math.floor(minX + (2 * length) / 3)
       );
     } else {
-      xPos = scene.allPositions.add(
-        Math.floor(scene.allPositions.minx + (2 * length) / 3),
-        scene.allPositions.maxx
-      );
+      xPos = scene.allPositions.add(Math.floor(minX + (2 * length) / 3), maxX);
     }
 
     // ensure different characters on the screen at all times
