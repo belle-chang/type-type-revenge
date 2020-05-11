@@ -339,7 +339,6 @@ function clean() {
   fade(document.getElementById("loader"));
 }
 
-// document.getElementById("loader-instruct").addEventListener("keydown", fly);
 
 function fly() {
   // scene.
