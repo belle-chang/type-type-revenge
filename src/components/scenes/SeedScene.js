@@ -84,50 +84,7 @@ class SeedScene extends Scene {
     // this.add(cube);
 
     // rain effect
-    setInterval(makeLine, 60, this);
-
-    function makeLine(scene) {
-      // get random position for the line
-      function getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-      }
-
-      // add resource tracker to dispose of lines once they have fallen out of the scene
-      let rt = new ResourceTracker();
-      const track = rt.track.bind(rt);
-
-      // create new line segment object and add to top of scene
-      var geometry = track(new THREE.Geometry());
-      var xPos = getRandomInt(-1 * scene.width, scene.width);
-      var yPos = scene.height + 4; // add "padding" to make lines start above the top of the screen
-      var length = getRandomInt(0, 3);
-      geometry.vertices.push(
-        track(new THREE.Vector3(xPos, yPos, 0)),
-        track(new THREE.Vector3(xPos, yPos - length, 0))
-      );
-      var material = track(
-        new THREE.LineBasicMaterial({ color: "rgb(70,70,70)" })
-      );
-      var line = track(new THREE.LineSegments(geometry, material));
-      scene.add(line);
-
-      // animate line
-      var start = { x: xPos, y: yPos };
-      var target = { x: xPos, y: -20 };
-      const tween = new TWEEN.Tween(start).to(target, 4500);
-      tween.onUpdate(function () {
-        line.position.y = start.y;
-      });
-      tween.start();
-
-      // dispose of line and remove from scene
-      tween.onComplete(() => {
-        rt.dispose();
-        scene.remove(line);
-      });
-    }
+    this.rainColor = "rgb(70,70,70)"
 
     // convert string into array of numbers
     // var info = starwars.split(" ");
@@ -166,6 +123,49 @@ class SeedScene extends Scene {
   // ------------------------------------------------------------------------
   // END OF CONSTRUCTOR
   // ------------------------------------------------------------------------
+
+  makeLine(scene, color) {
+    // get random position for the line
+    function getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+    }
+
+    // add resource tracker to dispose of lines once they have fallen out of the scene
+    let rt = new ResourceTracker();
+    const track = rt.track.bind(rt);
+
+    // create new line segment object and add to top of scene
+    var geometry = track(new THREE.Geometry());
+    var xPos = getRandomInt(-1 * scene.width, scene.width);
+    var yPos = scene.height + 4; // add "padding" to make lines start above the top of the screen
+    var length = getRandomInt(0, 3);
+    geometry.vertices.push(
+      track(new THREE.Vector3(xPos, yPos, 0)),
+      track(new THREE.Vector3(xPos, yPos - length, 0))
+    );
+    var material = track(
+      new THREE.LineBasicMaterial({ color: color })
+    );
+    var line = track(new THREE.LineSegments(geometry, material));
+    scene.add(line);
+
+    // animate line
+    var start = { x: xPos, y: yPos };
+    var target = { x: xPos, y: -20 };
+    const tween = new TWEEN.Tween(start).to(target, 4500);
+    tween.onUpdate(function () {
+      line.position.y = start.y;
+    });
+    tween.start();
+
+    // dispose of line and remove from scene
+    tween.onComplete(() => {
+      rt.dispose();
+      scene.remove(line);
+    });
+  }
 
   addLetter(scene, third, color, round) {
     if (round != scene.state.round) return;
@@ -256,6 +256,26 @@ class SeedScene extends Scene {
   }
 
   update(timeStamp) {
+
+    function getColor(){ 
+      return "hsl(" + Math.floor(360 * Math.random()) + ',' +
+                 (25 + Math.floor(70 * Math.random())) + '%,' + 
+                 (45 + Math.floor(10 * Math.random())) + '%)'
+    }
+    if (this.score.streak >= 50) this.rainColor = 'hsl(153, 100%, 41%)'
+    else if (this.score.streak >= 40) this.rainColor = 'hsl(107, 100%, 41%)'
+    else if (this.score.streak >= 30) this.rainColor = 'hsl(87, 100%, 41%)'
+    else if (this.score.streak >= 20) this.rainColor = "hsl(66, 100%, 41%)"
+    else if (this.score.streak >= 10) this.rainColor = "hsl(47, 100%, 41%)"
+    else this.rainColor = "rgb(70,70,70)"
+
+    // if it's within 2 miliseconds in either direction, make rain
+    if ((timeStamp - this.nextTime) < 100 || ((timeStamp - this.nextTime) > -100) && this.running) {
+      // trying to figure out how to do a rainbow
+      if (this.score.streak >= 60) this.makeLine(this, getColor());
+      else this.makeLine(this, this.rainColor);
+      this.nextTime = timeStamp + 80
+    }
     // this.title.update(timeStamp);
     // const { updateList, updateListTarget } = this.state;
 
@@ -310,6 +330,7 @@ class SeedScene extends Scene {
         );
         this.state.timeoutList.push(timer);
       }
+      this.nextTime = timeStamp;
     }
 
     // error bar logic
