@@ -14,6 +14,7 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import mp3 from "./sounds/grenade.mp3";
+import { Title } from 'objects'
 
 // Initialize core ThreeJS components
 let muted = true;
@@ -245,70 +246,9 @@ function closeGameOver() {
 }
 
 
+//---------------------------------------------------
 // LOADER PAGE
-class Title extends THREE.Group {
-  constructor() {
-    super();
-    var loader = new THREE.FontLoader();
-    loader.load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/fonts/helvetiker_bold.typeface.json', (font) => {
-      var textGeo0 = new THREE.TextGeometry("welcome to", {
-          font: font,
-          size: 1,
-          height: .25,
-          curveSegments: 2
-      });
-      textGeo0.center();
-
-      // add material
-      var mat0 = new THREE.MeshNormalMaterial();
-      // create mesh
-      let textMesh0 = new THREE.Mesh(textGeo0, mat0);
-      // randomize position between top left corner and top right corner of the screen
-      // let newx = getRandomInt(-22, 22);
-      textMesh0.position.set(-7, height - 6, 0);
-      textMesh0.rotateZ(Math.PI / 9);
-
-      var textGeo1 = new THREE.TextGeometry("TYPE TYPE", {
-          font: font,
-          size: 2,
-          height: .25,
-          curveSegments: 2
-      });
-      textGeo1.center();
-
-      // add material
-      var mat1 = new THREE.MeshNormalMaterial();
-      // create mesh
-      let textMesh1 = new THREE.Mesh(textGeo1, mat1);
-      // randomize position between top left corner and top right corner of the screen
-      // let newx = getRandomInt(-22, 22);
-      textMesh1.position.set(-3, height - 7, 0);
-      textMesh1.rotateZ(Math.PI / 9);
-
-
-      var textGeo3 = new THREE.TextGeometry("REVENGE !", {
-          font: font,
-          size: 2,
-          height: .25,
-          curveSegments: 2
-      });
-      textGeo3.center();
-
-      // add material
-      var mat3 = new THREE.MeshNormalMaterial();
-
-      let textMesh3 = new THREE.Mesh(textGeo3, mat3);
-      textMesh3.position.set(5, height - 7, 0);
-      textMesh3.rotateZ(Math.PI / 9);
-      // textMesh3.rotateY(Math.PI / 6);
-      // add mesh to l_scene
-      this.add(textMesh0)
-      this.add(textMesh1);
-      this.add(textMesh3);
-    });
-  }
-}
-
+//---------------------------------------------------
 var container = document.getElementById( 'container' );
 
 var l_cam = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -325,19 +265,25 @@ l_renderer.setClearColor( 0x000000, 0 ); // the default
 l_renderer.setSize(window.innerWidth, window.innerHeight);
 container.appendChild(l_renderer.domElement);
 
-var l_title = new Title(l_scene);
+let stop_loader = false;
+var l_title = new Title(height);
 l_scene.add(l_title);
 var animate = function (timeStamp) {
-    requestAnimationFrame(animate);
-    for (let children of l_scene.children)
-      children.rotation.z = 0.05 * Math.sin(timeStamp / 300);
-    l_renderer.render(l_scene, l_cam);
+    if (!stop_loader) {
+      requestAnimationFrame(animate);
+      for (let children of l_scene.children)
+        children.rotation.z = 0.05 * Math.sin(timeStamp / 300);
+      l_renderer.render(l_scene, l_cam);
+    }
 };
 
 animate();
 document.getElementById("loader-button").addEventListener("click", clean);
 function clean() {
+  l_title.tracker.dispose;
   while (l_scene.children.length > 0) {
     l_scene.remove(l_scene.children[0]);
   }
-  document.getElementById("loader").className = "hidden";}
+  stop_loader = true;
+  document.getElementById("loader").className = "hidden";
+}
