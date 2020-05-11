@@ -173,6 +173,7 @@ class Letter extends Mesh {
         // new background color is a toned down version of the letter color (orig color is too bright)
         // this.parent.background = this.textMesh.material.color.clone().addScalar(-0.4);
         this.parent.score.update();
+        this.parent.score.total_correct += 1;
         this.scoreAccountedFor = true;
 
         // make letter glow

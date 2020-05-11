@@ -175,6 +175,40 @@
       transform: translateX(-50%);
       /* color: white; */
     }
+
+    #score-msg {
+      font-size: 2em;
+      position: fixed;
+      bottom: 60%;
+      left: 50%;
+      transform: translateX(-50%);
+      /* color: white; */
+    }
+    #score-show1 {
+      font-size: 1.5em;
+      position: fixed;
+      bottom: 21%;
+      left: 50%;
+      transform: translateX(-50%);
+      /* color: white; */
+    }
+    #score-show2 {
+      font-size: 1.5em;
+      position: fixed;
+      bottom: 18%;
+      left: 50%;
+      transform: translateX(-50%);
+      /* color: white; */
+    }
+    #restart-button {
+      width: 170px;
+      height: 85px;
+      font-size: 1.75em;
+      position: fixed;
+      bottom: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
   </style>
 
   <body>
@@ -200,6 +234,12 @@
       <div id="volume" class="mute-container mute hidden">
         <i class="fas fa-volume-up"></i>
       </div>
+    </div>
+    <div id="percent-score" class="hidden">
+      <p id="score-msg"></p>
+      <p id="score-show1"></p>
+      <p id="score-show2"></p>
+      <button id="restart-button">start over</button>
     </div>
 
     <div class="instructions" id="instructions">
