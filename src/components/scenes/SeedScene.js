@@ -34,18 +34,18 @@ class SeedScene extends Scene {
 
     // use HSL instead of RGB so you can control the glow of the letters in target
     this.noteToColor = {
-      0: "hsl(265, 26%, 81%)",
-      1: "hsl(204, 100%, 33%)",
-      2: "hsl(262, 83%, 51%)",
-      3: "hsl(204, 57%, 80%)",
-      4: "hsl(179, 33%, 73%)",
-      5: "hsl(84, 53%, 59%)",
-      6: "hsl(139, 48%, 88%)",
-      7: "hsl(53, 100%, 71%)",
-      8: "hsl(14, 89%, 69%)",
-      9: "hsl(0, 72%, 53%)",
-      10: "hsl(324, 100%, 46%)",
-      11: "hsl(353, 84%, 88%)"
+      0: "hsl(0, 72%, 53%)", // red
+      1: "hsl(14, 89%, 69%)", // orange
+      2: "hsl(53, 100%, 71%)", // yellow
+      3: "hsl(139, 48%, 88%)", // spring green
+      4: "hsl(84, 53%, 59%)", // green
+      5: "hsl(179, 33%, 73%)", // turquoise
+      6: "hsl(204, 57%, 80%)", // cyan
+      7: "hsl(262, 83%, 51%)", // ocean
+      8: "hsl(204, 100%, 33%)", // blue
+      9: "hsl(265, 26%, 81%)", // violet
+      10: "hsl(353, 84%, 88%)", // magenta
+      11: "hsl(324, 100%, 46%)" // raspberry
     };
 
     // Init state
@@ -91,7 +91,7 @@ class SeedScene extends Scene {
     // this.add(cube);
 
     // rain effect
-    this.rainColor = "rgb(70,70,70)"
+    this.rainColor = "rgb(70,70,70)";
 
     // convert string into array of numbers
     // var info = starwars.split(" ");
@@ -152,9 +152,7 @@ class SeedScene extends Scene {
       track(new THREE.Vector3(xPos, yPos, 0)),
       track(new THREE.Vector3(xPos, yPos - length, 0))
     );
-    var material = track(
-      new THREE.LineBasicMaterial({ color: color })
-    );
+    var material = track(new THREE.LineBasicMaterial({ color: color }));
     var line = track(new THREE.LineSegments(geometry, material));
     scene.add(line);
 
@@ -258,25 +256,33 @@ class SeedScene extends Scene {
   }
 
   update(timeStamp) {
-
-    function getColor(){ 
-      return "hsl(" + Math.floor(360 * Math.random()) + ',' +
-                 (25 + Math.floor(70 * Math.random())) + '%,' + 
-                 (45 + Math.floor(10 * Math.random())) + '%)'
+    function getColor() {
+      return (
+        "hsl(" +
+        Math.floor(360 * Math.random()) +
+        "," +
+        (25 + Math.floor(70 * Math.random())) +
+        "%," +
+        (45 + Math.floor(10 * Math.random())) +
+        "%)"
+      );
     }
-    if (this.score.streak >= 50) this.rainColor = 'hsl(153, 100%, 41%)'
-    else if (this.score.streak >= 40) this.rainColor = 'hsl(107, 100%, 41%)'
-    else if (this.score.streak >= 30) this.rainColor = 'hsl(87, 100%, 41%)'
-    else if (this.score.streak >= 20) this.rainColor = "hsl(66, 100%, 41%)"
-    else if (this.score.streak >= 10) this.rainColor = "hsl(47, 100%, 41%)"
-    else this.rainColor = "rgb(70,70,70)"
+    if (this.score.streak >= 50) this.rainColor = "hsl(153, 100%, 41%)";
+    else if (this.score.streak >= 40) this.rainColor = "hsl(107, 100%, 41%)";
+    else if (this.score.streak >= 30) this.rainColor = "hsl(87, 100%, 41%)";
+    else if (this.score.streak >= 20) this.rainColor = "hsl(66, 100%, 41%)";
+    else if (this.score.streak >= 10) this.rainColor = "hsl(47, 100%, 41%)";
+    else this.rainColor = "rgb(70,70,70)";
 
     // if it's within 2 miliseconds in either direction, make rain
-    if ((timeStamp - this.nextTime) < 100 || ((timeStamp - this.nextTime) > -100) && this.running) {
+    if (
+      timeStamp - this.nextTime < 100 ||
+      (timeStamp - this.nextTime > -100 && this.running)
+    ) {
       // trying to figure out how to do a rainbow
       if (this.score.streak >= 60) this.makeLine(this, getColor());
       else this.makeLine(this, this.rainColor);
-      this.nextTime = timeStamp + 80
+      this.nextTime = timeStamp + 80;
     }
     // this.title.update(timeStamp);
     // const { updateList, updateListTarget } = this.state;
