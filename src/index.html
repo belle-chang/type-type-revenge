@@ -215,6 +215,7 @@
   </style>
 
   <body>
+    <!-- loader page -->
     <div id="loader" class="">
       <a
         >Type Type Revenge is a typing practice game modeled after the classic
@@ -223,6 +224,7 @@
       <a id="loader-instruct">Press p to play!</a>
       <div id="container"></div>
     </div>
+    <!-- question icon -->
     <div
       class="instructions-open score-container"
       onClick="openInstructions()"
@@ -230,6 +232,7 @@
     >
       <i class="far fa-question-circle"></i>
     </div>
+    <!-- mute toggle -->
     <div id="volume-controls">
       <div id="mute" class="mute-container mute hidden">
         <i class="fas fa-volume-mute"></i>
@@ -238,13 +241,14 @@
         <i class="fas fa-volume-up"></i>
       </div>
     </div>
+    <!-- post game -->
     <div id="percent-score" class="hidden">
       <p id="score-msg"></p>
       <p id="score-show1"></p>
       <p id="score-show2"></p>
       <button id="restart-button">start over</button>
     </div>
-
+    <!-- instructions -->
     <div class="instructions" id="instructions">
       <h1 class="instructions-heading">HOW TO PLAY</h1>
       <p class="instructions-text">
@@ -285,7 +289,7 @@
     <!-- add in options to choose song? -->
     <!-- add in options to choose difficulty? -->
     <!-- mb add in something that dims the rest of the background when this box opens up -->
-    <div class="instructions hidden" id="game-over">
+    <!-- <div class="instructions hidden" id="game-over">
       <h1 class="instructions-heading">GREAT JOB !</h1>
       <p class="instructions-text" id="final-score"></p>
       <div class="button-container">
@@ -294,8 +298,7 @@
       <button class="instructions-close" onClick="closeGameOver()">
         close this box
       </button>
-    </div>
-    <!-- <script type="module" src="./src/test.js"></script>     -->
+    </div> -->
 
     <!-- script -->
     <script>

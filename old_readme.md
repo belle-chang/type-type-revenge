@@ -1,13 +1,17 @@
-# Welcome to Type Type Revenge!
+# COS 426 Final Project Seed
 
-Type Type Revenge is a 3D web game built with Three.js to provide an interactive environment for users of various typing levels to practice their typing skills. It is inspired by the classic iPhone game Tap Tap Revenge, as well as popular videogames Guitar Hero and Dance Dance Revolution.
+This project will help you get started on your ThreeJS project and provide a strong foundation for extension. It sets up a simple scene, camera, and renderer in a modern JavaScript environment.
 
-[Live Demo](https://belle-chang.github.io/type-type-revenge)
+[Online Demo](https://reillybova.github.io/three-seed/)
 
-## List of Features
-![image](media/instructions.png)
+## Installation
+This project uses the GitHub's NodeJS Package Manager (npm) to manage project dependencies. All npm settings, as well as your project dependencies and their versionings, are defined in the file `package.json`.
 
-<!-- ## Setting Up Your Project
+The NodeJS Package Manager, which is the world's largest software registry and supports over one million open source JavaScript packages and libraries, runs in a NodeJS runtime. The NodeJS runtime is essentially a port of Google Chrome's JavaScript V8 engine that will run in your terminal.
+
+Before you begin, you will need to install [NodeJS and npm](https://www.npmjs.com/get-npm). Then, open a terminal instance and set your working directory to the root of the project and run `npm install`.
+
+## Setting Up Your Project
 Before you start your project, look inside `package.json`. Take a note of the following fields, and adjust them where appropriate:
 
 * `name`: This is your project name as it would appear on the npm registry (if published). You should replace this with your own project name, but make sure to preserve the all lowercase and hyphenated format.
@@ -62,7 +66,7 @@ Both models were downloaded from the Google Poly project:
 
 * [Floating island](https://poly.google.com/view/eEz9hdknXOi)
 
-* [Flower](https://poly.google.com/view/eydI4__jXpi) -->
+* [Flower](https://poly.google.com/view/eydI4__jXpi)
 
 ## License
 [MIT](./LICENSE)
