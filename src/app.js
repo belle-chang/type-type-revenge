@@ -322,12 +322,12 @@ const l_scene = new THREE.Scene();
 l_scene.height = height;
 l_scene.width = width;
 
-const controls = new OrbitControls(l_cam, container);
-controls.enableDamping = false;
-controls.enablePan = false;
-controls.minDistance = 16;
-controls.maxDistance = 16;
-controls.update();
+// const controls = new OrbitControls(l_cam, container);
+// controls.enableDamping = false;
+// controls.enablePan = false;
+// controls.minDistance = 16;
+// controls.maxDistance = 16;
+// controls.update();
 
 var l_renderer = new THREE.WebGLRenderer({alpha: true});
 l_renderer.setClearColor( 0x000000, 0 ); // the default
