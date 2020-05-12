@@ -14,8 +14,8 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import mp3 from "./sounds/grenade.mp3";
+import wii_mp3 from "./sounds/WiiThemeSong.mp3"
 import { Title, Key } from 'objects'
-// import { BasicLights } from 'objects'
 import { BasicLights } from "lights";
 
 // Initialize core ThreeJS components
@@ -107,6 +107,8 @@ window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
 document.getElementById("start").addEventListener("click", start);
 document.getElementById("start-over").addEventListener("click", startOver);
+document.getElementById("grenade").addEventListener("click", setGrenade);
+document.getElementById("wii").addEventListener("click", setWii);
 document.getElementById("easy").addEventListener("click", setEasy);
 document.getElementById("medium").addEventListener("click", setMedium);
 document.getElementById("hard").addEventListener("click", setHard);
@@ -144,11 +146,7 @@ var sound = new THREE.Audio(listener);
 
 // load a sound and set it as the Audio object's buffer
 var audioLoader = new THREE.AudioLoader();
-audioLoader.load(mp3, function (buffer) {
-  sound.setBuffer(buffer);
-  sound.setLoop(false);
-  sound.setVolume(0.5);
-});
+// loadGrenade();
 
 // if it's a reload
 window.onload = function () {
@@ -204,14 +202,37 @@ function toggleVolume() {
   // scene.playing = playing;
 }
 
-function start() {
+function loadGrenade() {
+  audioLoader.load(mp3, function (buffer) {
+    sound.setBuffer(buffer);
+    sound.setLoop(false);
+    sound.setVolume(0.5);
+  });
+}
+
+function loadWii() {
+  audioLoader.load(wii_mp3, function (buffer) {
+    sound.setBuffer(buffer);
+    sound.setLoop(false);
+    sound.setVolume(0.5);
+  });
+}
+
+async function start() {
+  closeInstructions();
+  if (scene.song == 0) {
+    loadGrenade();
+  }
+  else if (scene.song == 1) {
+    loadWii();
+  }
+  await new Promise(r => setTimeout(r, 1200));
   scene.start = true;
   if (playing) sound.stop(); // so that song starts from beginning w/ new game
   sound.play();
   playing = true;
   muted = false;
   sound.setLoop(false);
-  closeInstructions();
   document.getElementById("volume").className = "mute mute-container";
 }
 
@@ -236,6 +257,20 @@ function startOver() {
 
 function closeGameOver() {
   document.getElementById("game-over").className = "instructions hidden";
+}
+
+function setGrenade() {
+  scene.song = 0;
+  document.getElementById("grenade").className = "active";
+  document.getElementById("wii").className = "";
+  // loadGrenade();
+}
+
+function setWii() {
+  scene.song = 1;
+  document.getElementById("wii").className = "active";
+  document.getElementById("grenade").className = "";
+  // loadWii();
 }
 
 function setEasy() {
