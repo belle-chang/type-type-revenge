@@ -48,19 +48,19 @@ class HighScore {
       }, 1500);
     }
     if (this.streak == 50) {
-      document.getElementById("message").innerHTML = "don't screw up now lmao!";
+      document.getElementById("message").innerHTML = "don't screw it up now!";
       setTimeout(function () {
         document.getElementById("message").innerHTML = "";
       }, 1500);
     }
     if (this.score == 60) {
-      document.getElementById("message").innerHTML = "awesome!";
+      document.getElementById("message").innerHTML = "incredible!";
       setTimeout(function () {
         document.getElementById("message").innerHTML = "";
       }, 1500);
     }
     if (this.score == 75 && this.streak == 75) {
-      document.getElementById("message").innerHTML = "literal perfection";
+      document.getElementById("message").innerHTML = "literal. perfection.";
       setTimeout(function () {
         document.getElementById("message").innerHTML = "";
       }, 1500);
