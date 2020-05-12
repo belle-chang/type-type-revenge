@@ -298,7 +298,7 @@
     <!-- add in options to choose song? -->
     <!-- add in options to choose difficulty? -->
     <!-- mb add in something that dims the rest of the background when this box opens up -->
-    <!-- <div class="instructions hidden" id="game-over">
+    <div class="instructions hidden" id="game-over">
       <h1 class="instructions-heading">GREAT JOB !</h1>
       <p class="instructions-text" id="final-score"></p>
       <div class="button-container">
@@ -307,7 +307,7 @@
       <button class="instructions-close" onClick="closeGameOver()">
         close this box
       </button>
-    </div> -->
+    </div>
 
     <!-- script -->
     <script>
@@ -320,10 +320,10 @@
       }
       function openInstructions() {
         // if the game over box was open, close it before opening instructions.
-        if ((document.getElementById("game-over").className = "instructions")) {
-          document.getElementById("game-over").className =
-            "instructions hidden";
-        }
+        // if ((document.getElementById("game-over").className = "instructions")) {
+        //   document.getElementById("game-over").className =
+        //     "instructions hidden";
+        // }
         document.getElementById("instructions").className = "instructions";
       }
     </script>

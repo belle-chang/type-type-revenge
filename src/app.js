@@ -106,7 +106,7 @@ window.addEventListener("resize", windowResizeHandler, false);
 window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
 document.getElementById("start").addEventListener("click", start);
-// document.getElementById("start-over").addEventListener("click", startOver);
+document.getElementById("start-over").addEventListener("click", startOver);
 document.getElementById("restart-button").addEventListener("click", startOver);
 document.getElementById("grenade").addEventListener("click", setGrenade);
 document.getElementById("wii").addEventListener("click", setWii);
