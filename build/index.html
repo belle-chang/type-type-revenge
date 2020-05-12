@@ -45,8 +45,8 @@
       background-color: #5250a4;
       padding: 30px 5em 50px 5em;
       border-radius: 10px;
-      opacity: 0.85;
-      width: 500px;
+      opacity: 0.90;
+      width: 700px;
       position: absolute;
       text-align: center;
     }
@@ -57,7 +57,7 @@
     .instructions-text {
       text-align: center;
       font-size: 1em;
-      line-height: 30px;
+      line-height: 25px;
     }
     .instructions-open {
       font-size: 1.75em;
@@ -98,7 +98,10 @@
       font-size: 15px;
       font-weight: 700;
     }
-
+    button:focus {
+      outline: none;
+      box-shadow: none;
+    }
     .Button:active,
     .active {
       background-color: #232577;
@@ -189,7 +192,7 @@
       bottom: 5%;
       left: 50%;
       transform: translateX(-50%);
-    }</style><body><div id="loader" class=""><a>Type Type Revenge is a typing practice game modeled after the classic iPhone game, Tap Tap Revenge.</a><a id="loader-instruct">Press p to play!</a><div id="container"></div></div><div class="instructions-open score-container" onclick="openInstructions()" id="instructions-open"><i class="far fa-question-circle"></i></div><div id="volume-controls"><div id="mute" class="mute-container mute hidden"><i class="fas fa-volume-mute"></i></div><div id="volume" class="mute-container mute hidden"><i class="fas fa-volume-up"></i></div></div><div id="percent-score" class="hidden"><p id="score-msg"></p><p id="score-show1"></p><p id="score-show2"></p><button id="restart-button">start over</button></div><div class="instructions" id="instructions"><h1 class="instructions-heading">HOW TO PLAY</h1><p class="instructions-text">When the falling letters match up with their target outlines at the bottom of the screen, hit the corresponding letter on your keyboard to earn points.<br/><br/>Maintain a streak of correctly pressed notes to earn more points!<br/><br/>Make sure you turn your volume up so you can hear the music.</p><div class="button-container"><button id="easy" style="width: 140px;" class="active">easy</button> <button id="medium" style="width: 140px;">medium</button> <button id="hard" style="width: 140px;">hard</button><br/><button id="start">start new game</button><br/><button class="instructions-close" id="instructions-close">close this box</button></div></div><div class="message" id="message"><h1></h1></div><div class="instructions hidden" id="game-over"><h1 class="instructions-heading">GREAT JOB !</h1><p class="instructions-text" id="final-score"></p><div class="button-container"><button id="start-over">start over</button></div><button class="instructions-close" onclick="closeGameOver()">close this box</button></div><script>function closeInstructions() {
+    }</style><body><div id="loader" class=""><a>Type Type Revenge is a typing practice game modeled after the classic iPhone game, Tap Tap Revenge.</a><a id="loader-instruct">Press p to play!</a><div id="container"></div></div><div class="instructions-open score-container" onclick="openInstructions()" id="instructions-open"><i class="far fa-question-circle"></i></div><div id="volume-controls"><div id="mute" class="mute-container mute hidden"><i class="fas fa-volume-mute"></i></div><div id="volume" class="mute-container mute hidden"><i class="fas fa-volume-up"></i></div></div><div id="percent-score" class="hidden"><p id="score-msg"></p><p id="score-show1"></p><p id="score-show2"></p><button id="restart-button">start over</button></div><div class="instructions" id="instructions"><h1 class="instructions-heading">HOW TO PLAY</h1><p class="instructions-text">When the falling letters match up with their target outlines at the bottom of the screen, hit the corresponding letter on your keyboard to earn points.<br/><br/>The targets will glow when you correctly type the letters, and will turn red if you don't.<br/><br/>Maintain a streak of correctly pressed notes to earn more points!<br/><br/>Make sure you turn your volume up so you can hear the music. Good luck!</p><br/><h1 class="instructions-heading">CHOOSE A SONG</h1><div class="button-container"><button id="wii" style="width: 200px;">Wii Theme Song</button> <button id="grenade" style="width: 200px;" class="active">Grenade by Bruno Mars</button><br/><h1 class="instructions-heading">CHOOSE A LEVEL</h1><button id="easy" style="width: 140px;" class="active">easy</button> <button id="medium" style="width: 140px;">medium</button> <button id="hard" style="width: 140px;">hard</button><br/><button id="start">start new game</button><br/><button class="instructions-close" id="instructions-close">close this box</button></div></div><div class="message" id="message"><h1></h1></div><script>function closeInstructions() {
         document.getElementById("instructions").className =
           "instructions hidden";
       }
@@ -203,4 +206,4 @@
             "instructions hidden";
         }
         document.getElementById("instructions").className = "instructions";
-      }</script><script src="/main.fd9180bdf983adf0bfa4.js"></script></body></html>
+      }</script><script src="/main.b63ebb169cec621ee97d.js"></script></body></html>

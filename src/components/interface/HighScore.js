@@ -89,7 +89,10 @@ class HighScore {
     // document.getElementById("final-score").innerHTML =
     //   "Final score: " + this.score;
     // document.getElementById("game-over").className = "instructions";
+
+    // make percent-score container visible
     document.getElementById("percent-score").className = "";
+    // set message, final score, highest streak
     document.getElementById("score-msg").innerHTML = message;
     document.getElementById("score-show1").innerHTML = "Final score: " + this.score; "Highest streak: " + this.highest_streak;
     document.getElementById("score-show2").innerHTML = "Highest streak: " + this.highest_streak;

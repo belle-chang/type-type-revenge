@@ -82,10 +82,6 @@ class SeedScene extends Scene {
     this.lights = lights;
     this.add(lights);
 
-    // Add cube to scene
-    // const cube = new Cube(this);
-    // this.add(cube);
-
     // rain effect
     this.rainColor = "rgb(70,70,70)";
 
@@ -239,6 +235,8 @@ class SeedScene extends Scene {
   }
 
   update(timeStamp) {
+
+    // use this for rainbow rain
     function getColor() {
       return (
         "hsl(" +
@@ -250,6 +248,8 @@ class SeedScene extends Scene {
         "%)"
       );
     }
+
+    // set rain according to streak!
     if (this.score.streak >= 50) this.rainColor = "hsl(153, 100%, 41%)";
     else if (this.score.streak >= 40) this.rainColor = "hsl(107, 100%, 41%)";
     else if (this.score.streak >= 30) this.rainColor = "hsl(87, 100%, 41%)";
@@ -338,36 +338,38 @@ class SeedScene extends Scene {
     }
 
     // error bar logic
-    if (this.key != "" && this.key != undefined) {
-      // see if key pressed is any of the letters on the screen
-      const found = Array.from(this.state.lettersOnScreenSet).indexOf(this.key);
-      // if not turn on error bar
-      if (found == -1) {
-        this.score.reset();
-        this.incorrect.visible = true;
-        setTimeout(() => (this.incorrect.visible = false), 300);
-      } else {
-        // find letter
-        let found_letter = Array.from(this.state.updateSet)[found];
-        // if found letter is before target, turn on error bar
-        if (
-          found_letter.position.y >
-          -1 *
-            (found_letter.coords.y + Math.abs(found_letter.target.coords.y)) +
-            1.5
-        ) {
+    if (this.running) {
+      if (this.key != "" && this.key != undefined) {
+        // see if key pressed is any of the letters on the screen
+        const found = Array.from(this.state.lettersOnScreenSet).indexOf(this.key);
+        // if not turn on error bar
+        if (found == -1) {
           this.score.reset();
           this.incorrect.visible = true;
-          this.key = "";
           setTimeout(() => (this.incorrect.visible = false), 300);
-        }
-        // if found letter has already been pressed, turn on error bar
-        if (found_letter.target.state.mesh.visible) {
-          this.score.reset();
-          found_letter.target.changeColor(0xff0000);
-          this.incorrect.visible = true;
-          this.key = "";
-          setTimeout(() => (this.incorrect.visible = false), 300);
+        } else {
+          // find letter
+          let found_letter = Array.from(this.state.updateSet)[found];
+          // if found letter is before target, turn on error bar
+          if (
+            found_letter.position.y >
+            -1 *
+              (found_letter.coords.y + Math.abs(found_letter.target.coords.y)) +
+              1.5
+          ) {
+            this.score.reset();
+            this.incorrect.visible = true;
+            this.key = "";
+            setTimeout(() => (this.incorrect.visible = false), 300);
+          }
+          // if found letter has already been pressed, turn on error bar
+          if (found_letter.target.state.mesh.visible) {
+            this.score.reset();
+            found_letter.target.changeColor(0xff0000);
+            this.incorrect.visible = true;
+            this.key = "";
+            setTimeout(() => (this.incorrect.visible = false), 300);
+          }
         }
       }
     }
