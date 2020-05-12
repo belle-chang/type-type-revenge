@@ -366,7 +366,6 @@ var animate = function (timeStamp) {
 };
 
 animate();
-document.getElementById("loader-button").addEventListener("click", fly);
 function clean() {
   l_title.tracker.dispose;
   while (l_scene.children.length > 0) {
