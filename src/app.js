@@ -14,8 +14,8 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import mp3 from "./sounds/grenade.mp3";
+import wii_mp3 from "./sounds/WiiThemeSong.mp3"
 import { Title, Key } from 'objects'
-// import { BasicLights } from 'objects'
 import { BasicLights } from "lights";
 
 // Initialize core ThreeJS components
@@ -107,6 +107,8 @@ window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
 document.getElementById("start").addEventListener("click", start);
 document.getElementById("start-over").addEventListener("click", startOver);
+document.getElementById("grenade").addEventListener("click", setGrenade);
+document.getElementById("wii").addEventListener("click", setWii);
 document.getElementById("easy").addEventListener("click", setEasy);
 document.getElementById("medium").addEventListener("click", setMedium);
 document.getElementById("hard").addEventListener("click", setHard);
@@ -121,8 +123,12 @@ document
   .addEventListener("click", closeInstructions);
 // when key is pressed save event key to key parameter of SeedScene
 function handleKeyDown(event) {
-  if (!event.metaKey && !event.altKey && !event.controlKey)
+  if ((event.key == "p") && (document.getElementById("loader").style.display != "none"))
+    fly();
+  else {
+    if (!event.metaKey && !event.altKey && !event.controlKey)
     scene.key = event.key;
+  }
 }
 
 // once key is lifted, set SeedScene key to default value
@@ -140,11 +146,7 @@ var sound = new THREE.Audio(listener);
 
 // load a sound and set it as the Audio object's buffer
 var audioLoader = new THREE.AudioLoader();
-audioLoader.load(mp3, function (buffer) {
-  sound.setBuffer(buffer);
-  sound.setLoop(false);
-  sound.setVolume(0.5);
-});
+// loadGrenade();
 
 // if it's a reload
 window.onload = function () {
@@ -200,14 +202,37 @@ function toggleVolume() {
   // scene.playing = playing;
 }
 
-function start() {
+function loadGrenade() {
+  audioLoader.load(mp3, function (buffer) {
+    sound.setBuffer(buffer);
+    sound.setLoop(false);
+    sound.setVolume(0.5);
+  });
+}
+
+function loadWii() {
+  audioLoader.load(wii_mp3, function (buffer) {
+    sound.setBuffer(buffer);
+    sound.setLoop(false);
+    sound.setVolume(0.5);
+  });
+}
+
+async function start() {
+  closeInstructions();
+  if (scene.song == 0) {
+    loadGrenade();
+  }
+  else if (scene.song == 1) {
+    loadWii();
+  }
+  await new Promise(r => setTimeout(r, 1200));
   scene.start = true;
   if (playing) sound.stop(); // so that song starts from beginning w/ new game
   sound.play();
   playing = true;
   muted = false;
   sound.setLoop(false);
-  closeInstructions();
   document.getElementById("volume").className = "mute mute-container";
 }
 
@@ -232,6 +257,20 @@ function startOver() {
 
 function closeGameOver() {
   document.getElementById("game-over").className = "instructions hidden";
+}
+
+function setGrenade() {
+  scene.song = 0;
+  document.getElementById("grenade").className = "active";
+  document.getElementById("wii").className = "";
+  // loadGrenade();
+}
+
+function setWii() {
+  scene.song = 1;
+  document.getElementById("wii").className = "active";
+  document.getElementById("grenade").className = "";
+  // loadWii();
 }
 
 function setEasy() {
@@ -280,41 +319,82 @@ const l_scene = new THREE.Scene();
 l_scene.height = height;
 l_scene.width = width;
 
-// const controls = new OrbitControls(l_cam, container);
-// controls.enableDamping = false;
-// controls.enablePan = false;
-// controls.minDistance = 16;
-// controls.maxDistance = 16;
-// controls.update();
+const controls = new OrbitControls(l_cam, container);
+controls.enableDamping = false;
+controls.enablePan = false;
+controls.minDistance = 16;
+controls.maxDistance = 16;
+controls.update();
 
 var l_renderer = new THREE.WebGLRenderer({alpha: true});
 l_renderer.setClearColor( 0x000000, 0 ); // the default
 l_renderer.setSize(window.innerWidth, window.innerHeight);
+// renderer.toneMapping = THREE.LinearToneMapping;
+// renderer.setClearColor(0x000000,0.0);
+l_renderer.setPixelRatio(window.devicePixelRatio);
 container.appendChild(l_renderer.domElement);
 
 let stop_loader = false;
 var l_title = new Title(height);
-var key = new Key(height, "a");
-// key.position.set(width - 10, height - 10, 0);
+var key = new Key(height, "p");
+var key1 = new Key(height, "l");
+var key2 = new Key(height, "a");
+var key3 = new Key(height, "y");
+key.position.set(-6, height - 18.5, 0);
+key1.position.set(-2, height - 18.5, 0);
+key2.position.set(2, height - 18.5, 0);
+key3.position.set(6, height - 18.5, 0);
 l_scene.add(l_title);
-// l_scene.add(key);
+l_scene.add(key);
+l_scene.add(key1);
+l_scene.add(key2);
+l_scene.add(key3);
 l_scene.add(new BasicLights());
 var animate = function (timeStamp) {
   if (!stop_loader) {
     requestAnimationFrame(animate);
-    for (let children of l_scene.children)
-      children.rotation.z = 0.05 * Math.sin(timeStamp / 300);
+    // for (let children of l_scene.children)
+    //   children.rotation.z = 0.05 * Math.sin(timeStamp / 300);
+    l_title.rotation.z = 0.05 * Math.sin(timeStamp / 300);
+    l_title.update();
     l_renderer.render(l_scene, l_cam);
+    // key.update();
   }
 };
 
 animate();
-document.getElementById("loader-button").addEventListener("click", clean);
+document.getElementById("loader-button").addEventListener("click", fly);
 function clean() {
   l_title.tracker.dispose;
   while (l_scene.children.length > 0) {
     l_scene.remove(l_scene.children[0]);
   }
   stop_loader = true;
-  document.getElementById("loader").className = "hidden";
+  // document.getElementById("loader").className = "hidden";
+  fade(document.getElementById("loader"));
+}
+
+
+function fly() {
+  // scene.
+  key.update(true);
+  // key.update();
+  setTimeout(() => (key1.update(true)), 700);
+  setTimeout(() => (key2.update(true)), 1400);
+  setTimeout(() => (key3.update(true)), 2100);
+  setTimeout(() => (clean()), 4700);
+}
+
+// https://stackoverflow.com/questions/6121203/how-to-do-fade-in-and-fade-out-with-javascript-and-css
+function fade(element) {
+  var op = 1;  // initial opacity
+  var timer = setInterval(function () {
+      if (op <= 0.1){
+          clearInterval(timer);
+          element.style.display = 'none';
+      }
+      element.style.opacity = op;
+      element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+      op -= op * 0.1;
+  }, 20);
 }
