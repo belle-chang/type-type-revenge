@@ -3,6 +3,7 @@
 Type Type Revenge is a 3D web game built with Three.js to provide an interactive environment for users of various typing levels to practice their typing skills. It is inspired by the classic iPhone game Tap Tap Revenge, as well as popular videogames Guitar Hero and Dance Dance Revolution.
 
 [Live Demo](https://belle-chang.github.io/type-type-revenge)
+[Final Report](https://github.com/belle-chang/type-type-revenge/blob/master/type-type-revenge_final-report.pdf)
 
 ## Demo of Features
 ### Introduction Page
