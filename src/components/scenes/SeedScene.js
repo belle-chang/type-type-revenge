@@ -1,5 +1,5 @@
 import { Scene, Color, AnimationObjectGroup } from "three";
-import { Letter, Target, Title, Cube } from "objects";
+import { Letter, Target, Percentage } from "objects";
 import { ResourceTracker } from "tracker";
 import { BasicLights } from "lights";
 import * as THREE from "three";
@@ -223,6 +223,8 @@ class SeedScene extends Scene {
       if (this.children[1] == this.lights) {
         continue;
       }
+      if (this.children[1] instanceof Percentage)
+        this.children[1].dispose();
       this.remove(this.children[1]);
     }
     this.add(this.incorrect);
@@ -265,8 +267,6 @@ class SeedScene extends Scene {
       else this.makeLine(this, this.rainColor);
       this.nextTime = timeStamp + 80;
     }
-    // this.title.update(timeStamp);
-    // const { updateList, updateListTarget } = this.state;
 
     // for every 90 indices (30 notes) where info[i] = time, info[i+1] = note, info[i+2] = velocity
     // start game -- only runsonce
@@ -308,7 +308,7 @@ class SeedScene extends Scene {
         if (this.difficulty == 1) delta = 9;
         if (this.difficulty == 2) delta = 7;
       }
-      
+      this.total = (info.length - start + 1) / delta;
       for (let i = start; i < info.length; i += delta) {
         // assuming it takes 4000 ms for letter to fall to its target
         const fallTime = 4000;
@@ -381,8 +381,16 @@ class SeedScene extends Scene {
       // clear scene when game is over
       if (this.state.updateSet.size == 0) {
         this.running = false;
+        // add percentage and message
+        let ptg = Math.round(this.score.total_correct / this.total * 100);
+        let message = ""
+        if (ptg >= 90) message = "AMAZING JOB!"
+        else if (ptg >= 70) message = "C'mon, you can do better..."
+        else if (ptg >= 40) message = "Looks like you need more practice!"
+        else message = "Did you really even play?"
+        this.score.displayScore(message);
         this.dispose();
-        this.score.displayScore();
+        this.add(new Percentage(ptg));
       }
     }
   }

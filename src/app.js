@@ -107,6 +107,7 @@ window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
 document.getElementById("start").addEventListener("click", start);
 document.getElementById("start-over").addEventListener("click", startOver);
+document.getElementById("restart-button").addEventListener("click", startOver);
 document.getElementById("grenade").addEventListener("click", setGrenade);
 document.getElementById("wii").addEventListener("click", setWii);
 document.getElementById("easy").addEventListener("click", setEasy);
@@ -234,6 +235,7 @@ async function start() {
   muted = false;
   sound.setLoop(false);
   document.getElementById("volume").className = "mute mute-container";
+  document.getElementById("percent-score").className = "hidden";
 }
 
 function closeInstructions() {
@@ -253,6 +255,7 @@ function startOver() {
   sound.setLoop(false);
   closeGameOver();
   document.getElementById("volume").className = "mute mute-container";
+  document.getElementById("percent-score").className = "hidden";
 }
 
 function closeGameOver() {

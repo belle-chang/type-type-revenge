@@ -6,13 +6,15 @@ class HighScore {
     this.element.classList.add("score-glow");
     this.score = 0;
     this.streak = 0;
+    this.highest_streak = 0;
+    this.total_correct = 0;
     this.element.innerText = "Score: 0\n Streak: 0";
     document.body.appendChild(this.element);
   }
 
   update() {
     this.streak += 1;
-
+    if (this.streak > this.highest_streak) this.highest_streak = this.streak;
     // streak multiplier
     if (this.streak < 5) this.score += 1;
     else if (this.streak < 10) this.score += 2;
@@ -75,16 +77,22 @@ class HighScore {
   }
 
   fullReset() {
+    this.highest_streak = 0;
+    this.total_correct = 0;
     this.score = 0;
     this.streak = 0;
     this.element.innerText =
       "Score: " + this.score + "\nStreak: " + this.streak;
   }
 
-  displayScore() {
-    document.getElementById("final-score").innerHTML =
-      "Final score: " + this.score;
-    document.getElementById("game-over").className = "instructions";
+  displayScore(message) {
+    // document.getElementById("final-score").innerHTML =
+    //   "Final score: " + this.score;
+    // document.getElementById("game-over").className = "instructions";
+    document.getElementById("percent-score").className = "";
+    document.getElementById("score-msg").innerHTML = message;
+    document.getElementById("score-show1").innerHTML = "Final score: " + this.score; "Highest streak: " + this.highest_streak;
+    document.getElementById("score-show2").innerHTML = "Highest streak: " + this.highest_streak;
   }
 }
 export default HighScore;
