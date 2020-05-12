@@ -14,6 +14,7 @@ class Key extends Group {
       const track = this.tracker.track.bind(this.tracker);
 
       // https://stackoverflow.com/questions/49481332/how-to-create-3d-trapezoid-in-three-js
+      // trapezoidal mesh for key 
       var key_geometry = track(new THREE.CylinderGeometry( 0.8 / Math.sqrt( 2 ), 1 / Math.sqrt( 2 ), .5, 4, 1 )); // size of top can be changed
       key_geometry.rotateY( Math.PI / 4 );
       key_geometry.rotateX( Math.PI / 2 );
@@ -33,6 +34,7 @@ class Key extends Group {
       key_mesh.scale.set( 2.5, 2.5, 2.5 );
       this.add(key_mesh);
 
+      // text mesh
       var loader = new THREE.FontLoader();
       loader.load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/fonts/helvetiker_bold.typeface.json', (font) => {
         var textGeo0 = track(new THREE.TextGeometry(letter, {
@@ -92,8 +94,6 @@ class Key extends Group {
     }
 
     update() {
-        // Bob back and forth
-        // this.rotation.z = 0.05 * Math.sin(timeStamp / 300);
 
         // Advance tween animations, if any exist
         TWEEN.update();

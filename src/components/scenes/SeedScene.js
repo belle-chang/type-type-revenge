@@ -82,10 +82,6 @@ class SeedScene extends Scene {
     this.lights = lights;
     this.add(lights);
 
-    // Add cube to scene
-    // const cube = new Cube(this);
-    // this.add(cube);
-
     // rain effect
     this.rainColor = "rgb(70,70,70)";
 
@@ -239,6 +235,8 @@ class SeedScene extends Scene {
   }
 
   update(timeStamp) {
+
+    // use this for rainbow rain
     function getColor() {
       return (
         "hsl(" +
@@ -250,6 +248,8 @@ class SeedScene extends Scene {
         "%)"
       );
     }
+
+    // set rain according to streak!
     if (this.score.streak >= 50) this.rainColor = "hsl(153, 100%, 41%)";
     else if (this.score.streak >= 40) this.rainColor = "hsl(107, 100%, 41%)";
     else if (this.score.streak >= 30) this.rainColor = "hsl(87, 100%, 41%)";
