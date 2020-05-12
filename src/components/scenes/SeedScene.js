@@ -278,18 +278,16 @@ class SeedScene extends Scene {
     else if (this.score.streak >= 10) this.rainColor = "hsl(47, 100%, 41%)";
     else this.rainColor = "rgb(70,70,70)";
 
-    // // if it's within 2 miliseconds in either direction, make rain
-    // if (
-    //   timeStamp - this.nextTime < 5 ||
-    //   (timeStamp - this.nextTime > -5 && this.running)
-    // ) {
-    //   // trying to figure out how to do a rainbow
-    //   if (this.score.streak >= 60) this.makeLine(this, getColor());
-    //   else this.makeLine(this, this.rainColor);
-    //   this.nextTime = timeStamp + 80;
-    // }
-    // this.title.update(timeStamp);
-    // const { updateList, updateListTarget } = this.state;
+    // if it's within 2 miliseconds in either direction, make rain
+    if (
+      timeStamp - this.nextTime < 5 ||
+      (timeStamp - this.nextTime > -5 && this.running)
+    ) {
+      // trying to figure out how to do a rainbow
+      if (this.score.streak >= 60) this.makeLine(this, getColor());
+      else this.makeLine(this, this.rainColor);
+      this.nextTime = timeStamp + 80;
+    }
 
     // for every 90 indices (30 notes) where info[i] = time, info[i+1] = note, info[i+2] = velocity
     // start game -- only runsonce
