@@ -74,12 +74,12 @@ class Title extends THREE.Group {
 
     update(timeStamp) {
         // Bob back and forth
-        this.rotation.z = 0.05 * Math.sin(timeStamp / 300);
+        // this.rotation.z = 0.05 * Math.sin(timeStamp / 300);
 
         // Advance tween animations, if any exist
-        // TWEEN.update();
+        TWEEN.update();
         // uncomment this to move it automatically
-        // this.move();
+        // this.fall();
 
     }
 }
