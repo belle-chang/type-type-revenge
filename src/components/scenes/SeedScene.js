@@ -308,8 +308,11 @@ class SeedScene extends Scene {
         if (this.difficulty == 1) delta = 9;
         if (this.difficulty == 2) delta = 7;
       }
-      this.total = (info.length - start + 1) / delta;
+      // this.total = (info.length - start) / delta;
+      // console.log(this.total)
+      let total = 0;
       for (let i = start; i < info.length; i += delta) {
+        total += 1;
         // assuming it takes 4000 ms for letter to fall to its target
         const fallTime = 4000;
         // obtain note from pitch
@@ -334,6 +337,7 @@ class SeedScene extends Scene {
         );
         this.state.timeoutList.push(timer);
       }
+      this.total = total;
       this.nextTime = timeStamp;
     }
 
