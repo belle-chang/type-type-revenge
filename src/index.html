@@ -67,11 +67,11 @@
       transform: translate(-50%, -50%);
       color: white;
       /* background-color: #5250a4; */
-      background-image: linear-gradient(-90deg, #f7a399, #7271be);
+      background-image: linear-gradient(#f7a399, #7271be);
       padding: 30px 5em 50px 5em;
       border-radius: 10px;
-      opacity: 0.9;
-      width: 500px;
+      opacity: 0.95;
+      width: 80%;
       position: absolute;
       text-align: center;
     }
@@ -81,7 +81,7 @@
     }
     .instructions-text {
       text-align: center;
-      font-size: 1em;
+      font-size: 1.15em;
       line-height: 25px;
     }
     .instructions-open {
@@ -137,6 +137,22 @@
       color: white;
       background-color: #232577;
       border: none;
+    }
+    .start-button {
+      width: 190px;
+      height: 70px;
+      color: white;
+      background-color: rgb(0, 0, 0, 0);
+      margin: 2em auto;
+      text-align: center;
+      border-radius: 6px;
+      border: 2.5px solid white;
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .start-button:hover {
+      background-color: #232577;
+      border: 2.5px solid white;
     }
     .message {
       position: fixed;
@@ -218,19 +234,39 @@
       left: 50%;
       transform: translateX(-50%);
     }
+    .instructions-left {
+      max-width: 50%;
+      float: left;
+    }
+    .instructions-right {
+      max-width: 50%;
+      float: right;
+    }
+    .fa-music {
+      line-height: 50px;
+    }
+    .fa-times-circle {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      font-size: 30px;
+    }
+    .fa-times-circle:hover {
+      color: #7271be;
+    }
   </style>
 
   <body>
     <!-- loader page -->
-    <div id="loader" class="">
+    <!-- <div id="loader" class="">
       <a
         >Type Type Revenge is a typing practice game modeled after the classic
         iPhone game, Tap Tap Revenge.</a
-      >
-      <!-- <button id="loader-button">let's play!</button> -->
-      <a id="loader-instruct">Press p to play!</a>
+      > -->
+    <!-- <button id="loader-button">let's play!</button> -->
+    <!-- <a id="loader-instruct">Press p to play!</a>
       <div id="container"></div>
-    </div>
+    </div> -->
     <!-- question icon -->
     <div
       class="instructions-open score-container"
@@ -257,38 +293,43 @@
     </div>
     <!-- instructions -->
     <div class="instructions" id="instructions">
-      <h1 class="instructions-heading">HOW TO PLAY</h1>
-      <p class="instructions-text">
-        When the falling letters match up with their target outlines at the
-        bottom of the screen, hit the corresponding letter on your keyboard to
-        earn points.
-        <br /><br />
-        The targets will glow when you correctly type the letters, and will turn
-        red if you don't.
-        <br /><br />
-        Maintain a streak of correctly pressed notes to earn more points!
-        <br /><br />
-        Make sure you turn your volume up so you can hear the music. Good luck!
-      </p>
-      <br />
-      <h1 class="instructions-heading">CHOOSE A SONG</h1>
-      <div class="button-container">
-        <button id="wii" style="width: 200px;">Wii Theme Song</button>
-        <button id="grenade" style="width: 200px;" class="active">
-          Grenade by Bruno Mars
-        </button>
-        <!-- <button id="grenade" style="width: 140px;" class="active">Grenade by Bruno Mars</button> -->
-        <br />
-        <h1 class="instructions-heading">CHOOSE A LEVEL</h1>
-        <button id="easy" style="width: 140px;" class="active">easy</button>
-        <button id="medium" style="width: 140px;">medium</button>
-        <button id="hard" style="width: 140px;">hard</button>
-        <br />
-        <button id="start">start new game</button>
-        <br />
-        <button class="instructions-close" id="instructions-close">
-          close this box
-        </button>
+      <div class="instructions-left">
+        <h1 class="instructions-heading">HOW TO PLAY</h1>
+        <p class="instructions-text">
+          When the falling letters match up with their target outlines at the
+          bottom of the screen, hit the corresponding letter on your keyboard to
+          earn points.
+          <br /><i class="fas fa-music"></i><br />
+          The targets will glow when you correctly type the letters,
+          <br />and will turn red if you don't. <br /><i
+            class="fas fa-music"
+          ></i>
+          <br />
+          Maintain a streak of correctly pressed notes to earn more points!
+          <br /><i class="fas fa-music"></i><br />
+          Make sure you turn your volume up so you can hear the music.
+          <br />Good luck!
+        </p>
+      </div>
+      <div class="instructions-right">
+        <i class="far fa-times-circle" id="instructions-close"></i>
+        <h1 class="instructions-heading">CHOOSE A SONG</h1>
+        <div class="button-container">
+          <button id="wii" style="width: 200px;">Wii Theme Song</button>
+          <button id="grenade" style="width: 200px;" class="active">
+            Grenade by Bruno Mars
+          </button>
+          <!-- <button id="grenade" style="width: 140px;" class="active">Grenade by Bruno Mars</button> -->
+          <br />
+          <h1 class="instructions-heading">CHOOSE A LEVEL</h1>
+          <button id="easy" style="width: 140px;" class="active">easy</button>
+          <button id="medium" style="width: 140px;">medium</button>
+          <button id="hard" style="width: 140px;">hard</button>
+          <br />
+          <br />
+          <button class="start-button" id="start">start new game</button>
+          <br />
+        </div>
       </div>
     </div>
     <div class="message" id="message">
