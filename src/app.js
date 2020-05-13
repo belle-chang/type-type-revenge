@@ -14,8 +14,8 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import mp3 from "./sounds/grenade.mp3";
-import wii_mp3 from "./sounds/WiiThemeSong.mp3"
-import { Title, Key } from 'objects'
+import wii_mp3 from "./sounds/WiiThemeSong.mp3";
+import { Title, Key } from "objects";
 import { BasicLights } from "lights";
 
 // Initialize core ThreeJS components
@@ -106,7 +106,7 @@ window.addEventListener("resize", windowResizeHandler, false);
 window.addEventListener("keydown", handleKeyDown);
 window.addEventListener("keyup", handleKeyUp);
 document.getElementById("start").addEventListener("click", start);
-document.getElementById("start-over").addEventListener("click", startOver);
+// document.getElementById("start-over").addEventListener("click", startOver);
 document.getElementById("restart-button").addEventListener("click", startOver);
 document.getElementById("grenade").addEventListener("click", setGrenade);
 document.getElementById("wii").addEventListener("click", setWii);
@@ -124,11 +124,14 @@ document
   .addEventListener("click", closeInstructions);
 // when key is pressed save event key to key parameter of SeedScene
 function handleKeyDown(event) {
-  if ((event.key == "p") && (document.getElementById("loader").style.display != "none"))
+  if (
+    event.key == "p" &&
+    document.getElementById("loader").style.display != "none"
+  )
     fly();
   else {
     if (!event.metaKey && !event.altKey && !event.controlKey)
-    scene.key = event.key;
+      scene.key = event.key;
   }
 }
 
@@ -223,8 +226,7 @@ async function start() {
   closeInstructions();
   if (scene.song == 0) {
     loadGrenade();
-  }
-  else if (scene.song == 1) {
+  } else if (scene.song == 1) {
     loadWii();
   }
   await new Promise(r => setTimeout(r, 1200));
@@ -253,7 +255,7 @@ function startOver() {
   playing = true;
   muted = false;
   sound.setLoop(false);
-//   closeGameOver();
+  //   closeGameOver();
   document.getElementById("volume").className = "mute mute-container";
   document.getElementById("percent-score").className = "hidden";
 }
@@ -329,8 +331,8 @@ l_scene.width = width;
 // controls.maxDistance = 16;
 // controls.update();
 
-var l_renderer = new THREE.WebGLRenderer({alpha: true});
-l_renderer.setClearColor( 0x000000, 0 ); // the default
+var l_renderer = new THREE.WebGLRenderer({ alpha: true });
+l_renderer.setClearColor(0x000000, 0); // the default
 l_renderer.setSize(window.innerWidth, window.innerHeight);
 // renderer.toneMapping = THREE.LinearToneMapping;
 // renderer.setClearColor(0x000000,0.0);
@@ -376,27 +378,26 @@ function clean() {
   fade(document.getElementById("loader"));
 }
 
-
 function fly() {
   // scene.
   key.update(true);
   // key.update();
-  setTimeout(() => (key1.update(true)), 700);
-  setTimeout(() => (key2.update(true)), 1400);
-  setTimeout(() => (key3.update(true)), 2100);
-  setTimeout(() => (clean()), 4700);
+  setTimeout(() => key1.update(true), 700);
+  setTimeout(() => key2.update(true), 1400);
+  setTimeout(() => key3.update(true), 2100);
+  setTimeout(() => clean(), 4700);
 }
 
 // https://stackoverflow.com/questions/6121203/how-to-do-fade-in-and-fade-out-with-javascript-and-css
 function fade(element) {
-  var op = 1;  // initial opacity
+  var op = 1; // initial opacity
   var timer = setInterval(function () {
-      if (op <= 0.1){
-          clearInterval(timer);
-          element.style.display = 'none';
-      }
-      element.style.opacity = op;
-      element.style.filter = 'alpha(opacity=' + op * 100 + ")";
-      op -= op * 0.1;
+    if (op <= 0.1) {
+      clearInterval(timer);
+      element.style.display = "none";
+    }
+    element.style.opacity = op;
+    element.style.filter = "alpha(opacity=" + op * 100 + ")";
+    op -= op * 0.1;
   }, 20);
 }

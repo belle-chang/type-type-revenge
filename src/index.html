@@ -67,10 +67,13 @@
       transform: translate(-50%, -50%);
       color: white;
       /* background-color: #5250a4; */
-      background-image: linear-gradient(#f7a399, #7271be);
+      background-image: linear-gradient(black, #7271be);
+      border: 2.5px solid white;
+      box-shadow: 0 0 1em 1em #7271be;
+      background-color: black;
       padding: 30px 5em 50px 5em;
       border-radius: 10px;
-      opacity: 0.95;
+      opacity: 0.85;
       width: 80%;
       position: absolute;
       text-align: center;
@@ -114,12 +117,12 @@
     button {
       width: 170px;
       height: 50px;
-      color: #232577;
-      background-color: #acace6;
+      color: #acace6;
+      background-color: rgb(0, 0, 0, 0);
       margin: 1em auto;
       text-align: center;
       border-radius: 6px;
-      border: none;
+      border: 2.5px solid #acace6;
       font-size: 15px;
       font-weight: 700;
     }
@@ -129,14 +132,16 @@
     }
     .Button:active,
     .active {
-      background-color: #232577;
-      color: #acace6;
+      background-color: #acace6;
+      color: white;
+      border: 2.5px solid white;
     }
 
     button:hover {
+      background-color: #acace6;
       color: white;
-      background-color: #232577;
-      border: none;
+      border: 2.5px solid white;
+      box-shadow: 0 0 0.1em 0.1em white;
     }
     .start-button {
       width: 190px;
@@ -151,8 +156,9 @@
       font-weight: 700;
     }
     .start-button:hover {
-      background-color: #232577;
+      background-color: rgb(0, 0, 0, 0);
       border: 2.5px solid white;
+      box-shadow: 0 0 0.5em 0.5em white;
     }
     .message {
       position: fixed;
@@ -227,8 +233,8 @@
     }
     #restart-button {
       width: 170px;
-      height: 85px;
-      font-size: 1.75em;
+      height: 50px;
+      font-size: 1.5em;
       position: fixed;
       bottom: 5%;
       left: 50%;
@@ -258,15 +264,15 @@
 
   <body>
     <!-- loader page -->
-    <div id="loader" class="">
+    <!-- <div id="loader" class="">
       <a
         >Type Type Revenge is a typing practice game modeled after the classic
         iPhone game, Tap Tap Revenge.</a
-      >
-      <!-- <button id="loader-button">let's play!</button> -->
-      <a id="loader-instruct">Press p to play!</a>
+      > -->
+    <!-- <button id="loader-button">let's play!</button> -->
+    <!-- <a id="loader-instruct">Press p to play!</a>
       <div id="container"></div>
-    </div>
+    </div> -->
     <!-- question icon -->
     <div
       class="instructions-open score-container"
@@ -339,7 +345,7 @@
     <!-- add in options to choose song? -->
     <!-- add in options to choose difficulty? -->
     <!-- mb add in something that dims the rest of the background when this box opens up -->
-    <div class="instructions hidden" id="game-over">
+    <!-- <div class="instructions hidden" id="game-over">
       <h1 class="instructions-heading">GREAT JOB !</h1>
       <p class="instructions-text" id="final-score"></p>
       <div class="button-container">
@@ -348,7 +354,7 @@
       <button class="instructions-close" onClick="closeGameOver()">
         close this box
       </button>
-    </div>
+    </div> -->
 
     <!-- script -->
     <script>
