@@ -382,10 +382,10 @@ function fly() {
   // scene.
   key.update(true);
   // key.update();
-  setTimeout(() => key1.update(true), 700);
-  setTimeout(() => key2.update(true), 1400);
-  setTimeout(() => key3.update(true), 2100);
-  setTimeout(() => clean(), 4700);
+  setTimeout(() => key1.update(true), 400);
+  setTimeout(() => key2.update(true), 800);
+  setTimeout(() => key3.update(true), 1200);
+  setTimeout(() => clean(), 2500);
 }
 
 // https://stackoverflow.com/questions/6121203/how-to-do-fade-in-and-fade-out-with-javascript-and-css
