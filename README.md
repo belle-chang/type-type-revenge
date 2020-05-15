@@ -7,35 +7,46 @@ Type Type Revenge is a 3D web game built with Three.js to provide an interactive
 [Final Report](https://github.com/belle-chang/type-type-revenge/blob/master/type-type-revenge_final-report.pdf)
 
 ## Demo of Features
+
 ### Introduction Page
-![intro](media/intro.gif)
+
+![intro](media/intro_v2.gif)
 
 ### Instructions Bar
-![instructions](media/instructions.png)
+
+![instructions](media/instructionsv2.png)
 
 ### Letter Effects
+
 #### Correctly Typed Letter
+
 ![correct](media/correct.gif)
 
 #### Missed Letter
+
 ![missed](media/missed.gif)
 
 #### Incorrectly Typed Letter
+
 ![incorrect](media/incorrect.gif)
 
 ### Scoring Effects
+
 #### Low Scores
+
 ![ten](media/10.png)
 
 #### Medium Scores
+
 ![fifty](media/50.png)
 
 #### Medium to High Scores
+
 ![eighty](media/80.png)
 
 #### High Scores
-![hundred](media/100.png)
 
+![hundred](media/100.png)
 
 <!-- ## Setting Up Your Project
 Before you start your project, look inside `package.json`. Take a note of the following fields, and adjust them where appropriate:
@@ -95,4 +106,5 @@ Both models were downloaded from the Google Poly project:
 * [Flower](https://poly.google.com/view/eydI4__jXpi) -->
 
 ## License
+
 [MIT](./LICENSE)
